@@ -1,0 +1,58 @@
+.home {
+  font-size: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: white;
+  background: linear-gradient(110deg, #e73c7e, #23a6d5);
+  background-size: 200% 200%;
+  animation: gradientBackground 20s ease infinite;
+}
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 20% 50%;
+  }
+  50% {
+    background-position: 80% 50%;
+  }
+  100% {
+    background-position: 20% 50%;
+  }
+}
+
+.main {
+  display: flex;
+  height: 100%;
+}
+
+.header {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem 5rem 15%;
+}
+
+.header-text {
+  font-size: 4em;
+  font-weight: 500;
+  font-style: oblique;
+}
+
+.intro {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem 2rem 5%;
+}
+
+.intro-article {
+  font-size: 1.3em;
+  width: 80%;
+}
+
+
