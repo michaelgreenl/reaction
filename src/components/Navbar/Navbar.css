@@ -28,7 +28,29 @@
 .nav-link,
 .nav-link:visited {
   cursor: pointer;
-  margin: 0 1.5rem;
   color: white;
   text-decoration: none;
+}
+
+.nav-link-active,
+.nav-link span {
+  position: relative;
+  display: block;
+}
+
+.nav-link-active::after,
+.nav-link .not-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 150%;
+  bottom: -4px;
+  left: -4px;
+  border-bottom: solid 2px white;
+  transition: right 100ms ease-out;
+}
+
+.nav-link-active::after,
+.nav-link:hover .not-active::after {
+  right: -4px;
 }
