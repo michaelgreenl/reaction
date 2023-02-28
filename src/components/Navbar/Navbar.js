@@ -5,12 +5,15 @@ import './Navbar.css';
 function Navbar() {
   // TODO: Make "Reaction" logo not show up on home page
   // TODO: Make active NavLink class off if another NavLink is being hovered over
-  // TODO: Add actual :hover animation for activeclass
   // TODO: Add different :focus animation
+
+  const url = window.location.href;
 
   return (
     <nav className='navbar'>
-      <span className='logo-text'>Reaction</span>
+      <span className='logo-text' style={url.endsWith('/') ? { visibility: 'hidden' } : undefined}>
+        Reaction
+      </span>
       <ul className='nav-list'>
         <li className='nav-item'>
           <NavLink className='nav-link' to='/'>

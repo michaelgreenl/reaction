@@ -1,14 +1,15 @@
 .navbar {
   font-size: 16px;
   display: flex;
-  align-items: flex-end;
-  height: 5rem;
-  padding: 0 2rem;
+  align-items: center;
+  height: 7rem;
+  padding: 0px 3rem;
 }
 
 .logo-text {
   font-size: 1.5em;
-  font-weight: 500;
+  font-weight: 300;
+  letter-spacing: -0.03em;
   font-style: oblique;
   display: block;
   margin-right: auto;
@@ -19,7 +20,7 @@
   justify-content: space-evenly;
   width: 50%;
   min-width: 40rem;
-  padding: 0 5% 3px 0;
+  padding: 0px 5% 3px 0px;
   margin: 0;
   margin-right: auto;
   list-style: none;
@@ -36,6 +37,8 @@
 .nav-link span {
   position: relative;
   display: block;
+  font-weight: 400;
+  letter-spacing: 0.02em;
 }
 
 .nav-link-active::after,
@@ -47,7 +50,7 @@
   bottom: -4px;
   left: -4px;
   border-bottom: solid 2px white;
-  transition: right 100ms ease-out;
+  transition: right 150ms ease-out;
 }
 
 .nav-link-active::after,

@@ -1,6 +1,6 @@
 import React from 'react';
-import Navbar from '../../components/Navbar/Navbar';
 import './Play.css';
+import Navbar from '../../components/Navbar/Navbar';
 
 function Play() {
   return (

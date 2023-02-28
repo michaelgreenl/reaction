@@ -1,0 +1,22 @@
+.play {
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: white;
+  background: linear-gradient(110deg, #e73c7e, #23a6d5);
+  background-size: 200% 200%;
+  animation: gradientBackground 20s ease infinite;
+}
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 20% 50%;
+  }
+  50% {
+    background-position: 80% 50%;
+  }
+  100% {
+    background-position: 20% 50%;
+  }
+}

@@ -7,7 +7,7 @@ function Home() {
   return (
     <div className='home'>
       <Navbar />
-      <div className='main'>
+      <main className='main'>
         <header className='header'>
           <h1 className='header-text'>Reaction</h1>
           <Button text='Play' />
@@ -26,7 +26,7 @@ function Home() {
             </p>
           </article>
         </section>
-      </div>
+      </main>
     </div>
   );
 }
