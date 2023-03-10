@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navbar.css';
 
-function Navbar() {
+export const Navbar = () => {
   const url = window.location.href;
-  const [notActiveHovered, setNotActiveHovered] = useState(() => false);
+  const [notActiveHovered, setNotActiveHovered] = useState(false);
 
   return (
     <nav className='navbar'>
@@ -83,6 +83,4 @@ function Navbar() {
       </ul>
     </nav>
   );
-}
-
-export default Navbar;
+};

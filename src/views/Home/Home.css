@@ -9,26 +9,14 @@
   animation: gradientBackground 20s ease infinite;
 }
 
-@keyframes gradientBackground {
-  0% {
-    background-position: 20% 50%;
-  }
-  50% {
-    background-position: 80% 50%;
-  }
-  100% {
-    background-position: 20% 50%;
-  }
-}
-
-.main {
+.home .main {
   display: flex;
   flex: 1;
   padding: 2rem 4rem;
   gap: 2rem;
 }
 
-.header {
+.home .header {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -36,14 +24,14 @@
   padding: 0px 0px 15% 6rem;
 }
 
-.header-text {
+.home .header-text {
   font-size: 4em;
   font-weight: 300;
   letter-spacing: -0.05em;
   font-style: oblique;
 }
 
-.intro {
+.home .intro {
   flex: 2;
   display: flex;
   justify-content: center;
@@ -51,7 +39,7 @@
   padding-bottom: 5%;
 }
 
-.intro-article {
+.home .intro-article {
   font-size: 1.3em;
   width: 80%;
 }

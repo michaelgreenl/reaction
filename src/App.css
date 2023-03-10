@@ -127,6 +127,18 @@ body,
   padding: 0;
 }
 
+@keyframes gradientBackground {
+  0% {
+    background-position: 20% 50%;
+  }
+  50% {
+    background-position: 80% 50%;
+  }
+  100% {
+    background-position: 20% 50%;
+  }
+}
+
 ::-webkit-scrollbar {
   height: 10px;
   width: 10px;
