@@ -2,6 +2,7 @@ import React from 'react';
 import './Home.css';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Button } from '../../components/Button/Button';
+import { LogoText } from '../../components/Logo/LogoText';
 
 function Home() {
   return (
@@ -9,7 +10,7 @@ function Home() {
       <Navbar />
       <main className='main'>
         <header className='header'>
-          <h1 className='header-text'>Reaction</h1>
+          <LogoText svgSize={{ width: '6em' }} textSize={{ fontSize: '5em' }} />
           <Button text='Play' />
         </header>
         <section className='intro'>

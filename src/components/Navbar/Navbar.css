@@ -6,16 +6,19 @@
   padding: 0px 3rem;
 }
 
-.logo-text {
+.navbar .logo-cont {
+  display: flex;
+  margin-right: auto;
+}
+
+.navbar .logo-text {
   font-size: 1.75em;
   font-weight: 300;
   letter-spacing: -0.03em;
   font-style: oblique;
-  display: block;
-  margin-right: auto;
 }
 
-.nav-list {
+.navbar .nav-list {
   display: flex;
   justify-content: space-evenly;
   width: 50%;
@@ -26,23 +29,23 @@
   list-style: none;
 }
 
-.nav-link,
-.nav-link:visited {
+.navbar .nav-link,
+.navbar .nav-link:visited {
   cursor: pointer;
   color: white;
   text-decoration: none;
 }
 
-.nav-link-active,
-.nav-link span {
+.navbar .nav-link-active,
+.navbar .nav-link span {
   position: relative;
   display: block;
   font-weight: 400;
   letter-spacing: 0.02em;
 }
 
-.nav-link-active::after,
-.nav-link .not-active::after {
+.navbar .nav-link-active::after,
+.navbar .nav-link .not-active::after {
   content: '';
   position: absolute;
   top: 0;
@@ -53,7 +56,7 @@
   transition: right 150ms ease-out;
 }
 
-.nav-link-active::after,
-.nav-link:hover .not-active::after {
+.navbar .nav-link-active::after,
+.navbar .nav-link:hover .not-active::after {
   right: -4px;
 }

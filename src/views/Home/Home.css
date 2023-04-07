@@ -24,6 +24,10 @@
   padding: 0px 0px 15% 6rem;
 }
 
+.home .logo-cont {
+  display: flex;
+}
+
 .home .header-text {
   font-size: 4em;
   font-weight: 300;

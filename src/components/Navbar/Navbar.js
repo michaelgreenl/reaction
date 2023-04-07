@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
 import './Navbar.css';
+import { NavLink } from 'react-router-dom';
+import { LogoText } from '../Logo/LogoText';
 
 export const Navbar = () => {
   const url = window.location.href;
@@ -8,9 +9,9 @@ export const Navbar = () => {
 
   return (
     <nav className='navbar'>
-      <span className='logo-text' style={url.endsWith('/') ? { visibility: 'hidden' } : undefined}>
-        Reaction
-      </span>
+      <div className='logo-cont' style={url.endsWith('/') ? { visibility: 'hidden' } : undefined}>
+        <LogoText svgSize={{ width: '1.4em' }} textSize={{ fontSize: '1.2em' }} />
+      </div>
       <ul className='nav-list'>
         <li className='nav-item'>
           <NavLink className='nav-link' to='/'>
