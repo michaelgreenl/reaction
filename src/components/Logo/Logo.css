@@ -1,0 +1,9 @@
+.logo-text {
+  display: flex;
+}
+
+.logo-text .text {
+  font-weight: 300;
+  letter-spacing: -0.05em;
+  font-style: oblique;
+}
