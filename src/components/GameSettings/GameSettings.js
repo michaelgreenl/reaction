@@ -1,25 +1,59 @@
-import React from 'react';
-import { useGameSettings } from '../../hooks/useGameSettings';
-import './GameSetttings.css';
+import React, { useContext } from 'react';
+import { GameSettingsContext } from '../../hooks/GameSettingsContext';
+import './GameSettings.css';
 
 export const GameSettings = () => {
-  const [gameSettings, handleChange] = useGameSettings({
-    circleColor: '#FFFFFF',
-    circleSize: 100,
-    shrinkTime: 3,
-    showTime: true,
-    // gameMode: {
+  const { gameSettings, setGameSettings } = useContext(GameSettingsContext);
 
-    // }
-  });
+  function handleChange(event) {
+    setGameSettings({
+      ...gameSettings,
+      [event.target.name]: event.target.value,
+    });
+  }
 
   return (
     <div className='game-settings'>
       <h3 className='header-text'>Settings</h3>
-      <input name='circleColor' type='color' value={gameSettings.circleColor} onChange={handleChange} />
-      <input name='circleSize' type='range' value={gameSettings.circleSize} onChange={handleChange} />
-      <input name='shrinkTime' type='number' value={gameSettings.shrinkTime} onChange={handleChange} />
-      <input name='showTime' type='checkbox' value={gameSettings.showTime} onChange={handleChange} />
+      <div>
+        <label htmlFor='circleColor'>Circle Color</label>
+        <input
+          name='circleColor'
+          type='color'
+          value={gameSettings.circleColor}
+          onChange={(event) => handleChange(event)}
+        />
+      </div>
+      <div>
+        <label htmlFor='circleSize'>Circle Size</label>
+        <input
+          name='circleSize'
+          type='range'
+          value={gameSettings.circleSize}
+          onChange={(event) => handleChange(event)}
+        />
+      </div>
+      <div>
+        <label htmlFor='shrinkTime'>Circle Shrink Time</label>
+        <input
+          name='shrinkTime'
+          type='number'
+          step='0.5'
+          min='0.5'
+          max='4'
+          value={gameSettings.shrinkTime}
+          onChange={(event) => handleChange(event)}
+        />
+      </div>
+      <div>
+        <label htmlFor='showTime'>Show Time in Circle</label>
+        <input
+          name='showTime'
+          type='checkbox'
+          value={gameSettings.showTime}
+          onChange={(event) => handleChange(event)}
+        />
+      </div>
     </div>
   );
 };

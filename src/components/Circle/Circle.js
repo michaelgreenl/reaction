@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Circle.css';
-import { useGameSettings } from '../../hooks/useGameSettings';
+import { GameSettingsContext } from '../../hooks/GameSettingsContext';
 
 export const Circle = () => {
-  const [settings] = useGameSettings();
+  const { gameSettings } = useContext(GameSettingsContext);
 
   const circleStyle = {
-    width: settings.circleSize,
-    backgroundColor: settings.circleColor,
+    width: `${gameSettings.circleSize}px`,
+    backgroundColor: gameSettings.circleColor,
   };
 
   return (
     <div className='circle' style={circleStyle}>
-      {settings.showTime && <span className='time'>{settings.shrinkTime}</span>}
+      {gameSettings.showTime && <span className='time'>{gameSettings.shrinkTime}</span>}
     </div>
   );
 };
