@@ -1,0 +1,12 @@
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  aspect-ratio: 1;
+}
+
+.circle .time {
+  font-size: 1.1em;
+  color: #444444;
+}
