@@ -9,14 +9,34 @@
   animation: gradientBackground 20s ease infinite;
 }
 
-@keyframes gradientBackground {
-  0% {
-    background-position: 20% 50%;
-  }
-  50% {
-    background-position: 80% 50%;
-  }
-  100% {
-    background-position: 20% 50%;
-  }
+.play .main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0;
+  transition: all 50ms ease-in;
+}
+
+.play .settings {
+  height: 15rem;
+  width: 60rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+
+.play .settings-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.play .buttons {
+  display: flex;
+  gap: 10%;
 }
