@@ -1,20 +1,20 @@
 import React, { useContext } from 'react';
 import './Circle.css';
-import { GameSettingsContext } from '../../hooks/GameSettingsContext';
+import { UserContext } from '../../hooks/UserContext';
 import { PropTypes } from 'prop-types';
 
 export const Circle = (props) => {
-  const { gameSettings } = useContext(GameSettingsContext);
+  const { user } = useContext(UserContext);
 
   const circleStyle = {
     ...props.styles,
-    width: `${gameSettings.circleSize}px`,
-    backgroundColor: gameSettings.circleColor,
+    width: `${user.gameSettings.circleSize}px`,
+    backgroundColor: user.gameSettings.circleColor,
   };
 
   return (
     <div className='circle' style={circleStyle}>
-      {gameSettings.showTime && <span className='time'>{gameSettings.shrinkTime}</span>}
+      {user.gameSettings.showTime && <span className='time'>{user.gameSettings.shrinkTime}</span>}
     </div>
   );
 };
