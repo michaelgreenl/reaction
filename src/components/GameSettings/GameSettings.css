@@ -9,15 +9,6 @@
   box-sizing: border-box;
 }
 
-.game-settings .input-cont {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  margin: 0.25em 0;
-  padding-left: 0.25em;
-}
-
 .game-settings .header-text {
   font-weight: 400;
   margin: 0;
@@ -29,26 +20,13 @@
   border: #636363 solid 1px;
 }
 
-.game-settings .range-input {
-  appearance: none;
-  height: 0.5em;
-  width: 40%;
-  margin: 0.5em 0;
-  background: #cecece;
-  border-radius: 10px;
-}
-
-.game-settings .range-input::-webkit-slider-thumb {
-  appearance: none;
-  cursor: grab;
-  height: 1em;
-  width: 1em;
-  background: #e73c7e;
-  border-radius: 50%;
-}
-
-.game-settings .range-input::-webkit-slider-thumb:active {
-  cursor: grabbing;
+.game-settings .input-cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0.25em 0;
+  padding-left: 0.25em;
 }
 
 .game-settings .number {
@@ -81,13 +59,79 @@
   padding: 0;
 }
 
+.game-settings .radio-options {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.game-settings .radio-option {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.radio-label {
+  margin-right: 0.25em;
+}
+
+.game-settings .radio-input {
+  cursor: pointer;
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0;
+  border: #a7a7a7 solid 2px;
+  border-radius: 4px;
+}
+
+.game-settings .radio-input::before {
+  content: '';
+  width: 0.66em;
+  height: 0.66em;
+  background-color: #d64a80;
+  border-radius: 2px;
+  margin: 0;
+  opacity: 0;
+}
+
+.game-settings .radio-input:checked:before {
+  opacity: 1;
+}
+
+.game-settings .range-input {
+  appearance: none;
+  height: 0.5em;
+  width: 40%;
+  margin: 0.5em 0;
+  background: #cecece;
+  border-radius: 10px;
+}
+
+.game-settings .range-input::-webkit-slider-thumb {
+  appearance: none;
+  cursor: grab;
+  height: 1em;
+  width: 1em;
+  background: #e73c7e;
+  border-radius: 50%;
+}
+
+.game-settings .range-input::-webkit-slider-thumb:active {
+  cursor: grabbing;
+}
+
 .game-settings .checkbox-input {
   appearance: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.25em;
-  height: 1.25em;
+  width: 1.2em;
+  height: 1.2em;
   margin: 0;
   border: #a7a7a7 solid 2px;
   border-radius: 4px;
@@ -95,8 +139,8 @@
 
 .game-settings .checkbox-input::before {
   content: '';
-  width: 0.7em;
-  height: 0.65em;
+  width: 0.66em;
+  height: 0.66em;
   background-color: #d64a80; 
   border-radius: 2px;
   margin: 0;

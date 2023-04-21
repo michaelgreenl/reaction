@@ -10,9 +10,10 @@ import './App.css';
 function App() {
   const [user, setUser] = useState({
     gameSettings: {
+      shrinkTime: 2.0,
+      difficulty: { easy: false, medium: true, hard: false },
       circleColor: '#FFFFFF',
       circleSize: 100,
-      shrinkTime: 2.0,
       showTime: true,
     },
     scores: [],
