@@ -104,17 +104,6 @@ export const GameSettings = () => {
           onChange={(event) => handleChange(event.target.name, event.target.value)}
         />
       </div>
-      <div className='input-cont'>
-        <label htmlFor='showTime'>Show Time in Circle</label>
-        <input
-          className='checkbox-input'
-          name='showTime'
-          type='checkbox'
-          value={gameSettings.showTime}
-          checked={gameSettings.showTime}
-          onChange={(event) => handleChange(event.target.name, event.target.checked)}
-        />
-      </div>
     </div>
   );
 };

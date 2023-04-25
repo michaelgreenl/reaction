@@ -14,7 +14,6 @@ function App() {
       difficulty: { easy: false, medium: true, hard: false },
       circleColor: '#FFFFFF',
       circleSize: 100,
-      showTime: true,
     },
     scores: [],
   });
