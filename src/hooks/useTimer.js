@@ -19,11 +19,12 @@ export const useTimer = (timeVal, increment) => {
     };
   });
 
-  function reset() {
+  function resetTimer() {
     setTimer(false);
+    setTime(timeVal);
   }
 
-  return { timer, time, reset };
+  return { timer, time, resetTimer };
 };
 
 useTimer.propTypes = {
