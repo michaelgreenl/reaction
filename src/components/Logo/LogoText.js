@@ -7,7 +7,6 @@ export const LogoText = (props) => {
   return (
     <div className='logo-text'>
       <LogoSvg styling={props.svgSize} />
-      {/* FIXME: Make font size dynamic with textSize prop */}
       <h1 className='text' style={props.textSize}>
         Reaction
       </h1>
@@ -16,6 +15,6 @@ export const LogoText = (props) => {
 };
 
 LogoText.propTypes = {
-  svgSize: PropTypes.string,
-  textSize: PropTypes.string,
+  svgSize: PropTypes.object,
+  textSize: PropTypes.object,
 };
