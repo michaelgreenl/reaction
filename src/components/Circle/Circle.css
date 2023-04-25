@@ -1,12 +1,21 @@
-.circle {
+.circle-cont {
+  position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 100%;
-  aspect-ratio: 1;
+  align-content: center;
+  background: transparent !important;
 }
 
-.circle .time {
-  font-size: 1.1em;
-  color: #444444;
+.circle {
+  cursor: pointer;
+  border-radius: 100%;
+  aspect-ratio: 1;
+  border: 0;
+}
+
+@keyframes shrink {
+  100% {
+    width: 0px;
+  }
 }

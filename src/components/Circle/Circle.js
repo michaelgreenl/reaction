@@ -5,20 +5,37 @@ import { PropTypes } from 'prop-types';
 
 export const Circle = (props) => {
   const { user } = useContext(UserContext);
+  const { gameSettings } = user;
 
   const circleStyle = {
     ...props.styles,
-    width: `${user.gameSettings.circleSize}px`,
-    backgroundColor: user.gameSettings.circleColor,
+    width: `${gameSettings.circleSize}px`,
+    backgroundColor: gameSettings.circleColor,
   };
 
   return (
-    <div className='circle' style={circleStyle}>
-      {user.gameSettings.showTime && <span className='time'>{user.gameSettings.shrinkTime}</span>}
+    <div
+      className='circle-cont'
+      style={{
+        ...circleStyle,
+        height: `${gameSettings.circleSize}px`,
+      }}
+    >
+      <button
+        className='circle'
+        onClick={props.onClick}
+        style={{
+          ...circleStyle,
+          animation: props.useTransition ? `shrink ${gameSettings.shrinkTime}s linear forwards` : 'none',
+        }}
+      ></button>
     </div>
   );
 };
 
 Circle.propTypes = {
+  onClick: PropTypes.func,
   styles: PropTypes.object,
+  position: PropTypes.object,
+  useTransition: PropTypes.bool,
 };
