@@ -11,10 +11,13 @@ function Home() {
       <Navbar />
       <main className='main'>
         <section className='logo'>
-          <LogoText svgSize={{ width: '6em' }} textStyles={{ fontSize: '5em', margin: '3rem 0' }} />
+          <LogoText svgSize={{ width: '6em' }} textStyles={{ fontSize: '5em', margin: '0' }} />
           <NavLink to='/play'>
             <Button text='Play Now' styling={{ fontSize: '1.25em', marginLeft: '15%' }} />
           </NavLink>
+          <video className='intro-video' loop muted autoPlay>
+            <source src='/assets/videos/game.mp4' type='video/mp4' />
+          </video>
         </section>
         <section className='intro'>
           <article className='intro-article'>
@@ -24,15 +27,12 @@ function Home() {
               auctor massa egestas faucibus vel consequat lacus.
             </p>
             <blockquote>Maecenas convallis sit amet ipsum a dapibus. Phasellus</blockquote>
-            <p>
-              eleifend facilisis turpis, a aliquam ligula hendrerit a. Nunc tempus eleifend nunc id gravida. Vestibulum
-              quis ultrices felis. Aliquam erat volutpat. Vestibulum fringilla purus euismod massa scelerisque rutrum.
-              Aliquam rutrum lacinia odio, ac gravida libero. Nam ut pulvinar urna. Maecenas eget congue odio. Ut
-              bibendum feugiat feugiat. Donec congue id sapien vel molestie. Praesent bibendum risus non eros posuere,
-              id scelerisque
+            <p className='intro-content'>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper pharetra porta. Proin sed velit
+              auctor massa egestas faucibus vel consequat lacus. , consectetur adipiscing elit. Etiam semper pharetra
+              porta. Proin sed velit auctor massa egestas faucib
             </p>
           </article>
-          <div className='video'></div>
         </section>
       </main>
       <footer className='footer'></footer>

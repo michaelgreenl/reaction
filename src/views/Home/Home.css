@@ -21,7 +21,14 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0px 0px 15% 6rem;
+  gap: 2rem;
+  padding-left: 6rem;
+}
+
+.home .intro-video {
+  border: solid 2px white;
+  width: 110%;
+  margin-top: 4rem;
 }
 
 .home .intro {
@@ -36,5 +43,6 @@
   font-size: 1.3em;
   width: 80%;
 }
+
 
 
