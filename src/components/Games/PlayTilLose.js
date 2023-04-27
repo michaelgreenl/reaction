@@ -4,13 +4,15 @@ import { UserContext } from '../../hooks/UserContext';
 import { useTimer } from '../../hooks/useTimer';
 import { random } from 'lodash';
 import { Circle } from '../Circle/Circle';
+import { Button } from '../Button/Button';
 
 export const PlayTilLose = () => {
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
   const [genTime, setGenTime] = useState(0);
   const [circleCount, setCircleCount] = useState(0);
-  const { user } = useContext(UserContext);
+  const [gameActive, setGameActive] = useState(true);
+  const { user, setUser } = useContext(UserContext);
   const { gameSettings } = user;
 
   useEffect(() => {
@@ -22,11 +24,13 @@ export const PlayTilLose = () => {
   const { timer, resetTimer } = useTimer(genTime, 0.01);
 
   useEffect(() => {
-    if (timer) {
+    if (timer && gameActive) {
       resetTimer();
       generateCircle();
+    } else if (!gameActive) {
+      resetTimer();
     }
-  }, [timer]);
+  }, [timer, gameActive]);
 
   function generateCircle() {
     const position = {
@@ -56,12 +60,40 @@ export const PlayTilLose = () => {
     setCircles(circles.filter((circle) => circle.key !== key));
   }
 
+  function gameLostListener(toSet) {
+    setGameActive(toSet);
+    setCircles([]);
+    setUser({
+      ...user,
+      scores: [...user.scores, currScore],
+    });
+    setCurrScore(0);
+  }
+
   return (
     <div className='canvas'>
-      <span className='score'>{currScore}</span>
-      {circles.map((circle) => (
-        <Circle key={circle.key} onClick={() => circleClick(circle.key)} styles={circle.styles} useTransition={true} />
-      ))}
+      {gameActive ? (
+        <>
+          <span className='score'>{currScore}</span>
+          {circles.map((circle) => (
+            <Circle
+              key={circle.key}
+              onClick={() => circleClick(circle.key)}
+              styles={circle.styles}
+              useTransition={true}
+              animationEnd={gameLostListener}
+            />
+          ))}
+        </>
+      ) : (
+        <div className='end-screen'>
+          <span className='score'>{user.scores[user.scores.length - 1]}</span>
+          <div className='end-buttons'>
+            <Button text='Settings' styling={{ fontSize: '1.2em' }} />
+            <Button text='Play Again' styling={{ fontSize: '1.2em' }} onClick={() => setGameActive(true)} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -28,6 +28,7 @@ export const Circle = (props) => {
           ...circleStyle,
           animation: props.useTransition ? `shrink ${gameSettings.shrinkTime}s linear forwards` : 'none',
         }}
+        onAnimationEnd={() => props.animationEnd(false)}
       ></button>
     </div>
   );
@@ -38,4 +39,5 @@ Circle.propTypes = {
   styles: PropTypes.object,
   position: PropTypes.object,
   useTransition: PropTypes.bool,
+  animationEnd: PropTypes.func,
 };

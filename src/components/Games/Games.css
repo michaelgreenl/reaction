@@ -9,3 +9,24 @@
   float: right;
   margin: 1rem 3%;
 }
+
+
+.canvas .end-screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.canvas .end-screen .score {
+  font-size: 3.5em; 
+  margin-bottom: 0.75em;
+} 
+
+.canvas .end-buttons {
+  display: flex;
+  justify-content: space-between;
+  width: 23%;
+}
