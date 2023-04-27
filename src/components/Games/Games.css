@@ -27,6 +27,5 @@
 
 .canvas .end-buttons {
   display: flex;
-  justify-content: space-between;
-  width: 23%;
+  gap: 2rem;
 }

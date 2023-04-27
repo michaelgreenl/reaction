@@ -7,7 +7,7 @@ export const LogoText = (props) => {
   return (
     <div className='logo-text'>
       <LogoSvg styling={props.svgSize} />
-      <h1 className='text' style={props.textSize}>
+      <h1 className='text' style={props.textStyles}>
         Reaction
       </h1>
     </div>
@@ -16,5 +16,5 @@ export const LogoText = (props) => {
 
 LogoText.propTypes = {
   svgSize: PropTypes.object,
-  textSize: PropTypes.object,
+  textStyles: PropTypes.object,
 };

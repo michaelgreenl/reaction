@@ -11,9 +11,9 @@ function Home() {
       <Navbar />
       <main className='main'>
         <section className='logo'>
-          <LogoText svgSize={{ width: '6em' }} textSize={{ fontSize: '5em' }} />
+          <LogoText svgSize={{ width: '6em' }} textStyles={{ fontSize: '5em', margin: '3rem 0' }} />
           <NavLink to='/play'>
-            <Button text='Play Game' styling={{ fontSize: '1.25em', marginLeft: '15%' }} />
+            <Button text='Play Now' styling={{ fontSize: '1.25em', marginLeft: '15%' }} />
           </NavLink>
         </section>
         <section className='intro'>
