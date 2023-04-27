@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import './Games.css';
+import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { useTimer } from '../../hooks/useTimer';
 import { random } from 'lodash';
 import { Circle } from '../Circle/Circle';
 import { Button } from '../Button/Button';
 
-export const PlayTilLose = () => {
+export const PlayTilLose = (props) => {
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
   const [genTime, setGenTime] = useState(0);
@@ -89,11 +90,15 @@ export const PlayTilLose = () => {
         <div className='end-screen'>
           <span className='score'>{user.scores[user.scores.length - 1]}</span>
           <div className='end-buttons'>
-            <Button text='Settings' styling={{ fontSize: '1.2em' }} />
+            <Button text='Settings' styling={{ fontSize: '1.2em' }} onClick={() => props.showSettings()} />
             <Button text='Play Again' styling={{ fontSize: '1.2em' }} onClick={() => setGameActive(true)} />
           </div>
         </div>
       )}
     </div>
   );
+};
+
+PlayTilLose.propTypes = {
+  showSettings: PropTypes.func,
 };

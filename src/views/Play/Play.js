@@ -10,6 +10,11 @@ function Play() {
   const [gameActive, setGameActive] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
 
+  function setActiveSettings() {
+    setGameActive(false);
+    setShowSettings(true);
+  }
+
   return (
     <div className='play'>
       <Navbar />
@@ -22,7 +27,7 @@ function Play() {
               </div>
             )}
             <div className='settings-item'>
-              <Circle position={{ top: 50, right: 45 }} />
+              <Circle styles={{ top: '25%', right: '40%' }} />
             </div>
           </div>
           <div className='buttons'>
@@ -35,7 +40,7 @@ function Play() {
           </div>
         </main>
       ) : (
-        <PlayTilLose />
+        <PlayTilLose showSettings={setActiveSettings} />
       )}
     </div>
   );
