@@ -26,8 +26,8 @@ function Play() {
                 <GameSettings />
               </div>
             )}
-            <div className='settings-item'>
-              <Circle styles={!showSettings ? { top: '25%', right: '40%' } : null} />
+            <div className='settings-item' style={{ paddingLeft: '5%' }}>
+              <Circle styles={{ position: 'relative' }} />
             </div>
           </div>
           <div className='buttons'>

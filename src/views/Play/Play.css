@@ -7,6 +7,7 @@
   background: linear-gradient(110deg, #e73c7e, #23a6d5);
   background-size: 200% 200%;
   animation: gradientBackground 20s ease infinite;
+  letter-spacing: 0.03ch;
 }
 
 .play .main {
