@@ -27,7 +27,7 @@ function Play() {
               </div>
             )}
             <div className='settings-item'>
-              <Circle styles={{ top: '25%', right: '40%' }} />
+              <Circle styles={!showSettings ? { top: '25%', right: '40%' } : null} />
             </div>
           </div>
           <div className='buttons'>
