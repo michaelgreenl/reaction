@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from '../../components/Button/Button';
+import { Footer } from '../../components/Footer/Footer';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { GithubSvg } from '../../svgs/GithubSvg';
 import './Contact.css';
@@ -48,7 +49,7 @@ function Contact() {
           <Button text='Send' styling={{ fontSize: '1.1em', alignSelf: 'flex-end', marginRight: '-5%' }} />
         </form>
       </main>
-      <footer className='footer'></footer>
+      <Footer />
     </div>
   );
 }

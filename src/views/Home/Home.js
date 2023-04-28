@@ -4,6 +4,7 @@ import { Navbar } from '../../components/Navbar/Navbar';
 import { Button } from '../../components/Button/Button';
 import { LogoText } from '../../components/Logo/LogoText';
 import { NavLink } from 'react-router-dom';
+import { Footer } from '../../components/Footer/Footer';
 
 function Home() {
   return (
@@ -35,7 +36,7 @@ function Home() {
           </article>
         </section>
       </main>
-      <footer className='footer'></footer>
+      <Footer />
     </div>
   );
 }

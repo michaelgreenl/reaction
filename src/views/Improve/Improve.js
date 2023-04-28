@@ -1,4 +1,5 @@
 import React from 'react';
+import { Footer } from '../../components/Footer/Footer';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { DietSvg } from '../../svgs/DietSvg';
 import { ExerciseSvg } from '../../svgs/ExerciseSvg';
@@ -66,7 +67,7 @@ function Improve() {
           </div>
         </section>
       </main>
-      <footer className='footer'></footer>
+      <Footer />
     </div>
   );
 }
