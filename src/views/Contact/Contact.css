@@ -2,9 +2,86 @@
   font-size: 16px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
   color: white;
   background: linear-gradient(110deg, #e73c7e, #23a6d5);
   background-size: 200% 200%;
   animation: gradientBackground 20s ease infinite;
+  letter-spacing: 0.03ch;
+}
+
+.contact .header,
+.contact .main {
+  display: flex;
+}
+
+.contact .header {
+  justify-content: space-between;
+  width: 90%;
+  margin: 0.75em auto 0.25em;
+}
+
+.contact .header-text {
+  font-weight: 600;
+  margin: 0;
+}
+
+.contact .other-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 110%;
+  gap: 1.5em;
+}
+
+.contact .other-link {
+  animation: gradientBackground 20s ease infinite;
+  background: linear-gradient(110deg, #e73c7e, #23a6d5);
+  border-radius: 100px;
+  padding: 0;
+  height: 3em;
+  border: 0;
+}
+
+.contact .second-header {
+  font-size: 1.4em;
+  font-weight: 500;
+}
+
+.contact .main {
+  flex-direction: column;
+  margin: 0 auto;
+  width: 70%;
+}
+
+.contact .contact-form {
+  display: flex;
+  flex-direction: column;
+  margin-left: 5%;
+  min-width: 50rem;
+  width: 70%;
+  gap: 1em;
+}
+
+.contact .form-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0;
+}
+
+.contact .input-cont {
+  font-size: 1.2em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15em;
+}
+
+.contact .input-field {
+  height: 2.5em;
+  color: #444444;
+}
+
+.contact .input-text-area {
+  height: 7em;
 }
