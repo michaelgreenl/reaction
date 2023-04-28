@@ -23,7 +23,7 @@ export const Circle = (props) => {
     >
       <button
         className='circle'
-        onClick={props.onClick}
+        onMouseDown={props.onClick}
         style={{
           ...circleStyle,
           animation: props.useTransition ? `shrink ${gameSettings.shrinkTime}s linear forwards` : 'none',
