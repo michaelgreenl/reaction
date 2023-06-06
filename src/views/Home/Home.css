@@ -3,46 +3,115 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  color: white;
-  background: linear-gradient(110deg, #e73c7e, #23a6d5);
+  color: var(--primary-white);
+  background: var(--pink2blue-lingrand);
   background-size: 200% 200%;
   animation: gradientBackground 20s ease infinite;
 }
 
 .home .main {
-  display: flex;
   flex: 1;
-  padding: 2rem 4rem;
-  gap: 2rem;
+  display: grid;
+  grid-template-columns: minmax(max(200px, 40%), 650px) minmax(max(200px, 60%), 850px);
+  gap: 1em;
+  margin: 0 auto;
+  padding: 2.5rem 4.5rem;
 }
 
-.home .logo {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 2rem;
-  padding-left: 6rem;
+.home .header {
+  grid-column: 1/-1;
+  align-self: center;
 }
 
-.home .intro-video {
-  border: solid 2px white;
-  width: 110%;
-  margin-top: 4rem;
+.home .home-logo-svg {
+  width: 14%;
+  min-width: 14%;
+}
+
+.home .home-logo-text {
+  font-size: clamp(3rem, 13vw, 17rem);
+  margin: 0;
 }
 
 .home .intro {
-  flex: 2;
+  height: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-bottom: 5%;
+  flex-direction: column;
+  font-size: clamp(1.15em, 1.25vw, 1.35em);
+  padding-top: 5%;
 }
 
-.home .intro-article {
-  font-size: 1.3em;
-  width: 80%;
+.home .intro-header {
+  margin: 0;
 }
 
+.home .intro-quote {
+  white-space: nowrap;
+  font-style: italic;
+  align-self: flex-end;
+  margin: 0;
+}
 
+.home .play-now-btn {
+  align-self: flex-end;
+  margin-top: 0.75em;
+}
 
+.home .home-button {
+  background: var(--secondary-white);
+  color: var(--secondary-black);
+  font-size: 1em;
+}
+
+.home .video {
+  display: grid;
+  justify-self: center;
+}
+
+.home .intro-video {
+  border: solid 2px var(--primary-white);
+  margin: 0 auto;
+  width: 90%;
+}
+
+@media screen and (max-width: 1024px) {
+  .home .main {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1000px));
+    gap: 0;
+  }
+  
+  .home .intro {
+    justify-content: space-evenly;
+    padding-top: 0; 
+  }
+
+  .home .play-now-btn {
+    align-self: center;
+  }
+
+  .home .home-button {
+    margin-bottom: 1.25em;
+    font-size: 1.25em;
+  }
+  
+  .home .video {
+    padding-top: 0;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .home .main {
+    padding: 1.5rem 2.75rem;
+  } 
+  
+  .home .intro {
+    font-size: 1.1em;
+    align-self: center;
+    justify-content: center;
+    gap: 1%;
+  }
+
+  .home .intro-video {
+    width: 95%;
+  }
+}

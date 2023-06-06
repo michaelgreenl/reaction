@@ -11,22 +11,32 @@
   margin-right: auto;
 }
 
-.navbar .logo-text {
-  font-size: 1.75em;
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  font-style: oblique;
+.navbar .navbar-logo-svg {
+  width: 2.75em;
+}
+
+.navbar .navbar-logo-text {
+  font-size: 2.25em;
+}
+
+.navbar-menu-icon {
+  width: 1em;
 }
 
 .navbar .nav-list {
   display: flex;
   justify-content: space-evenly;
   width: 50%;
-  min-width: 40rem;
-  padding: 0px 5% 3px 0px;
+  min-width: 46rem;
+  padding: 0px 10% 0px 0px;
   margin: 0;
   margin-right: auto;
   list-style: none;
+}
+
+.navbar .nav-list-home {
+  margin: 0 auto;
+  padding: 0;
 }
 
 .navbar .nav-link,
@@ -59,4 +69,10 @@
 .navbar .nav-link-active::after,
 .navbar .nav-link:hover .not-active::after {
   right: -4px;
+}
+
+@media screen and (max-width: 1024px) {
+  .navbar .logo-cont {
+    margin-right: 12.5%;
+  }
 }
