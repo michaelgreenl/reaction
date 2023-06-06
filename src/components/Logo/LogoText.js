@@ -6,15 +6,13 @@ import { LogoSvg } from '../../svgs/LogoSvg';
 export const LogoText = (props) => {
   return (
     <div className='logo-text'>
-      <LogoSvg styling={props.svgSize} />
-      <h1 className='text' style={props.textStyles}>
-        Reaction
-      </h1>
+      <LogoSvg className={props.svgClassName} />
+      <h1 className={`text ${props.textClassName}`}>Reaction</h1>
     </div>
   );
 };
 
 LogoText.propTypes = {
-  svgSize: PropTypes.object,
-  textStyles: PropTypes.object,
+  svgClassName: PropTypes.string,
+  textClassName: PropTypes.string,
 };

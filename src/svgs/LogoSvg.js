@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 export const LogoSvg = (props) => {
   return (
     <svg
+      className={props.className}
       xmlns='http://www.w3.org/2000/svg'
-      style={{ ...props.styling, transform: 'rotate(25deg)', marginTop: '-.25em' }}
+      style={{ transform: 'rotate(25deg)', marginTop: '-.25em' }}
       viewBox='0 0 440 500'
       xmlSpace='preserve'
     >
@@ -98,5 +99,5 @@ export const LogoSvg = (props) => {
 };
 
 LogoSvg.propTypes = {
-  styling: PropTypes.object,
+  className: PropTypes.string,
 };
