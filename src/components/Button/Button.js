@@ -4,7 +4,7 @@ import './Button.css';
 
 export const Button = (props) => {
   return (
-    <button className='button' style={{ ...props.styling }} onClick={props.onClick}>
+    <button className={`button ${props.className}`} style={{ ...props.styling }} onClick={props.onClick}>
       <span className='button-text'>{props.text}</span>
     </button>
   );
@@ -12,6 +12,7 @@ export const Button = (props) => {
 
 Button.propTypes = {
   onClick: PropTypes.func,
+  className: PropTypes.string,
   styling: PropTypes.object,
   text: PropTypes.string,
 };
