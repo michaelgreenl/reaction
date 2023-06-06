@@ -117,6 +117,11 @@
 * {
   font-family: 'Poppins', helvetica, arial, sans-serif;
   box-sizing: border-box;
+  --pink2blue-lingrand: linear-gradient(110deg, #e73c7e, #23a6d5);
+  --primary-white: white;
+  --secondary-white: #f2eef2;
+  --primary-black: black;
+  --secondary-black: #473f48;
 }
 
 html,
