@@ -30,13 +30,13 @@ function Play() {
               <Circle styles={{ position: 'relative' }} />
             </div>
           </div>
-          <div className='buttons'>
+          <div className='start-buttons'>
             {showSettings ? (
-              <Button text='Save' styling={{ fontSize: '1.2em' }} onClick={() => setShowSettings(!showSettings)} />
+              <Button className='start-button' text='Save' onClick={() => setShowSettings(!showSettings)} />
             ) : (
-              <Button text='Settings' styling={{ fontSize: '1.2em' }} onClick={() => setShowSettings(!showSettings)} />
+              <Button className='start-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
             )}
-            <Button text='Start' styling={{ fontSize: '1.2em' }} onClick={() => setGameActive(!gameActive)} />
+            <Button className='start-button' text='Start' onClick={() => setGameActive(!gameActive)} />
           </div>
         </main>
       ) : (

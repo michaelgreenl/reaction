@@ -39,7 +39,13 @@
   justify-content: center;
 }
 
-.play .buttons {
+.play .start-buttons {
   display: flex;
   gap: 10%;
+}
+
+.play .start-button {
+  font-size: 1.2em;
+  color: var(--secondary-black);
+  background-color: var(--primary-white);
 }
