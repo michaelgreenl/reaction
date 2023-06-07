@@ -55,23 +55,6 @@ export const Navbar = () => {
             </NavLink>
           </li>
           <li className='nav-item'>
-            <NavLink className='nav-link' to='/improve'>
-              {({ isActive }) => (
-                <span
-                  className={isActive && !notActiveHovered ? 'nav-link-active' : 'not-active'}
-                  onMouseOver={() => {
-                    !isActive ? setNotActiveHovered(true) : setNotActiveHovered(false);
-                  }}
-                  onMouseOut={() => {
-                    !isActive ? setNotActiveHovered(false) : undefined;
-                  }}
-                >
-                  Improve
-                </span>
-              )}
-            </NavLink>
-          </li>
-          <li className='nav-item'>
             <NavLink className='nav-link' to='/contact'>
               {({ isActive }) => (
                 <span
