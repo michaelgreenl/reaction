@@ -12,6 +12,12 @@
   border-radius: 100%;
   aspect-ratio: 1;
   border: 0;
+  transition: opacity 50ms ease-out;
+  opacity: 1;
+}
+
+.circle-fade {
+  opacity: 0;
 }
 
 @keyframes shrink {

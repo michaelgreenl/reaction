@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import './Circle.css';
 import { UserContext } from '../../hooks/UserContext';
 import { PropTypes } from 'prop-types';
@@ -6,6 +6,8 @@ import { PropTypes } from 'prop-types';
 export const Circle = (props) => {
   const { user } = useContext(UserContext);
   const { gameSettings } = user;
+
+  const [circleFade, setCircleFade] = useState(false);
 
   const circleStyle = {
     ...props.styles,
@@ -22,8 +24,9 @@ export const Circle = (props) => {
       }}
     >
       <button
-        className='circle'
-        onMouseDown={props.onClick}
+        className={`circle ${circleFade ? 'circle-fade' : undefined}`}
+        onMouseDown={() => (props.useTransition ? setCircleFade(true) : undefined)}
+        onTransitionEnd={props.onClick}
         style={{
           ...circleStyle,
           animation: props.useTransition ? `shrink ${gameSettings.shrinkTime}s linear forwards` : 'none',
