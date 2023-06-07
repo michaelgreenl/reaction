@@ -59,6 +59,11 @@
   padding: 0;
 }
 
+.game-settings .number-arrow .number-polygon {
+  height: 15px;
+  fill: var(--bright-pink);
+}
+
 .game-settings .radio-options {
   width: 70%;
   display: flex;
