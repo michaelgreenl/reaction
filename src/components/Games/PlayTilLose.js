@@ -90,8 +90,8 @@ export const PlayTilLose = (props) => {
         <div className='end-screen'>
           <span className='score'>{user.scores[user.scores.length - 1]}</span>
           <div className='end-buttons'>
-            <Button text='Settings' styling={{ fontSize: '1.2em' }} onClick={() => props.showSettings()} />
-            <Button text='Play Again' styling={{ fontSize: '1.2em' }} onClick={() => setGameActive(true)} />
+            <Button className='end-button' text='Settings' onClick={() => props.showSettings()} />
+            <Button className='end-button' text='Play Again' onClick={() => setGameActive(true)} />
           </div>
         </div>
       )}

@@ -29,3 +29,9 @@
   display: flex;
   gap: 2rem;
 }
+
+.canvas .end-button {
+  font-size: 1.2em;
+  color: var(--secondary-black);
+  background-color: var(--primary-white);
+}
