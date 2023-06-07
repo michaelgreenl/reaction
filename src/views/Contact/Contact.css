@@ -35,12 +35,15 @@
 }
 
 .contact .other-link {
-  animation: gradientBackground 20s ease infinite;
-  background: linear-gradient(110deg, #e73c7e, #23a6d5);
+  background: transparent;
   border-radius: 100px;
   padding: 0;
   height: 3em;
   border: 0;
+}
+
+.contact .other-link .github-link {
+  width: 3em;
 }
 
 .contact .second-header {

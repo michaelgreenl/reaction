@@ -16,7 +16,7 @@ function Contact() {
         <div className='other-links'>
           <h2 className='second-header'>Other Links</h2>
           <button className='other-link'>
-            <GithubSvg styling={{ width: '3em' }} />
+            <GithubSvg className='github-link' />
           </button>
         </div>
         <form className='contact-form' name='contact'>
