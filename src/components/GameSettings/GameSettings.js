@@ -40,19 +40,19 @@ export const GameSettings = () => {
           <div className='number-arrows'>
             <button
               className='number-arrow'
-              style={{ transform: 'translate(-1px, 14px)' }}
+              style={{ transform: 'translate(-1px, 15px) rotate(-90deg)' }}
               onClick={() => handleChange('shrinkTime', gameSettings.shrinkTime - 0.5)}
               disabled={gameSettings.shrinkTime === 0.5}
             >
-              <PolygonSvg className='number-polygon' styling={{ transform: 'rotate(-90deg)' }} />
+              <PolygonSvg className='number-polygon' />
             </button>
             <button
               className='number-arrow'
-              style={{ transform: 'translate(-1px, -14px)' }}
+              style={{ transform: 'translate(-1px, -15px) rotate(90deg)' }}
               onClick={() => handleChange('shrinkTime', gameSettings.shrinkTime + 0.5)}
               disabled={gameSettings.shrinkTime === 3}
             >
-              <PolygonSvg className='number-polygon' styling={{ transform: 'rotate(90deg)' }} />
+              <PolygonSvg className='number-polygon' />
             </button>
           </div>
         </div>
