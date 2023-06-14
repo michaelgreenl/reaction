@@ -10,17 +10,53 @@
   margin: 1rem 3%;
 }
 
-
 .canvas .end-screen {
+  flex: 0.5;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
+  justify-content: space-between;
+  height: 55%;
   width: 100%;
 }
 
-.canvas .end-screen .score {
+.canvas .end-screen-center {
+  justify-content: center;
+  height: 95%;
+}
+
+.canvas .all-scores {
+  height: 60%;
+  width: 14rem;
+  overflow: hidden;
+  overflow-y: auto;
+  margin: 2em 5em;
+}
+
+.canvas .scores-header {
+  font-weight: 600;
+  font-style: italic;
+  margin: 0;
+}
+
+.canvas .scores {
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 0.25em 0;
+  padding: 0;
+  list-style: none;
+}
+
+.canvas .score {
+  margin: 0.25em 1em;
+}
+
+.canvas .end-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+
+.canvas .end-stats .end-score {
   font-size: 3.5em; 
   margin-bottom: 0.75em;
 } 

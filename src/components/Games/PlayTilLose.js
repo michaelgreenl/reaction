@@ -87,11 +87,25 @@ export const PlayTilLose = (props) => {
           ))}
         </>
       ) : (
-        <div className='end-screen'>
-          <span className='score'>{user.scores[user.scores.length - 1]}</span>
-          <div className='end-buttons'>
-            <Button className='end-button' text='Settings' onClick={() => props.showSettings()} />
-            <Button className='end-button' text='Play Again' onClick={() => setGameActive(true)} />
+        <div className={`end-screen ${user.scores.length === 1 ? 'end-screen-center' : undefined}`}>
+          {user.scores.length > 1 && (
+            <div className='all-scores'>
+              <h2 className='scores-header'>Scores</h2>
+              <ul className='scores'>
+                {user.scores.map((score, i) => (
+                  <li key={i} className='score'>
+                    {score}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className='end-stats'>
+            <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
+            <div className='end-buttons'>
+              <Button className='end-button' text='Settings' onClick={() => props.showSettings()} />
+              <Button className='end-button' text='Play Again' onClick={() => setGameActive(true)} />
+            </div>
           </div>
         </div>
       )}
