@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import './Play.css';
 import { UserContext } from '../../hooks/UserContext';
 import { Navbar } from '../../components/Navbar/Navbar';
 import { Button } from '../../components/Button/Button';
 import { GameSettings } from '../../components/GameSettings/GameSettings';
-import { Circle } from '../../components/Circle/Circle';
 import { PlayTilLose } from '../../components/Games/PlayTilLose';
 
 function Play() {
@@ -12,6 +11,7 @@ function Play() {
   const [gameActive, setGameActive] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showEndScreen, setShowEndScreen] = useState(false);
+  const gameSettingsRef = useRef(null);
 
   function setActiveGame() {
     setGameActive(false);
@@ -49,19 +49,13 @@ function Play() {
           )}
           {!showEndScreen ? (
             <>
-              <div className='settings'>
-                {showSettings && (
-                  <div className='settings-item'>
-                    <GameSettings />
-                  </div>
-                )}
-                <div className='settings-item' style={{ paddingLeft: '5%' }}>
-                  <Circle styles={{ position: 'relative' }} />
-                </div>
-              </div>
+              <GameSettings ref={gameSettingsRef} showSettings={showSettings} setShowSettings={setShowSettings} />
               <div className='play-buttons'>
                 {showSettings ? (
-                  <Button className='play-button' text='Save' onClick={() => setShowSettings(!showSettings)} />
+                  <>
+                    <Button className='play-button' text='Reset' onClick={() => gameSettingsRef.current.reset()} />
+                    <Button className='play-button' text='Save' onClick={() => gameSettingsRef.current.save()} />
+                  </>
                 ) : (
                   <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
                 )}

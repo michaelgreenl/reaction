@@ -52,25 +52,6 @@
   margin: 0.25em 1em;
 }
 
-.play .settings {
-  height: 15rem;
-  width: 60rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  margin-bottom: 5rem;
-}
-
-.play .settings-item {
-  position: relative;
-  height: 100%;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .play .play-buttons {
   display: flex;
   gap: 10%;

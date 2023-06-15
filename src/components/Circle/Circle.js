@@ -11,8 +11,8 @@ export const Circle = (props) => {
 
   const circleStyle = {
     ...props.styles,
-    width: `${gameSettings.circleSize}px`,
-    backgroundColor: gameSettings.circleColor,
+    width: `${!props.localSettings ? gameSettings.circleSize : props.localSettings.circleSize}px`,
+    backgroundColor: !props.localSettings ? gameSettings.circleColor : props.localSettings.circleColor,
   };
 
   return (
@@ -20,7 +20,7 @@ export const Circle = (props) => {
       className='circle-cont'
       style={{
         ...circleStyle,
-        height: `${gameSettings.circleSize}px`,
+        height: `${!props.localSettings ? gameSettings.circleSize : props.localSettings.circleSize}px`,
       }}
     >
       <button
@@ -43,4 +43,5 @@ Circle.propTypes = {
   position: PropTypes.object,
   useTransition: PropTypes.bool,
   animationEnd: PropTypes.func,
+  localSettings: PropTypes.object,
 };
