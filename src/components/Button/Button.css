@@ -1,4 +1,5 @@
 .button {
+  position: relative;
   cursor: pointer;
   border: 0;
   padding: 0.25em 1em;
@@ -8,4 +9,8 @@
 .button .button-text {
   white-space: nowrap;
   letter-spacing: 0.05em;
+}
+
+.button:disabled {
+  background: #c2c2c2 !important;
 }

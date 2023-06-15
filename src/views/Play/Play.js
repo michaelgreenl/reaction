@@ -11,6 +11,8 @@ function Play() {
   const [gameActive, setGameActive] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
   const [showEndScreen, setShowEndScreen] = useState(false);
+  const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
+  const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
   const gameSettingsRef = useRef(null);
 
   function setActiveGame() {
@@ -49,12 +51,28 @@ function Play() {
           )}
           {!showEndScreen ? (
             <>
-              <GameSettings ref={gameSettingsRef} showSettings={showSettings} setShowSettings={setShowSettings} />
+              <GameSettings
+                ref={gameSettingsRef}
+                showSettings={showSettings}
+                setShowSettings={setShowSettings}
+                setResetBtnDisabled={setResetBtnDisabled}
+                setSaveBtnDisabled={setSaveBtnDisabled}
+              />
               <div className='play-buttons'>
                 {showSettings ? (
                   <>
-                    <Button className='play-button' text='Reset' onClick={() => gameSettingsRef.current.reset()} />
-                    <Button className='play-button' text='Save' onClick={() => gameSettingsRef.current.save()} />
+                    <Button
+                      className='play-button'
+                      text='Reset'
+                      onClick={() => gameSettingsRef.current.reset()}
+                      disabled={resetBtnDisabled}
+                    />
+                    <Button
+                      className='play-button'
+                      text='Save'
+                      onClick={() => gameSettingsRef.current.save()}
+                      disabled={saveBtnDisabled}
+                    />
                   </>
                 ) : (
                   <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />

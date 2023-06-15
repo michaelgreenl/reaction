@@ -12,6 +12,8 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
   const [localSettings, setLocalSettings] = useState(gameSettings);
 
   function handleChange(name, value) {
+    props.setResetBtnDisabled(false);
+    props.setSaveBtnDisabled(false);
     setLocalSettings({
       ...localSettings,
       [name]: value,
@@ -19,6 +21,8 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
   }
 
   function saveSettings() {
+    props.setResetBtnDisabled(true);
+    props.setSaveBtnDisabled(true);
     setUser({
       ...user,
       gameSettings: {
@@ -28,6 +32,8 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
   }
 
   function resetSettings() {
+    props.setResetBtnDisabled(true);
+    props.setSaveBtnDisabled(true);
     setLocalSettings({
       ...gameSettings,
     });
@@ -147,4 +153,6 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
 GameSettings.propTypes = {
   showSettings: PropTypes.bool,
   setShowSettings: PropTypes.func,
+  setResetBtnDisabled: PropTypes.func,
+  setSaveBtnDisabled: PropTypes.func,
 };
