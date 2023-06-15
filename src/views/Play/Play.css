@@ -20,6 +20,38 @@
   transition: all 50ms ease-in;
 }
 
+.play .all-scores {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  height: 29%;
+  width: 14rem;
+  overflow: hidden;
+  margin: 2em 5em;
+}
+
+.play .scores-header {
+  font-weight: 600;
+  font-style: italic;
+  margin: 0;
+}
+
+.play .scores {
+  flex: 1;
+  overflow: hidden;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 0.25em 0;
+  padding: 0;
+  list-style: none;
+}
+
+.play .score {
+  font-size: 1.4em;
+  margin: 0.25em 1em;
+}
+
 .play .settings {
   height: 15rem;
   width: 60rem;
@@ -39,13 +71,24 @@
   justify-content: center;
 }
 
-.play .start-buttons {
+.play .play-buttons {
   display: flex;
   gap: 10%;
 }
 
-.play .start-button {
+.play .play-button {
   font-size: 1.2em;
   color: var(--secondary-black);
   background-color: var(--primary-white);
+}
+
+.play .end-stats {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play .end-stats .end-score {
+  font-size: 3.5em;
+  margin-bottom: 0.75em;
 }

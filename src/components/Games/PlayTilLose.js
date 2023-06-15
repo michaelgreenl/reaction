@@ -5,14 +5,12 @@ import { UserContext } from '../../hooks/UserContext';
 import { useTimer } from '../../hooks/useTimer';
 import { random } from 'lodash';
 import { Circle } from '../Circle/Circle';
-import { Button } from '../Button/Button';
 
 export const PlayTilLose = (props) => {
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
   const [genTime, setGenTime] = useState(0);
   const [circleCount, setCircleCount] = useState(0);
-  const [gameActive, setGameActive] = useState(true);
   const { user, setUser } = useContext(UserContext);
   const { gameSettings } = user;
 
@@ -25,13 +23,11 @@ export const PlayTilLose = (props) => {
   const { timer, resetTimer } = useTimer(genTime, 0.01);
 
   useEffect(() => {
-    if (timer && gameActive) {
+    if (timer) {
       resetTimer();
       generateCircle();
-    } else if (!gameActive) {
-      resetTimer();
     }
-  }, [timer, gameActive]);
+  }, [timer]);
 
   function generateCircle() {
     const position = {
@@ -61,8 +57,8 @@ export const PlayTilLose = (props) => {
     setCircles(circles.filter((circle) => circle.key !== key));
   }
 
-  function gameLostListener(toSet) {
-    setGameActive(toSet);
+  function gameLostListener() {
+    props.setActiveGame();
     setCircles([]);
     setUser({
       ...user,
@@ -73,46 +69,20 @@ export const PlayTilLose = (props) => {
 
   return (
     <div className='canvas'>
-      {gameActive ? (
-        <>
-          <span className='score'>{currScore}</span>
-          {circles.map((circle) => (
-            <Circle
-              key={circle.key}
-              onClick={() => circleClick(circle.key)}
-              styles={circle.styles}
-              useTransition={true}
-              animationEnd={gameLostListener}
-            />
-          ))}
-        </>
-      ) : (
-        <div className={`end-screen ${user.scores.length === 1 ? 'end-screen-center' : undefined}`}>
-          {user.scores.length > 1 && (
-            <div className='all-scores'>
-              <h2 className='scores-header'>Scores</h2>
-              <ul className='scores'>
-                {user.scores.map((score, i) => (
-                  <li key={i} className='score'>
-                    {score}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-          <div className='end-stats'>
-            <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
-            <div className='end-buttons'>
-              <Button className='end-button' text='Settings' onClick={() => props.showSettings()} />
-              <Button className='end-button' text='Play Again' onClick={() => setGameActive(true)} />
-            </div>
-          </div>
-        </div>
-      )}
+      <span className='score'>{currScore}</span>
+      {circles.map((circle) => (
+        <Circle
+          key={circle.key}
+          onClick={() => circleClick(circle.key)}
+          styles={circle.styles}
+          useTransition={true}
+          animationEnd={gameLostListener}
+        />
+      ))}
     </div>
   );
 };
 
 PlayTilLose.propTypes = {
-  showSettings: PropTypes.func,
+  setActiveGame: PropTypes.func,
 };
