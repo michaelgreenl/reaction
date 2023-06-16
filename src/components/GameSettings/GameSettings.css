@@ -28,13 +28,40 @@
   box-sizing: border-box;
 }
 
+.game-settings .settings-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.game-settings .close-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5em;
+  background: transparent;
+  padding: 0.75em;
+  border: 0;
+  border-radius: 100%;
+  margin: -0.75em -1em 0 0;
+}
+
+.game-settings .close-button:hover {
+  background: rgba(214, 74, 128, 0.1);
+}
+
+.game-settings .header-close-svg {
+  width: 1em;
+  fill: var(--bright-pink);
+}
+
 .game-settings .header-text {
   font-weight: 400;
   margin: 0;
 }
 
 .game-settings .break {
-  margin: 0.2em 0px 0.6em;
+  margin: 0.4em 0px 0.6em;
   width: 100%;
   border: #636363 solid 1px;
 }

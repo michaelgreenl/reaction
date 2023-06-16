@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { Circle } from '../../components/Circle/Circle';
 import { PolygonSvg } from '../../svgs/PolygonSvg';
+import { CloseSvg } from '../../svgs/CloseSvg';
 import './GameSettings.css';
 
 export const GameSettings = forwardRef(function GameSettings(props, ref) {
@@ -58,8 +59,11 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
           <div className='settings'>
             <header className='settings-header'>
               <h3 className='header-text'>Settings</h3>
-              <hr className='break' />
+              <button className='close-button' onClick={() => props.setShowSettings(false)}>
+                <CloseSvg className='header-close-svg' />
+              </button>
             </header>
+            <hr className='break' />
             <div className='input-cont'>
               <label htmlFor='shrinkTime'>Circle Shrink Time</label>
               <div className='number'>
