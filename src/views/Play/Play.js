@@ -64,13 +64,13 @@ function Play() {
                     <Button
                       className='play-button'
                       text='Reset'
-                      onClick={() => gameSettingsRef.current.reset()}
+                      onClick={() => gameSettingsRef.current.resetSettings()}
                       disabled={resetBtnDisabled}
                     />
                     <Button
                       className='play-button'
                       text='Save'
-                      onClick={() => gameSettingsRef.current.save()}
+                      onClick={() => gameSettingsRef.current.checkWarning()}
                       disabled={saveBtnDisabled}
                     />
                   </>

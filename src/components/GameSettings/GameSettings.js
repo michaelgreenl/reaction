@@ -1,35 +1,71 @@
-import React, { useState, useContext, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, useContext, forwardRef, useImperativeHandle, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { Circle } from '../../components/Circle/Circle';
 import { PolygonSvg } from '../../svgs/PolygonSvg';
 import { CloseSvg } from '../../svgs/CloseSvg';
 import './GameSettings.css';
+import { Modal } from '../Modal/Modal';
 
 export const GameSettings = forwardRef(function GameSettings(props, ref) {
   const _ = require('lodash');
   const { user, setUser } = useContext(UserContext);
   const { gameSettings } = user;
   const [localSettings, setLocalSettings] = useState(gameSettings);
+  const causesResetSettings = ['shrinkTime', 'difficulty', 'circleSize'];
+  const [enableScoreReset, setEnableScoreReset] = useState(false);
+  const [warningEnabled, setWarningEnabled] = useState(false);
 
   function handleChange(name, value) {
-    props.setResetBtnDisabled(false);
-    props.setSaveBtnDisabled(false);
     setLocalSettings({
       ...localSettings,
       [name]: value,
     });
   }
 
+  useEffect(() => {
+    if (!_.isEqual(localSettings, gameSettings)) {
+      checkScoreReset();
+      props.setResetBtnDisabled(false);
+      props.setSaveBtnDisabled(false);
+    } else {
+      setEnableScoreReset(false);
+      props.setResetBtnDisabled(true);
+      props.setSaveBtnDisabled(true);
+    }
+  }, [localSettings]);
+
+  function checkScoreReset() {
+    let toSet = false;
+    for (const setting of causesResetSettings) {
+      if (localSettings[setting] !== gameSettings[setting]) {
+        toSet = true;
+      }
+    }
+    setEnableScoreReset(toSet);
+  }
+
+  function checkWarning() {
+    if (enableScoreReset && !user.optOuts.saveGameSettingsWarning) {
+      setWarningEnabled(true);
+    } else {
+      saveSettings();
+    }
+  }
+
   function saveSettings() {
-    props.setResetBtnDisabled(true);
-    props.setSaveBtnDisabled(true);
     setUser({
       ...user,
       gameSettings: {
         ...localSettings,
       },
+      scores: enableScoreReset ? [] : user.scores,
     });
+
+    props.setResetBtnDisabled(true);
+    props.setSaveBtnDisabled(true);
+    setEnableScoreReset(false);
+    setWarningEnabled(false);
   }
 
   function resetSettings() {
@@ -42,18 +78,23 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
 
   useImperativeHandle(ref, () => {
     return {
-      save() {
-        saveSettings();
-      },
-      reset() {
-        resetSettings();
-      },
-      localSettings,
+      saveSettings,
+      resetSettings,
+      checkWarning,
     };
   });
 
   return (
     <div className='game-settings'>
+      {warningEnabled && (
+        <Modal
+          header='Warning'
+          message='warning message'
+          optOutOption='saveGameSettingsWarning'
+          onCancelClick={() => setWarningEnabled(false)}
+          onOkClick={() => saveSettings()}
+        />
+      )}
       {props.showSettings && (
         <div className='settings-item'>
           <div className='settings'>

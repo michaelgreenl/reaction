@@ -15,6 +15,9 @@ function App() {
       circleSize: 100,
     },
     scores: [],
+    optOuts: {
+      saveGameSettingsWarning: false,
+    },
   });
 
   const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);

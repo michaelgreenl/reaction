@@ -1,26 +1,54 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Modal.css';
+import { Button } from '../Button/Button';
+import { UserContext } from '../../hooks/UserContext';
 
-function Modal(props) {
-  // TODO: Make input go to setting value for user
+export const Modal = (props) => {
+  const { user, setUser } = useContext(UserContext);
+  const [optedOut, setOptedOut] = useState(false);
+
+  function onOkClick() {
+    props.onOkClick();
+    if (optedOut) {
+      setUser({
+        ...user,
+        optOuts: {
+          ...user.optOuts,
+          [props.optOutOption]: true,
+        },
+      });
+    }
+  }
+
   return (
     <div className='modal'>
       <h3 className='header'>{props.header}</h3>
       <p>{props.message}</p>
-      <footer className='footer'>
-        <input type='radio'>{props.canCancel ? "Don't ask this again" : "Don't show this message again"}</input>
-        {props.canCancel ? <button className='modal-button'>Cancel</button> : undefined}
-        <button className='modal-button'>Ok</button>
-      </footer>
+      <div className='option-buttons'>
+        {props.onCancelClick && <Button text='Cancel' onClick={() => props.onCancelClick()} />}
+        <Button text='Ok' onClick={() => onOkClick()} />
+      </div>
+      {props.optOutOption && (
+        <footer className='footer'>
+          <input
+            type='checkbox'
+            name='optOut'
+            value={optedOut}
+            checked={optedOut}
+            onChange={() => setOptedOut(!optedOut)}
+          />
+          <label htmlFor='optOut'>Don&lsquo;t show this message again</label>
+        </footer>
+      )}
     </div>
   );
-}
+};
 
 Modal.propTypes = {
   header: PropTypes.string,
   message: PropTypes.string,
-  canCancel: PropTypes.bool,
+  optOutOption: PropTypes.string,
+  onCancelClick: PropTypes.func,
+  onOkClick: PropTypes.func,
 };
-
-export default Modal;
