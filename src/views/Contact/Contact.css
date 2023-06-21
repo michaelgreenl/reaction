@@ -3,8 +3,8 @@
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  color: white;
-  background: linear-gradient(110deg, #e73c7e, #23a6d5);
+  color: var(--primary-white);
+  background: var(--pink2blue-lingrand);
   background-size: 200% 200%;
   animation: gradientBackground 20s ease infinite;
   letter-spacing: 0.03ch;
@@ -82,7 +82,7 @@
 
 .contact .input-field {
   height: 2.5em;
-  color: #444444;
+  color: var(--secondary-black);
 }
 
 .contact .input-text-area {

@@ -42,7 +42,7 @@
 .navbar .nav-link,
 .navbar .nav-link:visited {
   cursor: pointer;
-  color: white;
+  color: var(--primary-white);
   text-decoration: none;
 }
 
@@ -62,7 +62,7 @@
   right: 150%;
   bottom: -4px;
   left: -4px;
-  border-bottom: solid 2px white;
+  border-bottom: solid 2px var(--primary-white);
   transition: right 150ms ease-out;
 }
 

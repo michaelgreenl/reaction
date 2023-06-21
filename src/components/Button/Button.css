@@ -12,5 +12,6 @@
 }
 
 .button:disabled {
-  background: #c2c2c2 !important;
+  color: var(--secondary-white) !important;
+  background: var(--lighter-grey) !important; 
 }

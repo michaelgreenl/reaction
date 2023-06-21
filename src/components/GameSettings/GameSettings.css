@@ -148,7 +148,7 @@
   content: '';
   width: 0.66em;
   height: 0.66em;
-  background-color: #d64a80;
+  background-color: var(--bright-pink);
   border-radius: 2px;
   margin: 0;
   opacity: 0;
@@ -163,7 +163,7 @@
   height: 0.5em;
   width: 40%;
   margin: 0.5em 0;
-  background: #cecece;
+  background: var(--lighter-grey);
   border-radius: 10px;
 }
 
@@ -172,7 +172,7 @@
   cursor: grab;
   height: 1em;
   width: 1em;
-  background: #e73c7e;
+  background: var(--bright-pink);
   border-radius: 50%;
 }
 
@@ -188,7 +188,7 @@
   width: 1.2em;
   height: 1.2em;
   margin: 0;
-  border: #a7a7a7 solid 2px;
+  border: var(--grey) solid 2px;
   border-radius: 4px;
 }
 
@@ -196,7 +196,7 @@
   content: '';
   width: 0.66em;
   height: 0.66em;
-  background-color: #d64a80; 
+  background-color: var(--bright-pink); 
   border-radius: 2px;
   margin: 0;
   opacity: 0;
