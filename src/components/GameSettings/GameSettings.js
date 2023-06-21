@@ -89,7 +89,7 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
       {warningEnabled && (
         <Modal
           header='Warning'
-          message='warning message'
+          message='Saving these settings will reset your previous scores, since the difficulty will change.'
           optOutOption='saveGameSettingsWarning'
           onCancelClick={() => setWarningEnabled(false)}
           onOkClick={() => saveSettings()}
