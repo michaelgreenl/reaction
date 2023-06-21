@@ -1,0 +1,95 @@
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 100;
+}
+
+.modal .modal-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  width: 50rem;
+  border-radius: 5px;
+  padding: 1.5em;
+  background: var(--primary-white);
+}
+
+.modal .modal-header {
+  display: flex;
+  padding-left: 0.5em;
+  gap: 0em;
+}
+
+.modal .modal-logo-svg {
+  width: 2.25em;
+}
+
+.modal .modal-header-text {
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 0;
+  color: var(--bright-pink);
+}
+
+.modal .modal-message {
+  color: var(--primary-black);
+  margin: 0;
+  padding: 0.25em 1em;
+}
+
+.modal .modal-break {
+  width: 100%;
+  margin: 0;
+  border: var(--light-blue) solid 1px;
+}
+
+.modal .option-buttons {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 0.5em;
+  padding-right: 0.5em;
+  gap: 0.75em;
+}
+
+.modal .option-button {
+  font-size: 1.1em;
+  color: white;
+}
+
+.modal .option-button:first-child {
+  background-color: var(--light-grey);
+}
+
+.modal .option-button:last-child {
+  background-color: var(--bright-pink);
+}
+
+.modal .footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0.5em 0.75em 0;
+  gap: 0.5em;
+  color: var(--secondary-black);
+}
+
+.modal .checkbox-input {
+  cursor: pointer;
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.2em;
+  height: 1.2em;
+  margin: 0;
+  border: var(--grey) solid 2px;
+  border-radius: 4px;
+}
