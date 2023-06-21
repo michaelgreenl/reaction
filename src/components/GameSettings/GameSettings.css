@@ -20,17 +20,28 @@
 .game-settings .settings {
   display: flex;
   flex-direction: column;
-  min-width: 40rem;
-  background-color: white;
-  color: #444444;
+  gap: 0.25em;
+  min-width: 50rem;
+  background-color: var(--primary-white);
+  color: var(--secondary-black);
   border-radius: 5px;
-  padding: 1.5em;
+  padding: 1.25em 1.5em;
   box-sizing: border-box;
+  margin-right: 10%;
 }
 
 .game-settings .settings-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+}
+
+.game-settings .header-text {
+  font-style: oblique;
+  font-size: 1.8em;
+  font-weight: 600;
+  color: var(--bright-pink);
+  margin: 0 0.1em 0;
 }
 
 .game-settings .close-button {
@@ -38,12 +49,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2.5em;
   background: transparent;
   padding: 0.75em;
   border: 0;
   border-radius: 100%;
-  margin: -0.75em -1em 0 0;
 }
 
 .game-settings .close-button:hover {
@@ -55,15 +64,10 @@
   fill: var(--bright-pink);
 }
 
-.game-settings .header-text {
-  font-weight: 400;
-  margin: 0;
-}
-
 .game-settings .break {
-  margin: 0.4em 0px 0.6em;
+  margin: 0.15em 0 0;
   width: 100%;
-  border: #636363 solid 1px;
+  border: var(--light-blue) solid 1px;
 }
 
 .game-settings .input-cont {
@@ -72,7 +76,7 @@
   justify-content: space-between;
   width: 100%;
   margin: 0.25em 0;
-  padding-left: 0.25em;
+  padding: 0 0.5em;
 }
 
 .game-settings .number {
@@ -111,10 +115,10 @@
 }
 
 .game-settings .radio-options {
-  width: 70%;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  gap: 1em;
 }
 
 .game-settings .radio-option {
@@ -136,7 +140,7 @@
   width: 1.2em;
   height: 1.2em;
   margin: 0;
-  border: #a7a7a7 solid 2px;
+  border: var(--grey) solid 2px;
   border-radius: 4px;
 }
 
