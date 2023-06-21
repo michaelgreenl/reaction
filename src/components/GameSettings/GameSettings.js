@@ -188,7 +188,7 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
           </div>
         </div>
       )}
-      <div className='settings-item' style={{ paddingLeft: '5%' }}>
+      <div className='settings-item'>
         <Circle styles={{ position: 'relative' }} localSettings={localSettings} />
       </div>
     </div>

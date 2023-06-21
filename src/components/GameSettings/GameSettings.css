@@ -1,10 +1,9 @@
 .game-settings {
   height: 15rem;
-  width: 60rem;
+  width: 80rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
   margin-bottom: 5rem;
 }
 
@@ -17,6 +16,10 @@
   justify-content: center;
 }
 
+.game-settings .settings-item:last-child {
+  padding-left: 5%;
+}
+
 .game-settings .settings {
   display: flex;
   flex-direction: column;
@@ -27,7 +30,6 @@
   border-radius: 5px;
   padding: 1.25em 1.5em;
   box-sizing: border-box;
-  margin-right: 10%;
 }
 
 .game-settings .settings-header {
