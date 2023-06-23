@@ -15,6 +15,22 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
   const causesResetSettings = ['shrinkTime', 'difficulty', 'circleSize'];
   const [enableScoreReset, setEnableScoreReset] = useState(false);
   const [warningEnabled, setWarningEnabled] = useState(false);
+  const [currentWarning, setCurrentWarning] = useState(null);
+  const saveGameSettingsWarning = {
+    header: 'Warning',
+    message: 'Saving these settings will reset your previous scores, since the difficulty will change.',
+    optOutOption: 'saveGameSettingsWarning',
+    buttons: [
+      {
+        text: 'Cancel',
+        onClick: () => setWarningEnabled(false),
+      },
+      {
+        text: 'Ok',
+        onClick: () => saveSettings(),
+      },
+    ],
+  };
 
   function handleChange(name, value) {
     setLocalSettings({
@@ -46,7 +62,9 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
   }
 
   function checkWarning() {
+    // FIXME: Make it so this checks for ALL opt outs
     if (enableScoreReset && !user.optOuts.saveGameSettingsWarning) {
+      setCurrentWarning(saveGameSettingsWarning);
       setWarningEnabled(true);
     } else {
       saveSettings();
@@ -66,6 +84,7 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
     props.setSaveBtnDisabled(true);
     setEnableScoreReset(false);
     setWarningEnabled(false);
+    setCurrentWarning(null);
   }
 
   function resetSettings() {
@@ -88,11 +107,10 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
     <div className='game-settings'>
       {warningEnabled && (
         <Modal
-          header='Warning'
-          message='Saving these settings will reset your previous scores, since the difficulty will change.'
-          optOutOption='saveGameSettingsWarning'
-          onCancelClick={() => setWarningEnabled(false)}
-          onOkClick={() => saveSettings()}
+          header={currentWarning.header}
+          message={currentWarning.message}
+          optOutOption={currentWarning.optOutOption}
+          buttons={currentWarning.buttons}
         />
       )}
       {props.showSettings && (

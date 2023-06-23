@@ -10,7 +10,7 @@ export const Modal = (props) => {
   const [optedOut, setOptedOut] = useState(false);
 
   function onOkClick() {
-    props.onOkClick();
+    props.buttons[props.buttons.length - 1].onClick();
     if (optedOut) {
       setUser({
         ...user,
@@ -32,10 +32,14 @@ export const Modal = (props) => {
         <hr className='modal-break' />
         <p className='modal-message'>{props.message}</p>
         <div className='option-buttons'>
-          {props.onCancelClick && (
-            <Button className='option-button' text='Cancel' onClick={() => props.onCancelClick()} />
-          )}
-          <Button className='option-button' text='Ok' onClick={() => onOkClick()} />
+          {props.buttons.map((button, i) => (
+            <Button
+              className='option-button'
+              key={i}
+              text={button.text}
+              onClick={i < props.buttons.length - 1 ? () => button.onClick() : () => onOkClick()}
+            />
+          ))}
         </div>
         {props.optOutOption && (
           <footer className='footer'>
@@ -61,6 +65,7 @@ Modal.propTypes = {
   header: PropTypes.string,
   message: PropTypes.string,
   optOutOption: PropTypes.string,
-  onCancelClick: PropTypes.func,
-  onOkClick: PropTypes.func,
+  // onCancelClick: PropTypes.func,
+  // onOkClick: PropTypes.func,
+  buttons: PropTypes.array,
 };
