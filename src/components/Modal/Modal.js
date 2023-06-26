@@ -34,7 +34,7 @@ export const Modal = (props) => {
         <div className='option-buttons'>
           {props.buttons.map((button, i) => (
             <Button
-              className='option-button'
+              className={`option-button option-button-${button.className}`}
               key={i}
               text={button.text}
               onClick={i < props.buttons.length - 1 ? () => button.onClick() : () => onOkClick()}
@@ -65,7 +65,5 @@ Modal.propTypes = {
   header: PropTypes.string,
   message: PropTypes.string,
   optOutOption: PropTypes.string,
-  // onCancelClick: PropTypes.func,
-  // onOkClick: PropTypes.func,
   buttons: PropTypes.array,
 };

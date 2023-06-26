@@ -64,11 +64,11 @@
   color: white;
 }
 
-.modal .option-button:first-child {
+.modal .option-button-secondary {
   background-color: var(--light-grey);
 }
 
-.modal .option-button:last-child {
+.modal .option-button-primary {
   background-color: var(--bright-pink);
 }
 
