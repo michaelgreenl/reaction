@@ -23,10 +23,12 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
     buttons: [
       {
         text: 'Cancel',
+        className: 'secondary',
         onClick: () => setWarningEnabled(false),
       },
       {
         text: 'Ok',
+        className: 'primary',
         onClick: () => saveSettings(),
       },
     ],
@@ -42,23 +44,27 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
   useEffect(() => {
     if (!_.isEqual(localSettings, gameSettings)) {
       checkScoreReset();
+      props.setSettingsChanged(true);
       props.setResetBtnDisabled(false);
       props.setSaveBtnDisabled(false);
     } else {
       setEnableScoreReset(false);
+      props.setSettingsChanged(false);
       props.setResetBtnDisabled(true);
       props.setSaveBtnDisabled(true);
     }
   }, [localSettings]);
 
   function checkScoreReset() {
-    let toSet = false;
-    for (const setting of causesResetSettings) {
-      if (localSettings[setting] !== gameSettings[setting]) {
-        toSet = true;
+    if (user.scores.length) {
+      let toSet = false;
+      for (const setting of causesResetSettings) {
+        if (localSettings[setting] !== gameSettings[setting]) {
+          toSet = true;
+        }
       }
+      setEnableScoreReset(toSet);
     }
-    setEnableScoreReset(toSet);
   }
 
   function checkWarning() {
@@ -215,6 +221,7 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
 
 GameSettings.propTypes = {
   showSettings: PropTypes.bool,
+  setSettingsChanged: PropTypes.func,
   setShowSettings: PropTypes.func,
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,
