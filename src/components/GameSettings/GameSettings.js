@@ -34,26 +34,26 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
     ],
   };
 
+  useEffect(() => {
+    if (!_.isEqual(localSettings, gameSettings)) {
+      checkScoreReset();
+      props.settingsChanged.current = true;
+      props.setResetBtnDisabled(false);
+      props.setSaveBtnDisabled(false);
+    } else {
+      setEnableScoreReset(false);
+      props.settingsChanged.current = false;
+      props.setResetBtnDisabled(true);
+      props.setSaveBtnDisabled(true);
+    }
+  }, [localSettings]);
+
   function handleChange(name, value) {
     setLocalSettings({
       ...localSettings,
       [name]: value,
     });
   }
-
-  useEffect(() => {
-    if (!_.isEqual(localSettings, gameSettings)) {
-      checkScoreReset();
-      props.setSettingsChanged(true);
-      props.setResetBtnDisabled(false);
-      props.setSaveBtnDisabled(false);
-    } else {
-      setEnableScoreReset(false);
-      props.setSettingsChanged(false);
-      props.setResetBtnDisabled(true);
-      props.setSaveBtnDisabled(true);
-    }
-  }, [localSettings]);
 
   function checkScoreReset() {
     if (user.scores.length) {
@@ -86,16 +86,14 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
       scores: enableScoreReset ? [] : user.scores,
     });
 
-    props.setResetBtnDisabled(true);
-    props.setSaveBtnDisabled(true);
+    props.settingsChanged.current = false;
     setEnableScoreReset(false);
     setWarningEnabled(false);
     setCurrentWarning(null);
   }
 
   function resetSettings() {
-    props.setResetBtnDisabled(true);
-    props.setSaveBtnDisabled(true);
+    props.settingsChanged.current = false;
     setLocalSettings({
       ...gameSettings,
     });
@@ -221,7 +219,7 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
 
 GameSettings.propTypes = {
   showSettings: PropTypes.bool,
-  setSettingsChanged: PropTypes.func,
+  settingsChanged: PropTypes.object,
   setShowSettings: PropTypes.func,
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,

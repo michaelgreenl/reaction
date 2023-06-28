@@ -15,7 +15,7 @@ function Play() {
   const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
   const gameSettingsRef = useRef(null);
-  const [settingsChanged, setSettingsChanged] = useState(false);
+  const settingsChanged = useRef(false);
   const [warningEnabled, setWarningEnabled] = useState(false);
   const [currentWarning, setCurrentWarning] = useState(null);
   const startGameSettingsWarning = {
@@ -110,7 +110,7 @@ function Play() {
               <GameSettings
                 ref={gameSettingsRef}
                 showSettings={showSettings}
-                setSettingsChanged={setSettingsChanged}
+                settingsChanged={settingsChanged}
                 setShowSettings={setShowSettings}
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
