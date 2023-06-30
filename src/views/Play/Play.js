@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useMemo } from 'react';
 import './Play.css';
 import { UserContext } from '../../hooks/UserContext';
 import { Navbar } from '../../components/Navbar/Navbar';
@@ -18,44 +18,45 @@ function Play() {
   const settingsChanged = useRef(false);
   const [warningEnabled, setWarningEnabled] = useState(false);
   const [currentWarning, setCurrentWarning] = useState(null);
-  const startGameSettingsWarning = {
-    header: 'Before Starting',
-    message: "You haven't saved your new settings yet. Would you like to start the game with the updated settings?",
-    optOutOption: null,
-    buttons: [
-      {
-        text: 'Go Back',
-        className: 'secondary',
-        onClick: () => {
-          setWarningEnabled(false);
-          setCurrentWarning(null);
+  const startGameSettingsWarning = useMemo(() => {
+    return {
+      header: 'Before Starting',
+      message: "You haven't saved your new settings yet. Would you like to start the game with the updated settings?",
+      optOutOption: null,
+      buttons: [
+        {
+          text: 'Go Back',
+          className: 'secondary',
+          onClick: () => {
+            setWarningEnabled(false);
+            setCurrentWarning(null);
+          },
         },
-      },
-      {
-        text: 'No',
-        className: 'primary',
-        onClick: () => {
-          gameSettingsRef.current.resetSettings();
-          setWarningEnabled(false);
-          setGameActive(true);
-          setCurrentWarning(null);
+        {
+          text: 'No',
+          className: 'primary',
+          onClick: () => {
+            gameSettingsRef.current.resetSettings();
+            setWarningEnabled(false);
+            setGameActive(true);
+            setCurrentWarning(null);
+          },
         },
-      },
-      {
-        text: 'Yes',
-        className: 'primary',
-        onClick: () => {
-          gameSettingsRef.current.checkWarning();
-          setWarningEnabled(false);
-          setCurrentWarning(null);
-          // FIXME: the game needs to start after this since checkWarning() doesn't do that
+        {
+          text: 'Yes',
+          className: 'primary',
+          onClick: () => {
+            gameSettingsRef.current.saveSettings(true);
+            setWarningEnabled(false);
+            setCurrentWarning(null);
+          },
         },
-      },
-    ],
-  };
+      ],
+    };
+  });
 
-  function startGame() {
-    if (settingsChanged) {
+  function checkStartSettings() {
+    if (settingsChanged.current) {
       setCurrentWarning(startGameSettingsWarning);
       setWarningEnabled(true);
     } else {
@@ -114,6 +115,7 @@ function Play() {
                 setShowSettings={setShowSettings}
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
+                setGameActive={setGameActive}
               />
               <div className='play-buttons'>
                 {showSettings ? (
@@ -127,14 +129,14 @@ function Play() {
                     <Button
                       className='play-button'
                       text='Save'
-                      onClick={() => gameSettingsRef.current.checkWarning()}
+                      onClick={() => gameSettingsRef.current.saveSettings()}
                       disabled={saveBtnDisabled}
                     />
                   </>
                 ) : (
                   <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
                 )}
-                <Button className='play-button' text='Start' onClick={() => startGame()} />
+                <Button className='play-button' text='Start' onClick={() => checkStartSettings()} />
               </div>
             </>
           ) : (
