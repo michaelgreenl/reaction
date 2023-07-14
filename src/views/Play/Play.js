@@ -1,11 +1,12 @@
-import React, { useState, useContext, useRef, useMemo } from 'react';
+import React, { useState, useContext, useRef, useCallback, useReducer } from 'react';
 import './Play.css';
 import { UserContext } from '../../hooks/UserContext';
-import { Navbar } from '../../components/Navbar/Navbar';
+import { warningReducer } from '../../hooks/warningReducer';
+import Navbar from '../../components/Navbar/Navbar';
 import { Button } from '../../components/Button/Button';
-import { GameSettings } from '../../components/GameSettings/GameSettings';
+import GameSettings from '../../components/GameSettings/GameSettings';
 import { PlayTilLose } from '../../components/Games/PlayTilLose';
-import { Modal } from '../../components/Modal/Modal';
+import Modal from '../../components/Modal/Modal';
 
 function Play() {
   const { user } = useContext(UserContext);
@@ -16,68 +17,62 @@ function Play() {
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
   const gameSettingsRef = useRef(null);
   const settingsChanged = useRef(false);
-  const [warningEnabled, setWarningEnabled] = useState(false);
-  const [currentWarning, setCurrentWarning] = useState(null);
-  const startGameSettingsWarning = useMemo(() => {
-    return {
-      header: 'Before Starting',
-      message: "You haven't saved your new settings yet. Would you like to start the game with the updated settings?",
-      optOutOption: null,
-      buttons: [
-        {
-          text: 'Go Back',
-          className: 'secondary',
-          onClick: () => {
-            setWarningEnabled(false);
-            setCurrentWarning(null);
-          },
-        },
-        {
-          text: 'No',
-          className: 'primary',
-          onClick: () => {
-            gameSettingsRef.current.resetSettings();
-            setWarningEnabled(false);
-            setGameActive(true);
-            setCurrentWarning(null);
-          },
-        },
-        {
-          text: 'Yes',
-          className: 'primary',
-          onClick: () => {
-            gameSettingsRef.current.saveSettings(true);
-            setWarningEnabled(false);
-            setCurrentWarning(null);
-          },
-        },
-      ],
-    };
-  });
+  const [warning, dispatchWarning] = useReducer(warningReducer, {});
+  const [currWarning, setCurrWarning] = useState(null);
 
-  function checkStartSettings() {
+  const checkStartSettings = () => {
     if (settingsChanged.current) {
-      setCurrentWarning(startGameSettingsWarning);
-      setWarningEnabled(true);
+      dispatchWarning({
+        type: 'startGameSettingsWarning',
+        onClick1: () => warnStartGSonClick1(),
+        onClick2: () => warnStartGSonClick2(),
+        onClick3: () => warnStartGSonClick3(),
+      });
+      setCurrWarning('startGameSettingsWarning');
     } else {
       setGameActive(true);
     }
-  }
+  };
 
-  function setActiveGame() {
+  const warnStartGSonClick1 = useCallback(() => {
+    setCurrWarning(null);
+  });
+
+  const warnStartGSonClick2 = useCallback(() => {
+    gameSettingsRef.current.resetSettings();
+    setCurrWarning(null);
+    setGameActive(true);
+  });
+
+  const warnStartGSonClick3 = useCallback(() => {
+    gameSettingsRef.current.saveSettings(true);
+    if (currWarning === 'startGameSettingsWarning') {
+      setCurrWarning(null);
+    }
+  });
+
+  const endGame = () => {
     setGameActive(false);
     setShowEndScreen(true);
     setShowSettings(false);
-  }
+  };
 
-  function endSetActiveSettings() {
+  const endSetActiveSettings = () => {
     setShowEndScreen(false);
     setShowSettings(true);
-  }
+  };
 
   return (
     <div className='play'>
       <Navbar />
+      {currWarning && (
+        <Modal
+          header={warning[`${currWarning}`].header}
+          message={warning[`${currWarning}`].message}
+          optOutOption={warning[`${currWarning}`].optOutOption}
+          buttons={warning[`${currWarning}`].buttons}
+        />
+      )}
       {!gameActive ? (
         <main
           className='main'
@@ -100,14 +95,6 @@ function Play() {
           )}
           {!showEndScreen ? (
             <>
-              {warningEnabled && (
-                <Modal
-                  header={currentWarning.header}
-                  message={currentWarning.message}
-                  optOutOption={currentWarning.optOutOption}
-                  buttons={currentWarning.buttons}
-                />
-              )}
               <GameSettings
                 ref={gameSettingsRef}
                 showSettings={showSettings}
@@ -116,6 +103,8 @@ function Play() {
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
                 setGameActive={setGameActive}
+                setCurrWarning={setCurrWarning}
+                dispatchWarning={dispatchWarning}
               />
               <div className='play-buttons'>
                 {showSettings ? (
@@ -150,7 +139,7 @@ function Play() {
           )}
         </main>
       ) : (
-        <PlayTilLose setActiveGame={setActiveGame} />
+        <PlayTilLose endGame={endGame} />
       )}
     </div>
   );

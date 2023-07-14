@@ -1,41 +1,29 @@
-import React, { useState, useRef, useContext, forwardRef, useImperativeHandle, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  useRef,
+  useContext,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useCallback,
+  memo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { Circle } from '../../components/Circle/Circle';
 import { PolygonSvg } from '../../svgs/PolygonSvg';
 import { CloseSvg } from '../../svgs/CloseSvg';
 import './GameSettings.css';
-import { Modal } from '../Modal/Modal';
 
-export const GameSettings = forwardRef(function GameSettings(props, ref) {
+const GameSettings = forwardRef(function GameSettings(props, ref) {
+  // console.log('rendered');
   const _ = require('lodash');
   const { user, setUser } = useContext(UserContext);
   const { gameSettings } = user;
   const [localSettings, setLocalSettings] = useState(gameSettings);
   const causesResetSettings = ['shrinkTime', 'difficulty', 'circleSize'];
   const [enableScoreReset, setEnableScoreReset] = useState(false);
-  const [warningEnabled, setWarningEnabled] = useState(false);
-  const [currentWarning, setCurrentWarning] = useState(null);
   const saveAndStart = useRef(false);
-  const saveGameSettingsWarning = {
-    header: 'Warning',
-    message: 'Saving these settings will reset your previous scores, since the difficulty will change.',
-    optOutOption: 'saveGameSettingsWarning',
-    buttons: [
-      {
-        text: 'Cancel',
-        className: 'secondary',
-        onClick: () => setWarningEnabled(false),
-      },
-      {
-        text: 'Ok',
-        className: 'primary',
-        onClick: () => {
-          saveSettings(saveAndStart.current, true);
-        },
-      },
-    ],
-  };
 
   useEffect(() => {
     if (!_.isEqual(localSettings, gameSettings)) {
@@ -78,8 +66,12 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
     }
 
     if (!forceSave && enableScoreReset && !user.optOuts.saveGameSettingsWarning) {
-      setCurrentWarning(saveGameSettingsWarning);
-      setWarningEnabled(true);
+      props.dispatchWarning({
+        type: 'saveGameSettingsWarning',
+        onClick1: () => warnSaveGSonClick1(),
+        onClick2: () => warnSaveGSonClick2(),
+      });
+      props.setCurrWarning('saveGameSettingsWarning');
     } else {
       setUser({
         ...user,
@@ -93,8 +85,7 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
       props.setSaveBtnDisabled(true);
       props.settingsChanged.current = false;
       setEnableScoreReset(false);
-      setWarningEnabled(false);
-      setCurrentWarning(null);
+      props.setCurrWarning(null);
 
       if (startGame) {
         props.setGameActive(true);
@@ -111,6 +102,14 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
     });
   });
 
+  const warnSaveGSonClick1 = useCallback(() => {
+    props.setCurrWarning(null);
+  });
+
+  const warnSaveGSonClick2 = useCallback(() => {
+    saveSettings(saveAndStart.current, true);
+  });
+
   useImperativeHandle(ref, () => {
     return {
       saveSettings,
@@ -120,14 +119,6 @@ export const GameSettings = forwardRef(function GameSettings(props, ref) {
 
   return (
     <div className='game-settings'>
-      {warningEnabled && (
-        <Modal
-          header={currentWarning.header}
-          message={currentWarning.message}
-          optOutOption={currentWarning.optOutOption}
-          buttons={currentWarning.buttons}
-        />
-      )}
       {props.showSettings && (
         <div className='settings-item'>
           <div className='settings'>
@@ -235,4 +226,8 @@ GameSettings.propTypes = {
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,
   setGameActive: PropTypes.func,
+  setCurrWarning: PropTypes.func,
+  dispatchWarning: PropTypes.func,
 };
+
+export default memo(GameSettings);
