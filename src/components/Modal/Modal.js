@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Modal.css';
 import { Button } from '../Button/Button';
 import { UserContext } from '../../hooks/UserContext';
 import { LogoSvg } from '../../svgs/LogoSvg';
 
-export const Modal = (props) => {
+const Modal = (props) => {
   const { user, setUser } = useContext(UserContext);
   const [optedOut, setOptedOut] = useState(false);
 
-  function onOkClick() {
-    props.buttons[props.buttons.length - 1].onClick();
+  function onClick(i) {
+    props.buttons[i].onClick();
     if (optedOut) {
       setUser({
         ...user,
@@ -37,7 +37,7 @@ export const Modal = (props) => {
               className={`option-button option-button-${button.className}`}
               key={i}
               text={button.text}
-              onClick={i < props.buttons.length - 1 ? () => button.onClick() : () => onOkClick()}
+              onClick={() => onClick(i)}
             />
           ))}
         </div>
@@ -67,3 +67,5 @@ Modal.propTypes = {
   optOutOption: PropTypes.string,
   buttons: PropTypes.array,
 };
+
+export default memo(Modal);
