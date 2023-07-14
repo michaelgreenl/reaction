@@ -71,6 +71,10 @@
   right: -4px;
 }
 
+.not-active-hovered .nav-link-active::after {
+  right: 150%;
+}
+
 @media screen and (max-width: 1024px) {
   .navbar .logo-cont {
     margin-right: 12.5%;
