@@ -93,3 +93,17 @@
   border: var(--grey) solid 2px;
   border-radius: 4px;
 }
+
+.modal .checkbox-input::before {
+  content: '';
+  width: 0.68em;
+  height: 0.68em;
+  background-color: var(--bright-pink);
+  border-radius: 2px;
+  margin: 0;
+  opacity: 0;
+}
+
+.modal .checkbox-input:checked::before {
+  opacity: 1;
+}
