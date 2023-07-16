@@ -45,10 +45,15 @@ function Play() {
   });
 
   const warnStartGSonClick3 = useCallback(() => {
-    gameSettingsRef.current.saveSettings(true);
-    if (currWarning === 'startGameSettingsWarning') {
-      setCurrWarning(null);
-    }
+    gameSettingsRef.current.saveSettings().then(
+      () => {
+        setCurrWarning(null);
+        setGameActive(true);
+      },
+      () => {
+        setCurrWarning(null);
+      },
+    );
   });
 
   const endGame = () => {
@@ -103,6 +108,7 @@ function Play() {
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
                 setGameActive={setGameActive}
+                currWarning={currWarning}
                 setCurrWarning={setCurrWarning}
                 dispatchWarning={dispatchWarning}
               />

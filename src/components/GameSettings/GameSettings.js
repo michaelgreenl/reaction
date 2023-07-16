@@ -1,13 +1,4 @@
-import React, {
-  useState,
-  useRef,
-  useContext,
-  forwardRef,
-  useImperativeHandle,
-  useEffect,
-  useCallback,
-  memo,
-} from 'react';
+import React, { useState, useContext, forwardRef, useImperativeHandle, useEffect, useCallback, memo } from 'react';
 import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { Circle } from '../../components/Circle/Circle';
@@ -23,7 +14,6 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
   const [localSettings, setLocalSettings] = useState(gameSettings);
   const causesResetSettings = ['shrinkTime', 'difficulty', 'circleSize'];
   const [enableScoreReset, setEnableScoreReset] = useState(false);
-  const saveAndStart = useRef(false);
 
   useEffect(() => {
     if (!_.isEqual(localSettings, gameSettings)) {
@@ -58,40 +48,38 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
     }
   });
 
-  const saveSettings = useCallback((startGame = false, forceSave = false) => {
-    if (saveAndStart.current) {
-      saveAndStart.current = false;
-    } else if (startGame) {
-      saveAndStart.current = true;
-    }
+  const saveSettings = useCallback(
+    (forceSave = false) =>
+      new Promise((res, rej) => {
+        if (!forceSave && enableScoreReset && !user.optOuts.saveGameSettingsWarning) {
+          props.dispatchWarning({
+            type: 'saveGameSettingsWarning',
+            onClick1: () => {
+              warnSaveGSonClick1();
+              rej();
+            },
+            onClick2: () => warnSaveGSonClick2(() => res()),
+          });
+          props.setCurrWarning('saveGameSettingsWarning');
+        } else {
+          setUser({
+            ...user,
+            gameSettings: {
+              ...localSettings,
+            },
+            scores: enableScoreReset ? [] : user.scores,
+          });
 
-    if (!forceSave && enableScoreReset && !user.optOuts.saveGameSettingsWarning) {
-      props.dispatchWarning({
-        type: 'saveGameSettingsWarning',
-        onClick1: () => warnSaveGSonClick1(),
-        onClick2: () => warnSaveGSonClick2(),
-      });
-      props.setCurrWarning('saveGameSettingsWarning');
-    } else {
-      setUser({
-        ...user,
-        gameSettings: {
-          ...localSettings,
-        },
-        scores: enableScoreReset ? [] : user.scores,
-      });
+          props.setResetBtnDisabled(true);
+          props.setSaveBtnDisabled(true);
+          props.settingsChanged.current = false;
+          setEnableScoreReset(false);
+          props.setCurrWarning(null);
 
-      props.setResetBtnDisabled(true);
-      props.setSaveBtnDisabled(true);
-      props.settingsChanged.current = false;
-      setEnableScoreReset(false);
-      props.setCurrWarning(null);
-
-      if (startGame) {
-        props.setGameActive(true);
-      }
-    }
-  });
+          res();
+        }
+      }),
+  );
 
   const resetSettings = useCallback(() => {
     props.settingsChanged.current = false;
@@ -106,8 +94,15 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
     props.setCurrWarning(null);
   });
 
-  const warnSaveGSonClick2 = useCallback(() => {
-    saveSettings(saveAndStart.current, true);
+  const warnSaveGSonClick2 = useCallback((res) => {
+    saveSettings(true).then(
+      () => {
+        res();
+      },
+      () => {
+        props.setCurrWarning(null);
+      },
+    );
   });
 
   useImperativeHandle(ref, () => {
@@ -226,6 +221,7 @@ GameSettings.propTypes = {
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,
   setGameActive: PropTypes.func,
+  currWarning: PropTypes.string,
   setCurrWarning: PropTypes.func,
   dispatchWarning: PropTypes.func,
 };
