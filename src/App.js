@@ -1,30 +1,26 @@
-import React, { useState, useMemo, useCallback, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './views/Home/Home';
 import Play from './views/Play/Play';
 import Contact from './views/Contact/Contact';
 import { UserContext } from './hooks/UserContext';
+import { useStateRef } from './hooks/useStateRef';
 import './App.css';
 
 function App() {
-  const [user, setter] = useState({
-    gameSettings: {
-      shrinkTime: 2.0,
-      difficulty: { easy: false, medium: true, hard: false },
-      circleColor: '#FFFFFF',
-      circleSize: 100,
+  const [user, setUser, userRef] = useStateRef({
+    val: {
+      gameSettings: {
+        shrinkTime: 2.0,
+        difficulty: { easy: false, medium: true, hard: false },
+        circleColor: '#FFFFFF',
+        circleSize: 100,
+      },
+      scores: [],
+      optOuts: {
+        saveGameSettingsWarning: false,
+      },
     },
-    scores: [],
-    optOuts: {
-      saveGameSettingsWarning: false,
-    },
-  });
-
-  const userRef = useRef(user);
-
-  const setUser = useCallback((USER) => {
-    setter(USER);
-    userRef.current = USER;
   });
 
   const providerValue = useMemo(() => ({ user, setUser, userRef }), [user, setUser, userRef]);
