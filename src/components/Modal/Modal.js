@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import './Modal.css';
 import { Button } from '../Button/Button';
@@ -6,21 +6,20 @@ import { UserContext } from '../../hooks/UserContext';
 import { LogoSvg } from '../../svgs/LogoSvg';
 
 const Modal = (props) => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser, userRef } = useContext(UserContext);
   const [optedOut, setOptedOut] = useState(false);
 
-  function onClick(i) {
-    props.buttons[i].onClick();
-    if (optedOut) {
+  useEffect(() => {
+    return () => {
       setUser({
-        ...user,
+        ...userRef.current,
         optOuts: {
-          ...user.optOuts,
-          [props.optOutOption]: true,
+          ...userRef.current.optOuts,
+          [props.optOutOption]: optedOut,
         },
       });
-    }
-  }
+    };
+  }, [optedOut]);
 
   return (
     <div className='modal'>
@@ -37,7 +36,7 @@ const Modal = (props) => {
               className={`option-button option-button-${button.className}`}
               key={i}
               text={button.text}
-              onClick={() => onClick(i)}
+              onClick={() => props.buttons[i].onClick()}
             />
           ))}
         </div>

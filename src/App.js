@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useRef } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './views/Home/Home';
 import Play from './views/Play/Play';
@@ -7,7 +7,7 @@ import { UserContext } from './hooks/UserContext';
 import './App.css';
 
 function App() {
-  const [user, setUser] = useState({
+  const [user, setter] = useState({
     gameSettings: {
       shrinkTime: 2.0,
       difficulty: { easy: false, medium: true, hard: false },
@@ -20,7 +20,14 @@ function App() {
     },
   });
 
-  const providerValue = useMemo(() => ({ user, setUser }), [user, setUser]);
+  const userRef = useRef(user);
+
+  const setUser = useCallback((USER) => {
+    setter(USER);
+    userRef.current = USER;
+  });
+
+  const providerValue = useMemo(() => ({ user, setUser, userRef }), [user, setUser, userRef]);
 
   return (
     <Router>
