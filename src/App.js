@@ -19,6 +19,7 @@ function App() {
       scores: [],
       optOuts: {
         saveGameSettingsWarning: false,
+        closeGameSettingsWarning: false,
       },
     },
   });

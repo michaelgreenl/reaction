@@ -7,7 +7,6 @@ import { CloseSvg } from '../../svgs/CloseSvg';
 import './GameSettings.css';
 
 const GameSettings = forwardRef(function GameSettings(props, ref) {
-  // console.log('rendered');
   const _ = require('lodash');
   const { user, setUser } = useContext(UserContext);
   const { gameSettings } = user;
@@ -105,6 +104,38 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
     );
   });
 
+  function checkCloseWarning() {
+    if (props.settingsChanged.current && !user.optOuts.closeGameSettingsWarning) {
+      props.dispatchWarning({
+        type: 'closeGameSettingsWarning',
+        onClick1: () => warnCloseGSonClick1(),
+        onClick2: () => warnCloseGSonClick2(),
+      });
+      props.setCurrWarning('closeGameSettingsWarning');
+    } else {
+      resetSettings();
+      props.setShowSettings(false);
+    }
+  }
+
+  const warnCloseGSonClick1 = useCallback(() => {
+    resetSettings();
+    props.setCurrWarning(null);
+  });
+
+  const warnCloseGSonClick2 = useCallback(() => {
+    saveSettings(true).then(
+      () => {
+        props.setShowSettings(false);
+        props.setCurrWarning(null);
+      },
+      () => {
+        props.setShowSettings(false);
+        props.setCurrWarning(null);
+      },
+    );
+  });
+
   useImperativeHandle(ref, () => {
     return {
       saveSettings,
@@ -119,7 +150,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           <div className='settings'>
             <header className='settings-header'>
               <h3 className='header-text'>Settings</h3>
-              <button className='close-button' onClick={() => props.setShowSettings(false)}>
+              <button className='close-button' onClick={() => checkCloseWarning()}>
                 <CloseSvg className='header-close-svg' />
               </button>
             </header>

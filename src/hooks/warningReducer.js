@@ -50,6 +50,28 @@ export const warningReducer = (state, action) => {
         },
       };
     }
+    case 'closeGameSettingsWarning': {
+      return {
+        ...state,
+        closeGameSettingsWarning: {
+          header: 'Warning',
+          message: "You haven't saved your new settings yet. Would you like to save before closing?",
+          optOutOption: 'closeGameSettingsWarning',
+          buttons: [
+            {
+              text: 'No',
+              className: 'secondary',
+              onClick: () => action.onClick1(),
+            },
+            {
+              text: 'Yes',
+              className: 'primary',
+              onClick: () => action.onClick2(),
+            },
+          ],
+        },
+      };
+    }
     default: {
       throw Error('Unknown Warning');
     }
