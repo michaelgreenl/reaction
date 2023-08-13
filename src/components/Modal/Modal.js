@@ -1,4 +1,4 @@
-import React, { memo, useContext, useState, useEffect } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import './Modal.css';
 import { Button } from '../Button/Button';
@@ -9,17 +9,16 @@ const Modal = (props) => {
   const { setUser, userRef } = useContext(UserContext);
   const [optedOut, setOptedOut] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      setUser({
-        ...userRef.current,
-        optOuts: {
-          ...userRef.current.optOuts,
-          [props.optOutOption]: optedOut,
-        },
-      });
-    };
-  }, [optedOut]);
+  function onBtnClick(i) {
+    props.buttons[i].onClick();
+    setUser({
+      ...userRef.current,
+      optOuts: {
+        ...userRef.current.optOuts,
+        [props.optOutOption]: optedOut,
+      },
+    });
+  }
 
   return (
     <div className='modal'>
@@ -36,7 +35,7 @@ const Modal = (props) => {
               className={`option-button option-button-${button.className}`}
               key={i}
               text={button.text}
-              onClick={() => props.buttons[i].onClick()}
+              onClick={() => onBtnClick(i)}
             />
           ))}
         </div>
