@@ -124,8 +124,8 @@
   --secondary-black: #473f48;
   --grey: #a7a7a7;
   --light-grey: #c6c6c6;
-  --lighter-grey: #e0e0e0;
-  --bright-pink: #d64a80;
+  --lighter-grey: #f3f3f3;
+  --bright-pink: #ec6e9e;
   --light-pink: #ea89ae;
   --bright-blue: #23a6d5;
   --light-blue: #d9edff;
@@ -170,6 +170,10 @@ h1, h2, h3, h4, h5, h6 {
   border: 2px solid transparent;
   border-radius: 5px;
   background-clip: content-box;
+}
+
+button {
+  cursor: pointer;
 }
 
 button:focus-visible {
