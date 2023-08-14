@@ -7,14 +7,15 @@ import { random } from 'lodash';
 import { Circle } from '../Circle/Circle';
 
 export const PlayTilLose = (props) => {
+  const { user, setUser } = useContext(UserContext);
+  const { gameSettings } = user;
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
   const [genTime, setGenTime] = useState(0);
   const [circleCount, setCircleCount] = useState(0);
-  const { user, setUser } = useContext(UserContext);
-  const { gameSettings } = user;
 
   useEffect(() => {
+    // Setting how fast a circle should be generated based on a selected difficulty
     if (gameSettings.difficulty.easy) setGenTime(2.5);
     if (gameSettings.difficulty.medium) setGenTime(1.25);
     if (gameSettings.difficulty.hard) setGenTime(0.75);
@@ -23,6 +24,7 @@ export const PlayTilLose = (props) => {
   const { timer, resetTimer } = useTimer(genTime, 0.01);
 
   useEffect(() => {
+    // If the timer hook returns true the timer has reached 0 and a new circle should be generated.
     if (timer) {
       resetTimer();
       generateCircle();
@@ -30,6 +32,7 @@ export const PlayTilLose = (props) => {
   }, [timer]);
 
   function generateCircle() {
+    // Creating a random position for the circle
     const position = {
       top: random(2, 85),
       right: random(2, 85),
@@ -40,6 +43,7 @@ export const PlayTilLose = (props) => {
       position.right = 8;
     }
 
+    // Adding circle to 'circles' and incrementing circle count for the key
     setCircles(
       [
         ...circles,
@@ -53,18 +57,20 @@ export const PlayTilLose = (props) => {
   }
 
   function circleClick(key) {
+    // Incrementing score and removing circle that was clicked from 'circles'
     setCurrScore(currScore + 1);
     setCircles(circles.filter((circle) => circle.key !== key));
   }
 
   function gameLostListener() {
-    props.setActiveGame();
+    props.endGame();
     setCircles([]);
     setUser({
       ...user,
       scores: [...user.scores, currScore],
     });
     setCurrScore(0);
+    setCircleCount(0);
   }
 
   return (
@@ -84,5 +90,5 @@ export const PlayTilLose = (props) => {
 };
 
 PlayTilLose.propTypes = {
-  setActiveGame: PropTypes.func,
+  endGame: PropTypes.func,
 };

@@ -21,6 +21,7 @@ function Play() {
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
 
   const checkStartSettings = () => {
+    // If the settings are changed and the user is starting a game, warning is dispatched
     if (settingsChanged.current) {
       dispatchWarning({
         type: 'startGameSettingsWarning',
@@ -34,17 +35,24 @@ function Play() {
     }
   };
 
+  // onClick for 'Cancel' button in 'startGameSettingsWarning' modal
   const warnStartGSonClick1 = useCallback(() => {
+    // Removes the current warning state, which removes the modal from the screen
     setCurrWarning(null);
   });
 
+  // onClick for 'No' button in 'startGameSettingsWarning' modal
   const warnStartGSonClick2 = useCallback(() => {
+    // Resets the settings, then removes the modal and starts the game
     gameSettingsRef.current.resetSettings();
     setCurrWarning(null);
     setGameActive(true);
   });
 
+  // onClick for 'Yes' button in 'startGameSettingsWarning' modal
   const warnStartGSonClick3 = useCallback(() => {
+    // Saves the settings, then removes the modal and starts the game or just removes the modal
+    // The res() function can also be executed after a second modal is deployed.
     gameSettingsRef.current.saveSettings().then(
       () => {
         setCurrWarning(null);
@@ -56,12 +64,14 @@ function Play() {
     );
   });
 
+  // Resetting all things necessary for ending the game
   const endGame = () => {
     setGameActive(false);
     setShowEndScreen(true);
     setShowSettings(false);
   };
 
+  // Showing the settings if the user clicks 'show settings' on the end screen
   const endSetActiveSettings = () => {
     setShowEndScreen(false);
     setShowSettings(true);

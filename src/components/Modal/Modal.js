@@ -9,6 +9,7 @@ const Modal = (props) => {
   const { setUser, userRef } = useContext(UserContext);
   const [optedOut, setOptedOut] = useState(false);
 
+  // Executes the button click then sets the optOut option for the user.
   function onBtnClick(i) {
     props.buttons[i].onClick();
     setUser({

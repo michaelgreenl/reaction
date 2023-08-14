@@ -11,7 +11,11 @@ const Navbar = () => {
   const isTablet = useMediaQuery({ query: '(max-width: 768px)' });
   const [notActiveHovered, setNotActiveHovered] = useState(false);
 
-  const activeHoverCB = useCallback((toSet) => {
+  /*
+    When a NavItem other than the active one gets MouseOver/MouseOut this gets triggered. Making the animation for the
+    NavItem that's currently hovered fire/turn off and the active NavItem turn off/fire.
+  */
+  const setActiveHover = useCallback((toSet) => {
     setNotActiveHovered(toSet);
   }, []);
 
@@ -20,6 +24,7 @@ const Navbar = () => {
       <div className='logo-cont' style={url.current.endsWith('/') && isSmLaptop ? { display: 'none' } : undefined}>
         <LogoText svgClassName='navbar-logo-svg' textClassName='navbar-logo-text' />
       </div>
+      {/* Showing dropdown menu based on media-query */}
       {isTablet ? (
         <MenuSvg className='navbar-menu-icon' />
       ) : (
@@ -28,9 +33,9 @@ const Navbar = () => {
             notActiveHovered ? 'not-active-hovered' : undefined
           }`}
         >
-          <NavItem link='/' text='Home' setNotActiveHovered={activeHoverCB} />
-          <NavItem link='/Play' text='Play' setNotActiveHovered={activeHoverCB} />
-          <NavItem link='/Contact' text='Contact' setNotActiveHovered={activeHoverCB} />
+          <NavItem link='/' text='Home' setNotActiveHovered={setActiveHover} />
+          <NavItem link='/Play' text='Play' setNotActiveHovered={setActiveHover} />
+          <NavItem link='/Contact' text='Contact' setNotActiveHovered={setActiveHover} />
         </ul>
       )}
     </nav>
