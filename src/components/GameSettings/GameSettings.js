@@ -59,7 +59,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
             },
             onClick2: () => warnSaveGSonClick2(() => res()),
           });
-          props.setCurrWarning('saveGameSettingsWarning');
+          props.currWarning.set('saveGameSettingsWarning');
         } else {
           setUser({
             ...user,
@@ -73,7 +73,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           props.setSaveBtnDisabled(true);
           props.settingsChanged.current = false;
           setEnableScoreReset(false);
-          props.setCurrWarning(null);
+          props.currWarning.set(null);
 
           res();
         }
@@ -90,7 +90,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
   });
 
   const warnSaveGSonClick1 = useCallback(() => {
-    props.setCurrWarning(null);
+    props.currWarning.set(null);
   });
 
   const warnSaveGSonClick2 = useCallback((res) => {
@@ -99,7 +99,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
         res();
       },
       () => {
-        props.setCurrWarning(null);
+        props.currWarning.set(null);
       },
     );
   });
@@ -111,27 +111,28 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
         onClick1: () => warnCloseGSonClick1(),
         onClick2: () => warnCloseGSonClick2(),
       });
-      props.setCurrWarning('closeGameSettingsWarning');
+      props.currWarning.set('closeGameSettingsWarning');
     } else {
       resetSettings();
-      props.setShowSettings(false);
+      props.showSettings.set(false);
     }
   }
 
   const warnCloseGSonClick1 = useCallback(() => {
     resetSettings();
-    props.setCurrWarning(null);
+    props.currWarning.set(null);
+    props.showSettings.set(false);
   });
 
   const warnCloseGSonClick2 = useCallback(() => {
     saveSettings(true).then(
       () => {
-        props.setShowSettings(false);
-        props.setCurrWarning(null);
+        props.showSettings.set(false);
+        props.currWarning.set(null);
       },
       () => {
-        props.setShowSettings(false);
-        props.setCurrWarning(null);
+        props.showSettings.set(false);
+        props.currWarning.set(null);
       },
     );
   });
@@ -145,7 +146,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
 
   return (
     <div className='game-settings'>
-      {props.showSettings && (
+      {props.showSettings.get && (
         <div className='settings-item'>
           <div className='settings'>
             <header className='settings-header'>
@@ -246,15 +247,12 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
 });
 
 GameSettings.propTypes = {
-  showSettings: PropTypes.bool,
   settingsChanged: PropTypes.object,
-  setShowSettings: PropTypes.func,
+  showSettings: PropTypes.object,
+  currWarning: PropTypes.object,
+  dispatchWarning: PropTypes.func,
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,
-  setGameActive: PropTypes.func,
-  currWarning: PropTypes.string,
-  setCurrWarning: PropTypes.func,
-  dispatchWarning: PropTypes.func,
 };
 
 export default memo(GameSettings);

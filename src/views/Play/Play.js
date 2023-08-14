@@ -11,14 +11,14 @@ import Modal from '../../components/Modal/Modal';
 function Play() {
   const { user } = useContext(UserContext);
   const [gameActive, setGameActive] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [showEndScreen, setShowEndScreen] = useState(false);
-  const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
-  const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
-  const gameSettingsRef = useRef(null);
-  const settingsChanged = useRef(false);
   const [warning, dispatchWarning] = useReducer(warningReducer, {});
   const [currWarning, setCurrWarning] = useState(null);
+  const gameSettingsRef = useRef(null);
+  const settingsChanged = useRef(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
+  const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
 
   const checkStartSettings = () => {
     if (settingsChanged.current) {
@@ -102,15 +102,12 @@ function Play() {
             <>
               <GameSettings
                 ref={gameSettingsRef}
-                showSettings={showSettings}
                 settingsChanged={settingsChanged}
-                setShowSettings={setShowSettings}
+                showSettings={{ get: showSettings, set: (toSet) => setShowSettings(toSet) }}
+                currWarning={{ get: currWarning, set: (toSet) => setCurrWarning(toSet) }}
+                dispatchWarning={dispatchWarning}
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
-                setGameActive={setGameActive}
-                currWarning={currWarning}
-                setCurrWarning={setCurrWarning}
-                dispatchWarning={dispatchWarning}
               />
               <div className='play-buttons'>
                 {showSettings ? (
