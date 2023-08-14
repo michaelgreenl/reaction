@@ -39,7 +39,10 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
     if (user.scores.length) {
       let toSet = false;
       for (const setting of causesResetSettings) {
-        if (localSettings[setting] !== gameSettings[setting]) {
+        if (
+          localSettings[setting] !== gameSettings[setting] &&
+          !_.isEqual(localSettings[setting], gameSettings[setting])
+        ) {
           toSet = true;
         }
       }
