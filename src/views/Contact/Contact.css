@@ -10,28 +10,33 @@
   letter-spacing: 0.03ch;
 }
 
-.contact .header,
 .contact .main {
+  flex: 1;
   display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .contact .header {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  width: 90%;
-  margin: 0.75em auto 0.25em;
+  flex: 2;
+  width: 70%;
+  margin: 0 auto;
 }
 
 .contact .header-text {
-  font-weight: 600;
+  font-size: 4.5em;
+  font-weight: 400;
   margin: 0;
 }
 
 .contact .other-links {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  width: 110%;
-  gap: 1.5em;
 }
 
 .contact .other-link {
@@ -43,34 +48,41 @@
 }
 
 .contact .other-link .github-link {
-  width: 3em;
+  width: 4em;
 }
 
-.contact .second-header {
-  font-size: 1.4em;
-  font-weight: 500;
-}
-
-.contact .main {
+.contact .form-cont {
+  flex: 3;
+  display: flex;
   flex-direction: column;
   margin: 0 auto;
+  min-width: 50rem;
   width: 70%;
 }
 
 .contact .contact-form {
   display: flex;
   flex-direction: column;
-  margin-left: 5%;
-  min-width: 50rem;
-  width: 70%;
   gap: 1em;
+  background-color: var(--primary-white);
+  color: var(--secondary-black);
+  border-radius: 10px;
+  padding: 2.5em 3em;
+  box-sizing: border-box;
 }
 
 .contact .form-inputs {
   display: flex;
   flex-direction: column;
   gap: 1em;
+  margin: 0;
   padding: 0;
+  width: 100%;
+}
+
+.small-input-cont {
+  display: flex;
+  gap: 2em;
 }
 
 .contact .input-cont {
@@ -78,13 +90,34 @@
   display: flex;
   flex-direction: column;
   gap: 0.15em;
+  width: 100%;
+}
+
+.contact .input-label {
+  font-size: 0.8em;
 }
 
 .contact .input-field {
   height: 2.5em;
   color: var(--secondary-black);
+  background-color: var(--lighter-grey);
+  border: 0;
+  padding: 0.5em;
+}
+
+.contact .input-field:focus-visible {
+  outline: var(--secondary-black) solid 1px;
 }
 
 .contact .input-text-area {
   height: 7em;
+}
+
+.contact .submit-button {
+  font-size: 1.15em;
+  margin-top: 0.55em;
+  padding: 0.25em 1.5em;
+  background-color: var(--bright-pink);
+  color: var(--primary-white);
+  align-self: flex-end;
 }
