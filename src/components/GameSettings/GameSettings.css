@@ -66,7 +66,7 @@
   fill: var(--bright-pink);
 }
 
-.game-settings .break {
+.game-settings .settings-break {
   margin: 0.15em 0 0;
   width: 100%;
   border: var(--light-blue) solid 1px;
@@ -118,6 +118,7 @@
 
 .game-settings .radio-options {
   display: flex;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: space-evenly;
   gap: 1em;
@@ -143,7 +144,7 @@
   height: 1.2em;
   margin: 0;
   border: var(--grey) solid 2px;
-  border-radius: 4px;
+  border-radius: 100%;
 }
 
 .game-settings .radio-input::before {
@@ -151,7 +152,7 @@
   width: 0.66em;
   height: 0.66em;
   background-color: var(--bright-pink);
-  border-radius: 2px;
+  border-radius: 100%;
   margin: 0;
   opacity: 0;
 }
@@ -191,7 +192,7 @@
   height: 1.2em;
   margin: 0;
   border: var(--grey) solid 2px;
-  border-radius: 4px;
+  border-radius: 100%;
 }
 
 .game-settings .checkbox-input::before {

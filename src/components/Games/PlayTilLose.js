@@ -75,7 +75,7 @@ export const PlayTilLose = (props) => {
 
   return (
     <div className='canvas'>
-      <span className='score'>{currScore}</span>
+      <span className='curr-score'>{currScore}</span>
       {circles.map((circle) => (
         <Circle
           key={circle.key}

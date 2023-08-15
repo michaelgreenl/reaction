@@ -185,7 +185,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                 <CloseSvg className='header-close-svg' />
               </button>
             </header>
-            <hr className='break' />
+            <hr className='settings-break' />
             <div className='input-cont'>
               <label htmlFor='shrinkTime'>Circle Shrink Time</label>
               <div className='number'>
