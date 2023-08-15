@@ -12,22 +12,23 @@
 }
 
 .play .main {
+  position: relative;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 0;
-  transition: all 50ms ease-in;
+  gap: 5%;
 }
 
 .play .scores {
-  align-self: flex-start;
+  position: absolute;
+  top: 3rem;
+  left: 4rem;
   display: flex;
   flex-direction: column;
-  height: 29%;
+  max-height: 30%;
   width: 20rem;
-  margin: 2em 5em;
   background-color: var(--primary-white);
   color: var(--secondary-black);
   border-radius: 5px;
@@ -76,7 +77,7 @@
   font-weight: 400;
   letter-spacing: 0.03em;
   margin: 0.3em 0.1em;
-  padding: 0 0.3em;
+  padding: 0 0.4em;
   border-left: var(--light-pink) solid 4px;
   border-radius: 3px;
   height: 1.6em;
@@ -90,6 +91,12 @@
 .play .play-buttons {
   display: flex;
   gap: 10%;
+  margin-top: -5rem;
+  transition: all 50ms ease-in;
+}
+
+.play .play-buttons-margin {
+  margin-top: 0;
 }
 
 .play .play-button {

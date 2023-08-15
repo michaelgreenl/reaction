@@ -89,14 +89,8 @@ function Play() {
         />
       )}
       {!gameActive ? (
-        <main
-          className='main'
-          style={{
-            justifyContent: `${user.scores.length > 1 && !showSettings ? 'flex-start' : 'center'}`,
-            gap: `${showSettings ? '5%' : '0'}`,
-          }}
-        >
-          {user.scores.length > 1 && !showSettings && (
+        <main className='main'>
+          {user.scores.length > 0 && !showSettings && (
             <div className='scores'>
               <h2 className='scores-header'>Scores</h2>
               <hr className='scores-break' />
@@ -121,7 +115,7 @@ function Play() {
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
               />
-              <div className='play-buttons'>
+              <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
                 {showSettings ? (
                   <>
                     <Button
