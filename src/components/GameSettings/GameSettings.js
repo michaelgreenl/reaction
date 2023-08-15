@@ -68,6 +68,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
         /* 
           The 'saveGameSettingsWarning' will be dispatched if the score will be reset if the settings are changed due to a setting 
           that was changed, the user hasn't opted out of the warning, and force save hasn't be set to true.
+          Force save will only be set to true by the warnSaveGSonClick2() since it needs to have a chance to bypass this warning.
         */
         if (!forceSave && enableScoreReset && !user.optOuts.saveGameSettingsWarning) {
           props.dispatchWarning({
@@ -153,8 +154,8 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
 
   // onClick for 'Yes' button in 'closeGameSettingsWarning' modal
   const warnCloseGSonClick2 = useCallback(() => {
-    // Saves settings (forcefully) then exits settings and the modal
-    saveSettings(true).then(
+    // Saves settings then exits settings and the modal
+    saveSettings().then(
       () => {
         props.showSettings.set(false);
         props.currWarning.set(null);
