@@ -97,12 +97,14 @@ function Play() {
           }}
         >
           {user.scores.length > 1 && !showSettings && (
-            <div className='all-scores'>
+            <div className='scores'>
               <h2 className='scores-header'>Scores</h2>
-              <ul className='scores'>
+              <hr className='scores-break' />
+              <ul className='score-list'>
                 {user.scores.map((score, i) => (
                   <li key={i} className='score'>
-                    {score}
+                    <span>{score}</span>
+                    <span className='time'>0:00</span>
                   </li>
                 ))}
               </ul>

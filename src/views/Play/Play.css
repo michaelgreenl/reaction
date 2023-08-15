@@ -21,37 +21,70 @@
   transition: all 50ms ease-in;
 }
 
-.play .all-scores {
+.play .scores {
   align-self: flex-start;
   display: flex;
   flex-direction: column;
   height: 29%;
-  width: 14rem;
-  overflow: hidden;
+  width: 20rem;
   margin: 2em 5em;
+  background-color: var(--primary-white);
+  color: var(--secondary-black);
+  border-radius: 5px;
+  padding: 0.75em 1.25em;
+  box-sizing: border-box;
 }
 
 .play .scores-header {
   font-weight: 600;
   font-style: italic;
   margin: 0;
+  color: var(--bright-pink);
 }
 
-.play .scores {
+.play .scores-break {
+  margin: 0.15em 0 0;
+  width: 100%;
+  border: var(--light-blue) solid 1px;
+}
+
+.play .score-list {
   flex: 1;
-  overflow: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
+  overflow-x: hidden;
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
+  flex-direction: column;
   margin: 0.25em 0;
   padding: 0;
   list-style: none;
+  width: 103%;
+}
+
+.play .score-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.play .score-list::-webkit-scrollbar-thumb {
+  background: var(--light-pink);
 }
 
 .play .score {
-  font-size: 1.4em;
-  margin: 0.25em 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin: 0.3em 0.1em;
+  padding: 0 0.3em;
+  border-left: var(--light-pink) solid 4px;
+  border-radius: 3px;
+  height: 1.6em;
+}
+
+.play .score .time {
+  font-size: 0.8em;
+  color: var(--grey);
 }
 
 .play .play-buttons {
