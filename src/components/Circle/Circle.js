@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import './Circle.css';
 import { UserContext } from '../../hooks/UserContext';
 import { PropTypes } from 'prop-types';
+import { motion } from 'framer-motion';
 
 export const Circle = (props) => {
   const { user } = useContext(UserContext);
@@ -24,17 +25,16 @@ export const Circle = (props) => {
         height: `${!props.localSettings ? gameSettings.circleSize : props.localSettings.circleSize}px`,
       }}
     >
-      <button
+      <motion.button
         className={`circle ${circleFade ? 'circle-fade' : undefined}`}
-        onMouseDown={() => (props.useTransition ? setCircleFade(true) : undefined)} // Activating fade transition onClick
-        onTransitionEnd={props.onClick} // Triggering onClick when the fade transition ends
-        style={{
-          ...circleStyle,
-          // Making the circle immediately start to shrink
-          animation: props.useTransition ? `shrink ${gameSettings.shrinkTime}s linear forwards` : 'none',
-        }}
-        onAnimationEnd={() => props.animationEnd()} // If the shrink animation ends without the user clicking it, the game ends
-      ></button>
+        initial={props.useTransition ? { height: gameSettings.circleSize, width: gameSettings.circleSize } : undefined}
+        animate={props.useTransition ? { height: 12, width: 12 } : undefined} // Making sure the size stays if there's no transition needed
+        onClick={() => (props.useTransition ? setCircleFade(true) : undefined)} // Activating fade transition onClick
+        onTransitionEnd={() => props.onClick()} // Triggering onClick when the fade transition ends
+        onAnimationComplete={!circleFade ? () => props.animationEnd() : undefined} // If the shrink animation ends without the user clicking it, the game ends
+        transition={{ duration: gameSettings.shrinkTime }}
+        style={{ ...circleStyle }}
+      ></motion.button>
     </div>
   );
 };
