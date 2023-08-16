@@ -1,0 +1,72 @@
+.scores {
+  position: absolute;
+  top: 3rem;
+  left: 4rem;
+  display: flex;
+  flex-direction: column;
+  max-height: 30%;
+  width: 20rem;
+  background-color: var(--primary-white);
+  color: var(--secondary-black);
+  border-radius: 5px;
+  padding: 0.75em 1.25em;
+  box-sizing: border-box;
+}
+
+.scores .scores-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.scores .scores-header-text {
+  font-weight: 600;
+  font-style: italic;
+  margin: 0;
+  color: var(--bright-pink);
+}
+
+.scores .scores-break {
+  margin: 0.15em 0 0;
+  width: 100%;
+  border: var(--light-blue) solid 1px;
+}
+
+.scores .score-list {
+  flex: 1;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  margin: 0.25em 0;
+  padding: 0;
+  list-style: none;
+  width: 103%;
+}
+
+.scores .score-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scores .score-list::-webkit-scrollbar-thumb {
+  background: var(--light-pink);
+}
+
+.scores .score {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.2em;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  margin: 0.3em 0.1em;
+  padding: 0 0.4em;
+  border-left: var(--light-pink) solid 4px;
+  border-radius: 3px;
+  height: 1.6em;
+}
+
+.scores .score .time {
+  font-size: 0.8em;
+  color: var(--grey);
+}
