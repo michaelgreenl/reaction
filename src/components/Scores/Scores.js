@@ -13,8 +13,9 @@ export const Scores = () => {
   const closeButtonVariants = useMemo(() => {
     return {
       div: {
-        open: { maxHeight: '30%', width: '20rem' },
-        closed: { maxHeight: '7rem', width: '16.75rem' },
+        open: { maxHeight: '30%', width: '20rem', x: 0 },
+        closed: { maxHeight: '7rem', width: '16.75rem', x: 0 },
+        exit: { maxHeight: '7rem', width: '16.75rem', x: -300 },
       },
       svgs: {
         open: { d: 'M67.5 7.5L7.59623 67.4982M7.5 7.5L67.402 67.5' },
@@ -31,9 +32,11 @@ export const Scores = () => {
   return (
     <motion.div
       className='scores'
-      initial={closeButtonVariants.div.closed}
+      initial={closeButtonVariants.div.exit}
       animate={closeButton}
       variants={closeButtonVariants.div}
+      exit={closeButtonVariants.div.exit}
+      transition={{ type: 'spring', bounce: 0.25, duration: 0.4 }}
     >
       <header className='scores-header'>
         <h2 className='scores-header-text'>Scores</h2>

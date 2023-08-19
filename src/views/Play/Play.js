@@ -7,6 +7,7 @@ import GameSettings from '../../components/GameSettings/GameSettings';
 import { PlayTilLose } from '../../components/Games/PlayTilLose';
 import Modal from '../../components/Modal/Modal';
 import { Scores } from '../../components/Scores/Scores';
+import { AnimatePresence } from 'framer-motion';
 
 function Play() {
   const { user } = useContext(UserContext);
@@ -90,7 +91,7 @@ function Play() {
       )}
       {!gameActive ? (
         <main className='main'>
-          {user.scores.length > 0 && !showSettings && <Scores />}
+          <AnimatePresence>{user.scores.length > 0 && !showSettings && <Scores />}</AnimatePresence>
           {!showEndScreen ? (
             <>
               <GameSettings
