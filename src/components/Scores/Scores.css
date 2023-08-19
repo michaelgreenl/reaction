@@ -52,6 +52,10 @@
   background: var(--light-pink);
 }
 
+.scores .transparent-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
 .scores .score {
   display: flex;
   justify-content: space-between;
