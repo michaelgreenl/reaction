@@ -13,5 +13,5 @@
 
 .button:disabled {
   color: var(--secondary-white) !important;
-  background: var(--lighter-grey) !important; 
+  background: var(--light-grey) !important; 
 }
