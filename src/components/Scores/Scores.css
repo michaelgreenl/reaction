@@ -70,3 +70,25 @@
   font-size: 0.8em;
   color: var(--grey);
 }
+
+.scores .close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  padding: 0.75em;
+  border: 0;
+  border-radius: 100%;
+}
+
+.scores .close-button:hover {
+  background: rgba(214, 74, 128, 0.1);
+}
+
+.scores .close-button-svg {
+  stroke: var(--bright-pink);
+  stroke: #ec6e9e;
+  stroke-width: 14px;
+  stroke-linecap: round;
+  width: 1em;
+}
