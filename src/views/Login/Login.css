@@ -1,0 +1,12 @@
+.login {
+  position: relative;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: white;
+  background: var(--pink2blue-lingrand);
+  background-size: 200% 200%;
+  animation: gradientBackground 20s ease infinite;
+  letter-spacing: 0.03ch;
+}
