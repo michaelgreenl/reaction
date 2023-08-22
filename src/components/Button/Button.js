@@ -24,7 +24,7 @@ export const Button = (props) => {
             animate={props.svgAnimate}
             variants={props.svgVariants}
             transition={props.svgTransition}
-            d={props.svgInitial}
+            d={props.svgInitialPath}
           />
         </motion.svg>
       )}
@@ -40,7 +40,8 @@ Button.propTypes = {
   text: PropTypes.string,
   svgClassName: PropTypes.string,
   viewBox: PropTypes.string,
-  svgInitial: PropTypes.string,
+  svgInitial: PropTypes.any,
+  svgInitialPath: PropTypes.string,
   svgAnimate: PropTypes.any,
   svgVariants: PropTypes.object,
   svgTransition: PropTypes.object,

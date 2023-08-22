@@ -48,7 +48,7 @@ export const Scores = () => {
   return (
     <motion.div
       className='scores'
-      initial={scoresDivVariants.div.exit}
+      initial={'exit'}
       animate={divControls}
       variants={scoresDivVariants.div}
       transition={{ type: 'spring', bounce: 0.25, duration: 0.4 }}
@@ -59,7 +59,8 @@ export const Scores = () => {
           className='close-button'
           svgClassName='close-button-svg'
           viewBox='0 0 75 75'
-          svgInitial={scoresDivVariants.svgs.closed.d}
+          svgInitial={'closed'}
+          svgInitialPath={scoresDivVariants.svgs.closed.d}
           svgAnimate={closeBtnControls}
           svgVariants={scoresDivVariants.svgs}
           svgTransition={{ duration: 0.25, ease: 'easeInOut' }}
