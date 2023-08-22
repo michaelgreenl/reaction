@@ -1,9 +1,19 @@
-import React, { useState, useContext, forwardRef, useImperativeHandle, useEffect, useCallback, memo } from 'react';
+import React, {
+  useState,
+  useContext,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+  useCallback,
+  useMemo,
+  memo,
+} from 'react';
 import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { Circle } from '../../components/Circle/Circle';
 import { PolygonSvg } from '../../svgs/PolygonSvg';
-import { CloseSvg } from '../../svgs/CloseSvg';
+import { Button } from '../Button/Button';
+import { AnimatePresence, motion } from 'framer-motion';
 import './GameSettings.css';
 
 const GameSettings = forwardRef(function GameSettings(props, ref) {
@@ -175,6 +185,16 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
     };
   });
 
+  const settingsVariants = useMemo(() => {
+    return {
+      circle: {
+        start: { opacity: 0, x: -300 },
+        base: { opacity: 1, x: 0 },
+        exit: { opacity: 0, x: 0 },
+      },
+    };
+  });
+
   return (
     <div className='game-settings'>
       {props.showSettings.get && (
@@ -182,9 +202,16 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           <div className='settings'>
             <header className='settings-header'>
               <h3 className='header-text'>Settings</h3>
-              <button className='close-button' onClick={() => checkCloseWarning()}>
-                <CloseSvg className='header-close-svg' />
-              </button>
+              {/* <Button
+                className='close-button'
+                svgClassName='close-button-svg'
+                svgInitial='M67.5 7.5L7.59623 67.4982M7.5 7.5L67.402 67.5'
+                svgVariants={settingsVariants.button}
+                svgAnimate={props.showSettings.get ? 'open' : 'closed'}
+                viewBox='0 0 75 75'
+                onClick={() => checkCloseWarning()}
+              /> */}
+              <Button className='close-button' onClick={() => checkCloseWarning()} />
             </header>
             <hr className='settings-break' />
             <div className='input-cont'>
@@ -274,9 +301,21 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           </div>
         </div>
       )}
-      <div className='settings-item'>
-        <Circle styles={{ position: 'relative' }} localSettings={localSettings} />
-      </div>
+      <AnimatePresence>
+        {props.mainAnims && (
+          <motion.div
+            key='circle'
+            className='settings-item'
+            initial={'start'}
+            animate={'base'}
+            variants={settingsVariants.circle}
+            exit={'exit'}
+            transition={{ type: 'spring', bounce: 0.4, duration: 0.4 }}
+          >
+            <Circle className='settings-circle' localSettings={localSettings} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 });
@@ -288,6 +327,7 @@ GameSettings.propTypes = {
   dispatchWarning: PropTypes.func,
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,
+  mainAnims: PropTypes.bool,
 };
 
 export default memo(GameSettings);

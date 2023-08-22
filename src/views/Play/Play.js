@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useCallback, useReducer } from 'react';
+import React, { useState, useContext, useRef, useCallback, useReducer, useEffect } from 'react';
 import './Play.css';
 import { UserContext } from '../../hooks/UserContext';
 import Navbar from '../../components/Navbar/Navbar';
@@ -7,6 +7,7 @@ import GameSettings from '../../components/GameSettings/GameSettings';
 import { PlayTilLose } from '../../components/Games/PlayTilLose';
 import Modal from '../../components/Modal/Modal';
 import { Scores } from '../../components/Scores/Scores';
+// import { AnimatePresence, motion } from 'framer-motion';
 import { AnimatePresence } from 'framer-motion';
 
 function Play() {
@@ -20,6 +21,18 @@ function Play() {
   const [showSettings, setShowSettings] = useState(false);
   const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
+  const [mainAnims, setMainAnims] = useState(true);
+
+  useEffect(() => {
+    // Waits for the longest animation to finish before starting the game, this could be different depending on what is showing in the dom
+    if (mainAnims) {
+      setGameActive(false);
+    } else if (!mainAnims && !showSettings) {
+      setTimeout(() => {
+        setGameActive(true);
+      }, '400');
+    }
+  }, [mainAnims]);
 
   const checkStartSettings = () => {
     // If the settings are changed and the user is starting a game, warning is dispatched
@@ -32,7 +45,7 @@ function Play() {
       });
       setCurrWarning('startGameSettingsWarning');
     } else {
-      setGameActive(true);
+      setMainAnims(false);
     }
   };
 
@@ -47,7 +60,7 @@ function Play() {
     // Resets the settings, then removes the modal and starts the game
     gameSettingsRef.current.resetSettings();
     setCurrWarning(null);
-    setGameActive(true);
+    setMainAnims(true);
   });
 
   // onClick for 'Yes' button in 'startGameSettingsWarning' modal
@@ -57,7 +70,7 @@ function Play() {
     gameSettingsRef.current.saveSettings().then(
       () => {
         setCurrWarning(null);
-        setGameActive(true);
+        setMainAnims(false);
       },
       () => {
         setCurrWarning(null);
@@ -70,6 +83,7 @@ function Play() {
     setGameActive(false);
     setShowEndScreen(true);
     setShowSettings(false);
+    setMainAnims(true);
   };
 
   // Showing the settings if the user clicks 'show settings' on the end screen
@@ -91,7 +105,7 @@ function Play() {
       )}
       {!gameActive ? (
         <main className='main'>
-          <AnimatePresence>{user.scores.length > 0 && !showSettings && <Scores />}</AnimatePresence>
+          <AnimatePresence>{mainAnims && user.scores.length > 0 && !showSettings && <Scores />}</AnimatePresence>
           {!showEndScreen ? (
             <>
               <GameSettings
@@ -102,6 +116,7 @@ function Play() {
                 dispatchWarning={dispatchWarning}
                 setResetBtnDisabled={setResetBtnDisabled}
                 setSaveBtnDisabled={setSaveBtnDisabled}
+                mainAnims={mainAnims}
               />
               <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
                 {showSettings ? (
@@ -130,7 +145,7 @@ function Play() {
               <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
               <div className='play-buttons'>
                 <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
-                <Button className='play-button' text='Play Again' onClick={() => setGameActive(true)} />
+                <Button className='play-button' text='Play Again' onClick={() => setMainAnims(false)} />
               </div>
             </div>
           )}
