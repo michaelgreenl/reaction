@@ -60,7 +60,7 @@ function Play() {
     // Resets the settings, then removes the modal and starts the game
     gameSettingsRef.current.resetSettings();
     setCurrWarning(null);
-    setGameActive(true);
+    setMainAnims(false);
   });
 
   // onClick for 'Yes' button in 'startGameSettingsWarning' modal
@@ -70,7 +70,7 @@ function Play() {
     gameSettingsRef.current.saveSettings().then(
       () => {
         setCurrWarning(null);
-        setGameActive(false);
+        setMainAnims(false);
       },
       () => {
         setCurrWarning(null);
@@ -169,33 +169,21 @@ function Play() {
                     <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
                   </motion.div>
                 )}
-                {showEndScreen && (
-                  <>
-                    <motion.div
-                      layout
-                      key='endSettings'
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25, layout: { duration: 0.1 } }}
-                    >
-                      <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
-                    </motion.div>
-                    <motion.div
-                      layout
-                      key='playAgain'
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.25, layout: { duration: 0.1 } }}
-                    >
-                      <Button className='play-button' text='Play Again' onClick={() => setMainAnims(false)} />
-                    </motion.div>
-                  </>
+                {mainAnims && showEndScreen && (
+                  <motion.div
+                    layout
+                    key='endSettings'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                  >
+                    <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
+                  </motion.div>
                 )}
               </AnimatePresence>
               <AnimatePresence>
-                {mainAnims && !showEndScreen && (
+                {mainAnims && (
                   <motion.div
                     layout
                     key='start'
@@ -204,7 +192,11 @@ function Play() {
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.25, layout: { duration: 0.1 } }}
                   >
-                    <Button className='play-button' text='Start' onClick={() => checkStartSettings()} />
+                    <Button
+                      className='play-button'
+                      text={!showEndScreen ? 'Start' : 'Play Again'}
+                      onClick={!showEndScreen ? () => checkStartSettings() : () => setMainAnims(false)}
+                    />
                   </motion.div>
                 )}
               </AnimatePresence>
