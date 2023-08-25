@@ -187,6 +187,11 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
 
   const settingsVariants = useMemo(() => {
     return {
+      settingsDiv: {
+        start: { height: 0, maxWidth: 0, minWidth: 0 },
+        base: { height: 'auto', maxWidth: '50rem', minWidth: '50rem' },
+        exit: { height: 0, maxWidth: 0, minWidth: 0 },
+      },
       circle: {
         start: { opacity: 0, x: -300 },
         base: { opacity: 1, x: 0 },
@@ -197,110 +202,118 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
 
   return (
     <div className='game-settings'>
-      {props.showSettings.get && (
-        <div className='settings-item'>
-          <div className='settings'>
-            <header className='settings-header'>
-              <h3 className='header-text'>Settings</h3>
-              {/* <Button
-                className='close-button'
-                svgClassName='close-button-svg'
-                svgInitial='M67.5 7.5L7.59623 67.4982M7.5 7.5L67.402 67.5'
-                svgVariants={settingsVariants.button}
-                svgAnimate={props.showSettings.get ? 'open' : 'closed'}
-                viewBox='0 0 75 75'
-                onClick={() => checkCloseWarning()}
-              /> */}
-              <Button className='close-button' onClick={() => checkCloseWarning()} />
-            </header>
-            <hr className='settings-break' />
-            <div className='input-cont'>
-              <label htmlFor='shrinkTime'>Circle Shrink Time</label>
-              <div className='number'>
-                <input
-                  className='number-input'
-                  name='shrinkTime'
-                  type='number'
-                  step='0.5'
-                  min='0.5'
-                  max='3'
-                  value={localSettings.shrinkTime}
-                  onChange={(event) => handleChange(event.target.name, event.target.value)}
+      <AnimatePresence>
+        {props.mainAnims && props.showSettings.get && (
+          <motion.div
+            className='settings-item'
+            key='settingsDiv'
+            initial={'start'}
+            animate={'base'}
+            variants={settingsVariants.settingsDiv}
+            exit={'exit'}
+            style={{ overflow: 'hidden' }}
+          >
+            <div className='settings'>
+              <header className='settings-header'>
+                <h3 className='header-text'>Settings</h3>
+                <Button
+                  className='close-button'
+                  svgClassName='close-button-svg'
+                  svgInitial='open'
+                  svgInitialPath='M67.5 7.5L7.59623 67.4982M7.5 7.5L67.402 67.5'
+                  viewBox='0 0 75 75'
+                  onClick={() => checkCloseWarning()}
                 />
-                <div className='number-arrows'>
-                  <button
-                    className='number-arrow'
-                    style={{ transform: 'translate(-1px, 15px) rotate(-90deg)' }}
-                    // Decrement shrinkTime
-                    onClick={() => handleChange('shrinkTime', localSettings.shrinkTime - 0.5)}
-                    disabled={localSettings.shrinkTime === 0.5}
-                  >
-                    <PolygonSvg className='number-polygon' />
-                  </button>
-                  <button
-                    className='number-arrow'
-                    style={{ transform: 'translate(-1px, -15px) rotate(90deg)' }}
-                    // Increment shrinkTime
-                    onClick={() => handleChange('shrinkTime', localSettings.shrinkTime + 0.5)}
-                    disabled={localSettings.shrinkTime === 3}
-                  >
-                    <PolygonSvg className='number-polygon' />
-                  </button>
+              </header>
+              <hr className='settings-break' />
+              <div className='input-cont'>
+                <label htmlFor='shrinkTime'>Circle Shrink Time</label>
+                <div className='number'>
+                  <input
+                    className='number-input'
+                    name='shrinkTime'
+                    type='number'
+                    step='0.5'
+                    min='0.5'
+                    max='3'
+                    value={localSettings.shrinkTime}
+                    onChange={(event) => handleChange(event.target.name, event.target.value)}
+                  />
+                  <div className='number-arrows'>
+                    <button
+                      className='number-arrow'
+                      style={{ transform: 'translate(-1px, 15px) rotate(-90deg)' }}
+                      // Decrement shrinkTime
+                      onClick={() => handleChange('shrinkTime', localSettings.shrinkTime - 0.5)}
+                      disabled={localSettings.shrinkTime === 0.5}
+                    >
+                      <PolygonSvg className='number-polygon' />
+                    </button>
+                    <button
+                      className='number-arrow'
+                      style={{ transform: 'translate(-1px, -15px) rotate(90deg)' }}
+                      // Increment shrinkTime
+                      onClick={() => handleChange('shrinkTime', localSettings.shrinkTime + 0.5)}
+                      disabled={localSettings.shrinkTime === 3}
+                    >
+                      <PolygonSvg className='number-polygon' />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className='input-cont'>
-              <span>Difficulty</span>
-              <div className='radio-options'>
-                {Object.keys(gameSettings.difficulty).map((key) => (
-                  <div className='radio-option' key={key}>
-                    <label className='radio-label' htmlFor={key}>
-                      {/* Capitalizing label */}
-                      {key.charAt(0).toUpperCase()}
-                      {key.slice(1)}
-                    </label>
-                    <input
-                      className='radio-input'
-                      name='difficulty'
-                      type='radio'
-                      value={key}
-                      checked={localSettings.difficulty[`${key}`]}
-                      // mapping object to get checked target
-                      onChange={(event) =>
-                        handleChange(event.target.name, {
-                          ..._.mapValues(localSettings.difficulty, () => false),
-                          [event.target.value]: event.target.checked,
-                        })
-                      }
-                    />
-                  </div>
-                ))}
+              <div className='input-cont'>
+                <span>Difficulty</span>
+                <div className='radio-options'>
+                  {Object.keys(gameSettings.difficulty).map((key) => (
+                    <div className='radio-option' key={key}>
+                      <label className='radio-label' htmlFor={key}>
+                        {/* Capitalizing label */}
+                        {key.charAt(0).toUpperCase()}
+                        {key.slice(1)}
+                      </label>
+                      <input
+                        className='radio-input'
+                        name='difficulty'
+                        type='radio'
+                        value={key}
+                        checked={localSettings.difficulty[`${key}`]}
+                        // mapping object to get checked target
+                        onChange={(event) =>
+                          handleChange(event.target.name, {
+                            ..._.mapValues(localSettings.difficulty, () => false),
+                            [event.target.value]: event.target.checked,
+                          })
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className='input-cont'>
+                <label htmlFor='circleColor'>Circle Color</label>
+                <input
+                  name='circleColor'
+                  type='color'
+                  value={localSettings.circleColor}
+                  onChange={(event) => handleChange(event.target.name, event.target.value)}
+                />
+              </div>
+              <div className='input-cont'>
+                <label htmlFor='circleSize'>Circle Size</label>
+                <input
+                  className='range-input'
+                  name='circleSize'
+                  type='range'
+                  min='75'
+                  max='125'
+                  value={localSettings.circleSize}
+                  onChange={(event) => handleChange(event.target.name, event.target.value)}
+                />
               </div>
             </div>
-            <div className='input-cont'>
-              <label htmlFor='circleColor'>Circle Color</label>
-              <input
-                name='circleColor'
-                type='color'
-                value={localSettings.circleColor}
-                onChange={(event) => handleChange(event.target.name, event.target.value)}
-              />
-            </div>
-            <div className='input-cont'>
-              <label htmlFor='circleSize'>Circle Size</label>
-              <input
-                className='range-input'
-                name='circleSize'
-                type='range'
-                min='75'
-                max='125'
-                value={localSettings.circleSize}
-                onChange={(event) => handleChange(event.target.name, event.target.value)}
-              />
-            </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {props.mainAnims && (
           <motion.div
@@ -321,13 +334,13 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
 });
 
 GameSettings.propTypes = {
+  mainAnims: PropTypes.bool,
   settingsChanged: PropTypes.object,
   showSettings: PropTypes.object,
   currWarning: PropTypes.object,
   dispatchWarning: PropTypes.func,
   setResetBtnDisabled: PropTypes.func,
   setSaveBtnDisabled: PropTypes.func,
-  mainAnims: PropTypes.bool,
 };
 
 export default memo(GameSettings);
