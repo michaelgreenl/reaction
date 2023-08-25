@@ -26,6 +26,7 @@
   gap: 10%;
   margin-top: -5rem;
   transition: all 50ms ease-in;
+  justify-content: center;
 }
 
 .play .play-buttons-margin {
@@ -38,15 +39,7 @@
   background-color: var(--primary-white);
 }
 
-.play .end-stats {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 16%;
-}
-
-.play .end-stats .end-score {
+.play .end-score {
   font-size: 3.5em;
   margin-bottom: 0.75em;
 }

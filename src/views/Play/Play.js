@@ -7,8 +7,8 @@ import GameSettings from '../../components/GameSettings/GameSettings';
 import { PlayTilLose } from '../../components/Games/PlayTilLose';
 import Modal from '../../components/Modal/Modal';
 import { Scores } from '../../components/Scores/Scores';
-// import { AnimatePresence, motion } from 'framer-motion';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion, LayoutGroup } from 'framer-motion';
+// import { AnimatePresence } from 'framer-motion';
 
 function Play() {
   const { user } = useContext(UserContext);
@@ -27,7 +27,7 @@ function Play() {
     // Waits for the longest animation to finish before starting the game, this could be different depending on what is showing in the dom
     if (mainAnims) {
       setGameActive(false);
-    } else if (!mainAnims && !showSettings) {
+    } else {
       setTimeout(() => {
         setGameActive(true);
       }, '400');
@@ -60,7 +60,7 @@ function Play() {
     // Resets the settings, then removes the modal and starts the game
     gameSettingsRef.current.resetSettings();
     setCurrWarning(null);
-    setMainAnims(true);
+    setGameActive(true);
   });
 
   // onClick for 'Yes' button in 'startGameSettingsWarning' modal
@@ -70,7 +70,7 @@ function Play() {
     gameSettingsRef.current.saveSettings().then(
       () => {
         setCurrWarning(null);
-        setMainAnims(false);
+        setGameActive(false);
       },
       () => {
         setCurrWarning(null);
@@ -107,48 +107,109 @@ function Play() {
         <main className='main'>
           <AnimatePresence>{mainAnims && user.scores.length > 0 && !showSettings && <Scores />}</AnimatePresence>
           {!showEndScreen ? (
-            <>
-              <GameSettings
-                ref={gameSettingsRef}
-                settingsChanged={settingsChanged}
-                showSettings={{ get: showSettings, set: (toSet) => setShowSettings(toSet) }}
-                currWarning={{ get: currWarning, set: (toSet) => setCurrWarning(toSet) }}
-                dispatchWarning={dispatchWarning}
-                setResetBtnDisabled={setResetBtnDisabled}
-                setSaveBtnDisabled={setSaveBtnDisabled}
-                mainAnims={mainAnims}
-              />
-              <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
-                {showSettings ? (
-                  <>
+            <GameSettings
+              ref={gameSettingsRef}
+              settingsChanged={settingsChanged}
+              showSettings={{ get: showSettings, set: (toSet) => setShowSettings(toSet) }}
+              currWarning={{ get: currWarning, set: (toSet) => setCurrWarning(toSet) }}
+              dispatchWarning={dispatchWarning}
+              setResetBtnDisabled={setResetBtnDisabled}
+              setSaveBtnDisabled={setSaveBtnDisabled}
+              mainAnims={mainAnims}
+            />
+          ) : (
+            <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
+          )}
+          <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
+            <LayoutGroup>
+              <AnimatePresence mode='wait'>
+                {mainAnims && !showEndScreen && showSettings && (
+                  <motion.div
+                    layout
+                    key='reset'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                  >
                     <Button
                       className='play-button'
                       text='Reset'
                       onClick={() => gameSettingsRef.current.resetSettings()}
                       disabled={resetBtnDisabled}
                     />
+                  </motion.div>
+                )}
+                {mainAnims && !showEndScreen && showSettings && (
+                  <motion.div
+                    layout
+                    key='save'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                  >
                     <Button
                       className='play-button'
                       text='Save'
                       onClick={() => gameSettingsRef.current.saveSettings()}
                       disabled={saveBtnDisabled}
                     />
-                  </>
-                ) : (
-                  <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
+                  </motion.div>
                 )}
-                <Button className='play-button' text='Start' onClick={() => checkStartSettings()} />
-              </div>
-            </>
-          ) : (
-            <div className='end-stats'>
-              <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
-              <div className='play-buttons'>
-                <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
-                <Button className='play-button' text='Play Again' onClick={() => setMainAnims(false)} />
-              </div>
-            </div>
-          )}
+                {mainAnims && !showEndScreen && !showSettings && (
+                  <motion.div
+                    layout
+                    key='settings'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                  >
+                    <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
+                  </motion.div>
+                )}
+                {showEndScreen && (
+                  <>
+                    <motion.div
+                      layout
+                      key='endSettings'
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    >
+                      <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
+                    </motion.div>
+                    <motion.div
+                      layout
+                      key='playAgain'
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    >
+                      <Button className='play-button' text='Play Again' onClick={() => setMainAnims(false)} />
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
+              <AnimatePresence>
+                {mainAnims && !showEndScreen && (
+                  <motion.div
+                    layout
+                    key='start'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                  >
+                    <Button className='play-button' text='Start' onClick={() => checkStartSettings()} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </LayoutGroup>
+          </div>
         </main>
       ) : (
         <PlayTilLose endGame={endGame} />
