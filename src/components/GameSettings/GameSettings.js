@@ -15,6 +15,7 @@ import { PolygonSvg } from '../../svgs/PolygonSvg';
 import { Button } from '../Button/Button';
 import { AnimatePresence, motion } from 'framer-motion';
 import './GameSettings.css';
+import { CautionSvg } from '../../svgs/CautionSvg';
 
 const GameSettings = forwardRef(function GameSettings(props, ref) {
   const _ = require('lodash');
@@ -25,6 +26,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
   // Game settings that will affect the difficulty of the game.
   // If user changes one of these after playing a game, the scores will be reset.
   const causesResetSettings = ['shrinkTime', 'difficulty', 'circleSize'];
+  const [causedScoreReset, setCausedScoreReset] = useState([]);
   const [enableScoreReset, setEnableScoreReset] = useState(false);
 
   useEffect(() => {
@@ -36,6 +38,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
       props.setSaveBtnDisabled(false);
     } else {
       // Sets enableScoreReset to false, as all settings are now equal to current user's gameSettings
+      setCausedScoreReset([]);
       setEnableScoreReset(false);
       props.settingsChanged.current = false;
       props.setResetBtnDisabled(true);
@@ -62,6 +65,11 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           !_.isEqual(localSettings[setting], gameSettings[setting])
         ) {
           toSet = true;
+          if (!causedScoreReset.includes(setting)) {
+            setCausedScoreReset((old) => [...old, setting]);
+          }
+        } else if (causedScoreReset.includes(setting)) {
+          setCausedScoreReset((old) => old.filter((el) => el !== setting));
         }
       }
       setEnableScoreReset(toSet);
@@ -227,7 +235,12 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
               </header>
               <hr className='settings-break' />
               <div className='input-cont'>
-                <label htmlFor='shrinkTime'>Circle Shrink Time</label>
+                <div className='label-cont'>
+                  {causedScoreReset.includes('shrinkTime') && <CautionSvg className='caution-svg' />}
+                  <label className='input-label' htmlFor='shrinkTime'>
+                    Circle Shrink Time
+                  </label>
+                </div>
                 <div className='number'>
                   <input
                     className='number-input'
@@ -262,7 +275,10 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                 </div>
               </div>
               <div className='input-cont'>
-                <span>Difficulty</span>
+                <div className='label-cont'>
+                  {causedScoreReset.includes('difficulty') && <CautionSvg className='caution-svg' />}
+                  <span className='input-label'>Difficulty</span>
+                </div>
                 <div className='radio-options'>
                   {Object.keys(gameSettings.difficulty).map((key) => (
                     <div className='radio-option' key={key}>
@@ -290,7 +306,12 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                 </div>
               </div>
               <div className='input-cont'>
-                <label htmlFor='circleColor'>Circle Color</label>
+                <div className='label-cont'>
+                  {causedScoreReset.includes('circleColor') && <CautionSvg className='caution-svg' />}
+                  <label className='input-label' htmlFor='circleColor'>
+                    Circle Color
+                  </label>
+                </div>
                 <input
                   name='circleColor'
                   type='color'
@@ -299,7 +320,12 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                 />
               </div>
               <div className='input-cont'>
-                <label htmlFor='circleSize'>Circle Size</label>
+                <div className='label-cont'>
+                  {causedScoreReset.includes('circleSize') && <CautionSvg className='caution-svg' />}
+                  <label className='input-label' htmlFor='circleSize'>
+                    Circle Size
+                  </label>
+                </div>
                 <input
                   className='range-input'
                   name='circleSize'
