@@ -59,16 +59,26 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
     if (user.scores.length) {
       let toSet = false;
       for (const setting of causesResetSettings) {
-        // Since on of the settings is an object !_.isEqual(localSettings[setting], gameSettings[setting]) is also checked.
-        if (
-          localSettings[setting] !== gameSettings[setting] &&
-          !_.isEqual(localSettings[setting], gameSettings[setting])
-        ) {
+        // The circle size setting should only cause enableScoreReset to be true if the range property is different
+        if (setting === 'circleSize' && localSettings.circleSize.range !== gameSettings.circleSize.range) {
           toSet = true;
           if (!causedScoreReset.includes(setting)) {
             setCausedScoreReset((old) => [...old, setting]);
           }
+        } else if (
+          // Since on of the settings is an object !_.isEqual(localSettings[setting], gameSettings[setting]) is also checked.
+          localSettings[setting] !== gameSettings[setting] &&
+          !_.isEqual(localSettings[setting], gameSettings[setting]) &&
+          setting !== 'circleSize'
+        ) {
+          toSet = true;
+
+          // If the setting isn't already in causedScoreReset, add it
+          if (!causedScoreReset.includes(setting)) {
+            setCausedScoreReset((old) => [...old, setting]);
+          }
         } else if (causedScoreReset.includes(setting)) {
+          // If causedScoreReset includes the setting that has been reset, remove that setting
           setCausedScoreReset((old) => old.filter((el) => el !== setting));
         }
       }
@@ -335,6 +345,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                   value={localSettings.circleSize.px}
                   onChange={(event) =>
                     handleChange(event.target.name, {
+                      // Getting the range for the circle size based on the changed value
                       range: _.range(75, 92).includes(parseInt(event.target.value))
                         ? 'sm'
                         : _.range(92, 108).includes(parseInt(event.target.value))
