@@ -14,7 +14,7 @@ export const Circle = (props) => {
   const circleStyle = useMemo(() => {
     return {
       ...props.styles,
-      width: `${!props.localSettings ? gameSettings.circleSize : props.localSettings.circleSize}px`,
+      width: `${!props.localSettings ? gameSettings.circleSize.px : props.localSettings.circleSize.px}px`,
       backgroundColor: !props.localSettings ? gameSettings.circleColor : props.localSettings.circleColor,
     };
   });
@@ -49,12 +49,14 @@ export const Circle = (props) => {
       className='circle-cont'
       style={{
         ...circleStyle,
-        height: `${!props.localSettings ? gameSettings.circleSize : props.localSettings.circleSize}px`,
+        height: `${!props.localSettings ? gameSettings.circleSize.px : props.localSettings.circleSize.px}px`,
       }}
     >
       <motion.button
         className='circle'
-        initial={props.useTransition ? { height: gameSettings.circleSize, width: gameSettings.circleSize } : undefined}
+        initial={
+          props.useTransition ? { height: gameSettings.circleSize.px, width: gameSettings.circleSize.px } : undefined
+        }
         animate={controls}
         onMouseDown={props.useTransition ? () => setShowCircle(false) : undefined} // Activating fade transition onClick
         style={{ ...circleStyle }}

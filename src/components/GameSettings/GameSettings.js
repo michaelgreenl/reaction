@@ -306,8 +306,19 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                   type='range'
                   min='75'
                   max='125'
-                  value={localSettings.circleSize}
-                  onChange={(event) => handleChange(event.target.name, event.target.value)}
+                  value={localSettings.circleSize.px}
+                  onChange={(event) =>
+                    handleChange(event.target.name, {
+                      range: _.range(75, 92).includes(parseInt(event.target.value))
+                        ? 'sm'
+                        : _.range(92, 108).includes(parseInt(event.target.value))
+                        ? 'md'
+                        : _.range(108, 126).includes(parseInt(event.target.value))
+                        ? 'lg'
+                        : null,
+                      px: event.target.value,
+                    })
+                  }
                 />
               </div>
             </div>

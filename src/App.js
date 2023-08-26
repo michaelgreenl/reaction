@@ -14,7 +14,7 @@ function App() {
         shrinkTime: 2.0,
         difficulty: { easy: false, medium: true, hard: false },
         circleColor: '#FFFFFF',
-        circleSize: 100,
+        circleSize: { range: 'md', px: 100 },
       },
       scores: [],
       optOuts: {
