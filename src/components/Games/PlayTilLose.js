@@ -11,25 +11,27 @@ export const PlayTilLose = (props) => {
   const { gameSettings } = user;
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
-  const [genTime, setGenTime] = useState(0);
   const [circleCount, setCircleCount] = useState(0);
 
-  useEffect(() => {
-    // Setting how fast a circle should be generated based on a selected difficulty
-    if (gameSettings.difficulty.easy) setGenTime(2.5);
-    if (gameSettings.difficulty.medium) setGenTime(1.25);
-    if (gameSettings.difficulty.hard) setGenTime(0.75);
-  }, []);
+  useEffect(() => generateCircle(), []);
 
-  const { timer, resetTimer } = useTimer(genTime, 0.01);
+  const { timerComplete, resetTimer } = useTimer({
+    timeVal: gameSettings.difficulty.easy
+      ? 2.5
+      : gameSettings.difficulty.medium
+      ? 1.25
+      : gameSettings.difficulty.hard
+      ? 0.75
+      : null,
+  });
 
   useEffect(() => {
     // If the timer hook returns true the timer has reached 0 and a new circle should be generated.
-    if (timer) {
+    if (timerComplete) {
       resetTimer();
       generateCircle();
     }
-  }, [timer]);
+  }, [timerComplete]);
 
   function generateCircle() {
     // Creating a random position for the circle

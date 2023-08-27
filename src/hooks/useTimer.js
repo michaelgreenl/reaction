@@ -1,32 +1,33 @@
 import { useEffect, useState } from 'react';
 import propTypes from 'prop-types';
 
-export const useTimer = (timeVal, increment) => {
-  const [timer, setTimer] = useState(false);
+export const useTimer = ({ timeVal }) => {
+  const [timerComplete, setTimerComplete] = useState(false);
   const [time, setTime] = useState(timeVal);
+  const [startTime, setStartTime] = useState(Date.now());
 
   useEffect(() => {
-    let timer = setInterval(() => {
+    let timerInterval = setInterval(() => {
       if (time <= 0) {
-        // If the timer is <= 0 than set the timer to 0, then we can reset the timer using resetTimer()
-        setTimer(true);
+        setTimerComplete(true);
       } else {
-        // If the timer is above 0, continue to decrement the timer and return false.
-        setTime(Number(time - increment).toFixed(2));
-        return false;
+        // Getting the current elapsed time based on the current time, set to seconds by dividing by 1000
+        // Then subtracting the elapsed time from the timer's original set time
+        setTime(Number(timeVal - (Date.now() - startTime) / 1000));
       }
     }, 10);
     return () => {
-      clearInterval(timer);
+      clearInterval(timerInterval);
     };
   });
 
   function resetTimer() {
-    setTimer(false);
+    setStartTime(Date.now());
+    setTimerComplete(false);
     setTime(timeVal);
   }
 
-  return { timer, time, resetTimer };
+  return { timerComplete, time, resetTimer };
 };
 
 useTimer.propTypes = {
