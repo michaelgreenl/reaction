@@ -5,11 +5,16 @@ import { motion } from 'framer-motion';
 
 export const Button = (props) => {
   return (
-    <button
+    <motion.button
       className={`button ${props.className}`}
       style={{ ...props.styling }}
       onClick={() => props.onClick()}
       disabled={props.disabled}
+      initial={props.btnInitial}
+      animate={props.btnAnimate}
+      exit={props.btnExit}
+      variants={props.btnVariants}
+      transition={props.btnTransition}
     >
       {props.text && <span className='button-text'>{props.text}</span>}
       {props.svgInitial && (
@@ -28,7 +33,7 @@ export const Button = (props) => {
           />
         </motion.svg>
       )}
-    </button>
+    </motion.button>
   );
 };
 
@@ -37,6 +42,11 @@ Button.propTypes = {
   className: PropTypes.string,
   styling: PropTypes.object,
   disabled: PropTypes.bool,
+  btnInitial: PropTypes.any,
+  btnAnimate: PropTypes.any,
+  btnExit: PropTypes.any,
+  btnVariants: PropTypes.object,
+  btnTransition: PropTypes.object,
   text: PropTypes.string,
   svgClassName: PropTypes.string,
   viewBox: PropTypes.string,
