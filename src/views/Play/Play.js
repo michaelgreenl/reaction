@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useCallback, useReducer, useEffect } from 'react';
+import React, { useState, useContext, useRef, useCallback, useReducer, useEffect, useMemo } from 'react';
 import './Play.css';
 import { UserContext } from '../../hooks/UserContext';
 import Navbar from '../../components/Navbar/Navbar';
@@ -91,6 +91,15 @@ function Play() {
     setShowSettings(true);
   };
 
+  const buttonVariants = useMemo(() => {
+    return {
+      initial: { opacity: 0, transition: { duration: 0.25, layout: { duration: 0.1 } } },
+      animate: { opacity: 1, transition: { duration: 0.25, layout: { duration: 0.1 } } },
+      exit: { opacity: 0, transition: { duration: 0.25, layout: { duration: 0.1 } } },
+      transition: { layout: { duration: 0.2, ease: 'easeOut' } },
+    };
+  });
+
   return (
     <div className='play'>
       <Navbar />
@@ -128,10 +137,10 @@ function Play() {
                   <motion.div
                     layout
                     key='reset'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    initial={buttonVariants.initial}
+                    animate={buttonVariants.animate}
+                    exit={buttonVariants.exit}
+                    transition={buttonVariants.transition}
                   >
                     <Button
                       className='play-button'
@@ -145,10 +154,10 @@ function Play() {
                   <motion.div
                     layout
                     key='save'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    initial={buttonVariants.initial}
+                    animate={buttonVariants.animate}
+                    exit={buttonVariants.exit}
+                    transition={buttonVariants.transition}
                   >
                     <Button
                       className='play-button'
@@ -162,10 +171,10 @@ function Play() {
                   <motion.div
                     layout
                     key='settings'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    initial={buttonVariants.initial}
+                    animate={buttonVariants.animate}
+                    exit={buttonVariants.exit}
+                    transition={buttonVariants.transition}
                   >
                     <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
                   </motion.div>
@@ -174,10 +183,10 @@ function Play() {
                   <motion.div
                     layout
                     key='endSettings'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    initial={buttonVariants.initial}
+                    animate={buttonVariants.animate}
+                    exit={buttonVariants.exit}
+                    transition={buttonVariants.transition}
                   >
                     <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
                   </motion.div>
@@ -188,10 +197,10 @@ function Play() {
                   <motion.div
                     layout
                     key='start'
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.25, layout: { duration: 0.1 } }}
+                    initial={buttonVariants.initial}
+                    animate={buttonVariants.animate}
+                    exit={buttonVariants.exit}
+                    transition={buttonVariants.transition}
                   >
                     <Button
                       className='play-button'
