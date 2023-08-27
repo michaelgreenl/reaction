@@ -41,11 +41,11 @@
   margin: 0.25em 0;
   padding: 0;
   list-style: none;
-  width: 103%;
+  width: 106.5%;
 }
 
 .scores .score-list::-webkit-scrollbar {
-  width: 5px;
+  width: 7px;
 }
 
 .scores .score-list::-webkit-scrollbar-thumb {

@@ -3,9 +3,9 @@ import { UserContext } from '../../hooks/UserContext';
 import './Scores.css';
 import { Button } from '../Button/Button';
 import { usePresence, useAnimation, motion } from 'framer-motion';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-export const Scores = () => {
+export const Scores = (props) => {
   const { user } = useContext(UserContext);
   const [isPresent, safeToRemove] = usePresence();
   const divControls = useAnimation();
@@ -70,8 +70,8 @@ export const Scores = () => {
       <hr className='scores-break' />
       {/* Making the scroll bar thumb transparent during the dropdown closing */}
       <ul className={`score-list ${scoresDiv === 'closed' ? 'transparent-scroll' : undefined}`}>
-        {user.scores.map((score, i) => (
-          <li key={i} className='score'>
+        {user.scores.toReversed().map((score, i) => (
+          <li key={i} className='score' style={{ background: i === 0 && props.showEndScreen ? '#f5f5f5' : undefined }}>
             <span>{score}</span>
             <span className='time'>0:00</span>
           </li>
@@ -81,4 +81,6 @@ export const Scores = () => {
   );
 };
 
-// Scores.propTypes = {};
+Scores.propTypes = {
+  showEndScreen: PropTypes.bool,
+};
