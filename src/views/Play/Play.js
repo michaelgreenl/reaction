@@ -93,12 +93,24 @@ function Play() {
 
   const buttonVariants = useMemo(() => {
     return {
+      layout: true,
       initial: { opacity: 0, transition: { duration: 0.25, layout: { duration: 0.1 } } },
       animate: { opacity: 1, transition: { duration: 0.25, layout: { duration: 0.1 } } },
       exit: { opacity: 0, transition: { duration: 0.25, layout: { duration: 0.1 } } },
       transition: { layout: { duration: 0.2, ease: 'easeOut' } },
     };
   });
+
+  const GameSettingsProps = {
+    ref: gameSettingsRef,
+    settingsChanged: settingsChanged,
+    showSettings: { get: showSettings, set: (toSet) => setShowSettings(toSet) },
+    currWarning: { get: currWarning, set: (toSet) => setCurrWarning(toSet) },
+    dispatchWarning: dispatchWarning,
+    setResetBtnDisabled: setResetBtnDisabled,
+    setSaveBtnDisabled: setSaveBtnDisabled,
+    mainAnims: mainAnims,
+  };
 
   return (
     <div className='play'>
@@ -117,16 +129,7 @@ function Play() {
             {mainAnims && user.scores.length > 0 && !showSettings && <Scores showEndScreen={showEndScreen} />}
           </AnimatePresence>
           {!showEndScreen ? (
-            <GameSettings
-              ref={gameSettingsRef}
-              settingsChanged={settingsChanged}
-              showSettings={{ get: showSettings, set: (toSet) => setShowSettings(toSet) }}
-              currWarning={{ get: currWarning, set: (toSet) => setCurrWarning(toSet) }}
-              dispatchWarning={dispatchWarning}
-              setResetBtnDisabled={setResetBtnDisabled}
-              setSaveBtnDisabled={setSaveBtnDisabled}
-              mainAnims={mainAnims}
-            />
+            <GameSettings {...GameSettingsProps} />
           ) : (
             <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
           )}
@@ -134,14 +137,7 @@ function Play() {
             <LayoutGroup>
               <AnimatePresence mode='wait'>
                 {mainAnims && !showEndScreen && showSettings && (
-                  <motion.div
-                    layout
-                    key='reset'
-                    initial={buttonVariants.initial}
-                    animate={buttonVariants.animate}
-                    exit={buttonVariants.exit}
-                    transition={buttonVariants.transition}
-                  >
+                  <motion.div key='reset' {...buttonVariants}>
                     <Button
                       className='play-button'
                       text='Reset'
@@ -151,14 +147,7 @@ function Play() {
                   </motion.div>
                 )}
                 {mainAnims && !showEndScreen && showSettings && (
-                  <motion.div
-                    layout
-                    key='save'
-                    initial={buttonVariants.initial}
-                    animate={buttonVariants.animate}
-                    exit={buttonVariants.exit}
-                    transition={buttonVariants.transition}
-                  >
+                  <motion.div key='save' {...buttonVariants}>
                     <Button
                       className='play-button'
                       text='Save'
@@ -168,40 +157,19 @@ function Play() {
                   </motion.div>
                 )}
                 {mainAnims && !showEndScreen && !showSettings && (
-                  <motion.div
-                    layout
-                    key='settings'
-                    initial={buttonVariants.initial}
-                    animate={buttonVariants.animate}
-                    exit={buttonVariants.exit}
-                    transition={buttonVariants.transition}
-                  >
+                  <motion.div key='settings' {...buttonVariants}>
                     <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
                   </motion.div>
                 )}
                 {mainAnims && showEndScreen && (
-                  <motion.div
-                    layout
-                    key='endSettings'
-                    initial={buttonVariants.initial}
-                    animate={buttonVariants.animate}
-                    exit={buttonVariants.exit}
-                    transition={buttonVariants.transition}
-                  >
+                  <motion.div key='endSettings' {...buttonVariants}>
                     <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
                   </motion.div>
                 )}
               </AnimatePresence>
               <AnimatePresence>
                 {mainAnims && (
-                  <motion.div
-                    layout
-                    key='start'
-                    initial={buttonVariants.initial}
-                    animate={buttonVariants.animate}
-                    exit={buttonVariants.exit}
-                    transition={buttonVariants.transition}
-                  >
+                  <motion.div key='start' {...buttonVariants}>
                     <Button
                       className='play-button'
                       text={!showEndScreen ? 'Start' : 'Play Again'}
