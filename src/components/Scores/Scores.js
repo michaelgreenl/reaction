@@ -72,8 +72,8 @@ export const Scores = (props) => {
       <ul className={`score-list ${scoresDiv === 'closed' ? 'transparent-scroll' : undefined}`}>
         {user.scores.toReversed().map((score, i) => (
           <li key={i} className='score' style={{ background: i === 0 && props.showEndScreen ? '#f5f5f5' : undefined }}>
-            <span>{score}</span>
-            <span className='time'>0:00</span>
+            <span>{score.score}</span>
+            <span className='time'>{score.time}</span>
           </li>
         ))}
       </ul>

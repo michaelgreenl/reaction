@@ -131,7 +131,7 @@ function Play() {
           {!showEndScreen ? (
             <GameSettings {...GameSettingsProps} />
           ) : (
-            <span className='end-score'>{user.scores[user.scores.length - 1]}</span>
+            <span className='end-score'>{user.scores[user.scores.length - 1].score}</span>
           )}
           <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
             <LayoutGroup>
