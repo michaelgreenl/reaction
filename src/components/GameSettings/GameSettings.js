@@ -124,6 +124,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           props.settingsChanged.current = false;
           setEnableScoreReset(false);
           props.currWarning.set(null);
+          setCausedScoreReset([]);
           res();
         }
       }),
