@@ -15,7 +15,7 @@ export const PlayTilLose = (props) => {
 
   useEffect(() => generateCircle(), []);
 
-  const { timerComplete, resetTimer } = useTimer({
+  const { timerComplete, resetTimer, stopwatchTime } = useTimer({
     timeVal: gameSettings.difficulty.easy
       ? 2.5
       : gameSettings.difficulty.medium
@@ -77,6 +77,7 @@ export const PlayTilLose = (props) => {
 
   return (
     <div className='canvas'>
+      <span>{stopwatchTime}</span>
       <span className='curr-score'>{currScore}</span>
       {circles.map((circle) => (
         <Circle
