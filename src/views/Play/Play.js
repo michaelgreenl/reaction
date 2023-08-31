@@ -128,24 +128,32 @@ function Play() {
           <AnimatePresence>
             {mainAnims && user.scores.length > 0 && !showSettings && <Scores showEndScreen={showEndScreen} />}
           </AnimatePresence>
-          {!showEndScreen ? (
-            <GameSettings {...GameSettingsProps} />
-          ) : (
-            <motion.div className='end-screen'>
-              <div className='end-stats-cont'>
-                <div className='end-stat-cont'>
-                  <h2 className='end-stat-head'>Score:</h2>
-                  <span className='end-stat'>{user.scores[user.scores.length - 1].score}</span>
+          <AnimatePresence mode='wait'>
+            {!showEndScreen ? (
+              <GameSettings {...GameSettingsProps} />
+            ) : (
+              <motion.div
+                key='endScreen'
+                className='end-screen'
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className='end-stats-cont'>
+                  <div className='end-stat-cont'>
+                    <h2 className='end-stat-head'>Score:</h2>
+                    <span className='end-stat'>{user.scores[user.scores.length - 1].score}</span>
+                  </div>
+                  <div className='end-stat-cont'>
+                    <h2 className='end-stat-head'>Time:</h2>
+                    <span className='end-stat'>{user.scores[user.scores.length - 1].time}</span>
+                  </div>
                 </div>
-                <div className='end-stat-cont'>
-                  <h2 className='end-stat-head'>Time:</h2>
-                  <span className='end-stat'>{user.scores[user.scores.length - 1].time}</span>
-                </div>
-              </div>
-              <hr className='end-screen-break' />
-            </motion.div>
-          )}
-          <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
+                <hr className='end-screen-break' />
+              </motion.div>
+            )}
+          </AnimatePresence>
+          <div className='play-buttons'>
             <LayoutGroup>
               <AnimatePresence mode='wait'>
                 {mainAnims && !showEndScreen && showSettings && (
