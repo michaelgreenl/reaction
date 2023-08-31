@@ -5,6 +5,7 @@ import { UserContext } from '../../hooks/UserContext';
 import { useTimer } from '../../hooks/useTimer';
 import { random } from 'lodash';
 import { Circle } from '../Circle/Circle';
+import { motion } from 'framer-motion';
 
 export const PlayTilLose = (props) => {
   const { user, setUser } = useContext(UserContext);
@@ -13,7 +14,7 @@ export const PlayTilLose = (props) => {
   const [currScore, setCurrScore] = useState(0);
   const [circleCount, setCircleCount] = useState(0);
 
-  useEffect(() => generateCircle(), []);
+  // useEffect(() => generateCircle(), []);
 
   const { timerComplete, resetTimer, stopwatchTime } = useTimer({
     timeVal: gameSettings.difficulty.easy
@@ -77,8 +78,24 @@ export const PlayTilLose = (props) => {
 
   return (
     <div className='canvas'>
-      <span>{stopwatchTime}</span>
-      <span className='curr-score'>{currScore}</span>
+      <motion.div
+        className='curr-game-stats'
+        initial={{ opacity: 0, x: 300 }}
+        animate={{ opacity: 1, x: 0 }}
+        onAnimationComplete={() => generateCircle()}
+      >
+        <div className='game-stats'>
+          <div className='game-stat-cont'>
+            <h2 className='game-stat-head'>Score:</h2>
+            <span className='game-stat'>{currScore}</span>
+          </div>
+          <div className='game-stat-cont'>
+            <h2 className='game-stat-head'>Time:</h2>
+            <span className='game-stat'>{stopwatchTime}</span>
+          </div>
+        </div>
+        <hr className='game-stat-break' />
+      </motion.div>
       {circles.map((circle) => (
         <Circle
           key={circle.key}
