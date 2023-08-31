@@ -220,7 +220,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
   });
 
   return (
-    <div className='game-settings'>
+    <div className={`game-settings ${props.showSettings.get ? 'game-settings-open' : undefined}`}>
       <AnimatePresence>
         {props.mainAnims && props.showSettings.get && (
           <motion.div
@@ -266,7 +266,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                   <div className='number-arrows'>
                     <button
                       className='number-arrow'
-                      style={{ transform: 'translate(-1px, 15px) rotate(-90deg)' }}
+                      // style={{ transform: 'translate(-1px, 15px) rotate(-90deg)' }}
                       // Decrement shrinkTime
                       onClick={() => handleChange('shrinkTime', localSettings.shrinkTime - 0.5)}
                       disabled={localSettings.shrinkTime === 0.5}
@@ -275,7 +275,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                     </button>
                     <button
                       className='number-arrow'
-                      style={{ transform: 'translate(-1px, -15px) rotate(90deg)' }}
+                      // style={{ transform: 'translate(-1px, -15px) rotate(90deg)' }}
                       // Increment shrinkTime
                       onClick={() => handleChange('shrinkTime', localSettings.shrinkTime + 0.5)}
                       disabled={localSettings.shrinkTime === 3}

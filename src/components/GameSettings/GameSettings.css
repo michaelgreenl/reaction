@@ -7,6 +7,10 @@
   margin-bottom: 5rem;
 }
 
+.game-settings-open {
+  margin-bottom: 10rem;
+}
+
 .game-settings .settings-item {
   position: relative;
   height: 100%;
@@ -47,7 +51,6 @@
 }
 
 .game-settings .close-button {
-  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,9 +64,13 @@
   background: rgba(214, 74, 128, 0.1);
 }
 
-.game-settings .header-close-svg {
+.game-settings .close-button-svg {
+  stroke: var(--bright-pink);
+  stroke: #ec6e9e;
+  stroke-width: 14px;
+  stroke-linecap: round;
   width: 1em;
-  fill: var(--bright-pink);
+  height: 1em;
 }
 
 .game-settings .settings-break {
@@ -77,8 +84,24 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin: 0.25em 0;
+  margin: 0.35em 0;
   padding: 0 0.5em;
+}
+
+.game-settings .label-cont {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-settings .input-label {
+  white-space: nowrap;
+} 
+
+.game-settings .caution-svg {
+  width: 1em;
+  height: 1em;
+  fill: rgb(241, 183, 75);
 }
 
 .game-settings .number {
@@ -111,6 +134,14 @@
   padding: 0;
 }
 
+.game-settings .number-arrow:first-child {
+  transform: translate(-1px, 15px) rotate(-90deg);
+}
+
+.game-settings .number-arrow:last-child {
+  transform: translate(-1px, -15px) rotate(90deg);
+}
+
 .game-settings .number-arrow .number-polygon {
   height: 15px;
   fill: var(--bright-pink);
@@ -118,7 +149,6 @@
 
 .game-settings .radio-options {
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: space-evenly;
   gap: 1em;
@@ -130,7 +160,7 @@
   margin-left: auto;
 }
 
-.radio-label {
+.game-settings .radio-label {
   margin-right: 0.25em;
 }
 
@@ -172,11 +202,14 @@
 
 .game-settings .range-input::-webkit-slider-thumb {
   appearance: none;
+  position: relative;
   cursor: grab;
   height: 1em;
   width: 1em;
   background: var(--bright-pink);
   border-radius: 50%;
+  z-index: 2;
+  transition: all 25ms ease;
 }
 
 .game-settings .range-input::-webkit-slider-thumb:active {
@@ -199,7 +232,7 @@
   content: '';
   width: 0.66em;
   height: 0.66em;
-  background-color: var(--bright-pink); 
+  background-color: var(--bright-pink);
   border-radius: 2px;
   margin: 0;
   opacity: 0;
@@ -209,8 +242,6 @@
   opacity: 1;
 }
 
-
-
-
-
-
+.game-settings .settings-circle {
+  position: relative;
+}

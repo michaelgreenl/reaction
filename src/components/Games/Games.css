@@ -26,6 +26,7 @@
 }
 
 .canvas .game-stat-head {
+  font-weight: 600;
   font-size: 2rem;
   color: var(--light-pink);
   margin: 0.25em 0;

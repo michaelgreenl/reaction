@@ -51,7 +51,6 @@
   padding: 1.5em;
   margin-bottom: 4rem;
   width: 45rem;
-  /* width: 50%; */
 }
 
 .play .end-stats-cont {
@@ -77,7 +76,6 @@
 
 .play .end-stat {
   font-size: 3rem;
-  /* margin-bottom: 0.75em; */
 }
 
 .play .end-screen-break {
