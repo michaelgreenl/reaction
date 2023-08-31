@@ -131,7 +131,19 @@ function Play() {
           {!showEndScreen ? (
             <GameSettings {...GameSettingsProps} />
           ) : (
-            <span className='end-score'>{user.scores[user.scores.length - 1].score}</span>
+            <motion.div className='end-screen'>
+              <div className='end-stats-cont'>
+                <div className='end-stat-cont'>
+                  <h2 className='end-stat-head'>Score:</h2>
+                  <span className='end-stat'>{user.scores[user.scores.length - 1].score}</span>
+                </div>
+                <div className='end-stat-cont'>
+                  <h2 className='end-stat-head'>Time:</h2>
+                  <span className='end-stat'>{user.scores[user.scores.length - 1].time}</span>
+                </div>
+              </div>
+              <hr className='end-screen-break' />
+            </motion.div>
           )}
           <div className={`play-buttons ${showSettings ? 'play-buttons-margin' : undefined}`}>
             <LayoutGroup>
