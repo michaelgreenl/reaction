@@ -23,14 +23,14 @@ export const Circle = (props) => {
   const controls = useAnimation();
 
   useEffect(() => {
-    if (props.useTransition && !showCircle) {
+    if ((props.useTransition && !showCircle) || props.gameEnded) {
       controls.stop();
       controls
         .start({
           height: 12,
           width: 12,
           opacity: 0,
-          transition: { duration: 0.025, ease: 'easeOut' },
+          transition: { duration: !props.gameEnded ? 0.025 : 0.3, ease: 'easeOut' },
         })
         .then(() => props.onClick());
     } else if (props.useTransition && showCircle) {
@@ -42,7 +42,7 @@ export const Circle = (props) => {
         })
         .then(() => (showCircleRef.current ? props.animationEnd() : undefined));
     }
-  }, [showCircle]);
+  }, [showCircle, props.gameEnded]);
 
   return (
     <div
@@ -72,4 +72,5 @@ Circle.propTypes = {
   useTransition: PropTypes.bool,
   animationEnd: PropTypes.func,
   localSettings: PropTypes.object,
+  gameEnded: PropTypes.bool,
 };

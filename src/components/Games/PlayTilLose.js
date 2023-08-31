@@ -5,7 +5,7 @@ import { UserContext } from '../../hooks/UserContext';
 import { useTimer } from '../../hooks/useTimer';
 import { random } from 'lodash';
 import { Circle } from '../Circle/Circle';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 export const PlayTilLose = (props) => {
   const { user, setUser } = useContext(UserContext);
@@ -13,8 +13,7 @@ export const PlayTilLose = (props) => {
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
   const [circleCount, setCircleCount] = useState(0);
-
-  // useEffect(() => generateCircle(), []);
+  const [gameEnded, setGameEnded] = useState(false);
 
   const { timerComplete, resetTimer, stopwatchTime } = useTimer({
     timeVal: gameSettings.difficulty.easy
@@ -28,7 +27,7 @@ export const PlayTilLose = (props) => {
 
   useEffect(() => {
     // If the timer hook returns true the timer has reached 0 and a new circle should be generated.
-    if (timerComplete) {
+    if (timerComplete && !gameEnded) {
       resetTimer();
       generateCircle();
     }
@@ -66,8 +65,7 @@ export const PlayTilLose = (props) => {
   }
 
   function gameLostListener() {
-    props.endGame();
-    setCircles([]);
+    setGameEnded(true);
     setUser({
       ...user,
       scores: [...user.scores, { score: currScore, time: stopwatchTime }],
@@ -78,24 +76,29 @@ export const PlayTilLose = (props) => {
 
   return (
     <div className='canvas'>
-      <motion.div
-        className='curr-game-stats'
-        initial={{ opacity: 0, x: 300 }}
-        animate={{ opacity: 1, x: 0 }}
-        onAnimationComplete={() => generateCircle()}
-      >
-        <div className='game-stats'>
-          <div className='game-stat-cont'>
-            <h2 className='game-stat-head'>Score:</h2>
-            <span className='game-stat'>{currScore}</span>
-          </div>
-          <div className='game-stat-cont'>
-            <h2 className='game-stat-head'>Time:</h2>
-            <span className='game-stat'>{stopwatchTime}</span>
-          </div>
-        </div>
-        <hr className='game-stat-break' />
-      </motion.div>
+      <AnimatePresence onExitComplete={() => props.endGame()}>
+        {!gameEnded && (
+          <motion.div
+            className='curr-game-stats'
+            initial={{ opacity: 0, x: 300 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 300 }}
+            onAnimationComplete={() => generateCircle()}
+          >
+            <div className='game-stats'>
+              <div className='game-stat-cont'>
+                <h2 className='game-stat-head'>Score:</h2>
+                <span className='game-stat'>{currScore}</span>
+              </div>
+              <div className='game-stat-cont'>
+                <h2 className='game-stat-head'>Time:</h2>
+                <span className='game-stat'>{stopwatchTime}</span>
+              </div>
+            </div>
+            <hr className='game-stat-break' />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {circles.map((circle) => (
         <Circle
           key={circle.key}
@@ -103,6 +106,7 @@ export const PlayTilLose = (props) => {
           styles={circle.styles}
           useTransition={true}
           animationEnd={gameLostListener}
+          gameEnded={gameEnded}
         />
       ))}
     </div>
