@@ -18,16 +18,129 @@ import './GameSettings.css';
 import { CautionSvg } from '../../svgs/CautionSvg';
 
 const GameSettings = forwardRef(function GameSettings(props, ref) {
+  const { REACT_APP_API_URL } = process.env;
   const _ = require('lodash');
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser, userRef } = useContext(UserContext);
   const { gameSettings } = user;
   const [localSettings, setLocalSettings] = useState(gameSettings);
 
   // Game settings that will affect the difficulty of the game.
-  // If user changes one of these after playing a game, the scores will be reset.
+  // If user changes one of these after playing a game, the games will be reset.
   const causesResetSettings = ['shrinkTime', 'difficulty', 'circleSize'];
   const [causedScoreReset, setCausedScoreReset] = useState([]);
   const [enableScoreReset, setEnableScoreReset] = useState(false);
+
+  useEffect(() => {
+    if (user.isLoggedIn) {
+      fetch(`${REACT_APP_API_URL}/settings?settingsId=${user.settingsId}&userId=${user.userId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const err = await res.json();
+            if (err.message) {
+              throw new Error(err.message);
+            }
+            throw new Error('ERROR');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setLocalSettings({
+            ...localSettings,
+            shrinkTime: data.shrinkTime,
+            difficulty: {
+              easy: data.difficulty === 'easy',
+              medium: data.difficulty === 'medium',
+              hard: data.difficulty === 'hard',
+            },
+            circleColor: data.circleColor,
+            circleSize: {
+              range: _.range(75, 92).includes(data.circleSize)
+                ? 'sm'
+                : _.range(92, 108).includes(data.circleSize)
+                ? 'md'
+                : _.range(108, 126).includes(data.circleSize)
+                ? 'lg'
+                : null,
+              px: data.circleSize,
+            },
+          });
+          setUser({
+            ...user,
+            gameSettings: {
+              shrinkTime: data.shrinkTime,
+              difficulty: {
+                easy: data.difficulty === 'easy',
+                medium: data.difficulty === 'medium',
+                hard: data.difficulty === 'hard',
+              },
+              circleColor: data.circleColor,
+              circleSize: {
+                range: _.range(75, 92).includes(data.circleSize)
+                  ? 'sm'
+                  : _.range(92, 108).includes(data.circleSize)
+                  ? 'md'
+                  : _.range(108, 126).includes(data.circleSize)
+                  ? 'lg'
+                  : null,
+                px: data.circleSize,
+              },
+            },
+          });
+          window.localStorage.setItem('USER', JSON.stringify(userRef.current));
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } else if (!_.isEqual(user.gameSettings, gameSettings)) {
+      setLocalSettings({
+        ...localSettings,
+        shrinkTime: user.gameSettings.shrinkTime,
+        difficulty: {
+          easy: user.gameSettings.difficulty === 'easy',
+          medium: user.gameSettings.difficulty === 'medium',
+          hard: user.gameSettings.difficulty === 'hard',
+        },
+        circleColor: user.gameSettings.circleColor,
+        circleSize: {
+          range: _.range(75, 92).includes(user.gameSettings.circleSize)
+            ? 'sm'
+            : _.range(92, 108).includes(user.gameSettings.circleSize)
+            ? 'md'
+            : _.range(108, 126).includes(user.gameSettings.circleSize)
+            ? 'lg'
+            : null,
+          px: user.gameSettings.circleSize,
+        },
+      });
+      setUser({
+        ...user,
+        gameSettings: {
+          shrinkTime: user.gameSettings.shrinkTime,
+          difficulty: {
+            easy: user.gameSettings.difficulty === 'easy',
+            medium: user.gameSettings.difficulty === 'medium',
+            hard: user.gameSettings.difficulty === 'hard',
+          },
+          circleColor: user.gameSettings.circleColor,
+          circleSize: {
+            range: _.range(75, 92).includes(user.gameSettings.circleSize)
+              ? 'sm'
+              : _.range(92, 108).includes(user.gameSettings.circleSize)
+              ? 'md'
+              : _.range(108, 126).includes(user.gameSettings.circleSize)
+              ? 'lg'
+              : null,
+            px: user.gameSettings.circleSize,
+          },
+        },
+      });
+    }
+  }, []);
 
   useEffect(() => {
     // When the localSettings are changed, this checks if they are equal to the current user's gameSettings.
@@ -56,7 +169,7 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
   // If the user changes a setting, this checks if the user has played a game and the setting is in causesResetSettings.
   // If user it sets enableScoreReset to true.
   const checkScoreReset = useCallback(() => {
-    if (user.scores.length) {
+    if (user.games.length) {
       let toSet = false;
       for (const setting of causesResetSettings) {
         // The circle size setting should only cause enableScoreReset to be true if the range property is different
@@ -110,12 +223,55 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
           props.currWarning.set('saveGameSettingsWarning');
         } else {
           // Saving settings
+          if (user.isLoggedIn) {
+            fetch(`${REACT_APP_API_URL}/settings/`, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${user.token}`,
+              },
+              body: JSON.stringify({
+                settingsId: user.settingsId,
+                userId: user.userId,
+                shrinkTime: localSettings.shrinkTime,
+                difficulty: Object.keys(localSettings.difficulty).find((key) => localSettings.difficulty[key] === true),
+                circleColor: localSettings.circleColor,
+                circleSize: localSettings.circleSize.px,
+              }),
+            })
+              .then(async (res) => {
+                if (!res.ok) {
+                  const err = await res.json();
+                  if (err.message) {
+                    throw new Error(err.message);
+                  }
+                  throw new Error('ERROR');
+                }
+                return res.json();
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          }
+          window.localStorage.setItem(
+            'USER',
+            JSON.stringify({
+              ...user,
+              gameSettings: {
+                shrinkTime: localSettings.shrinkTime,
+                difficulty: localSettings.difficulty,
+                circleColor: localSettings.circleColor,
+                circleSize: localSettings.circleSize,
+              },
+            }),
+          );
           setUser({
             ...user,
             gameSettings: {
               ...localSettings,
             },
-            scores: enableScoreReset ? [] : user.scores,
+            // FIXME: This can be changed in the future
+            games: enableScoreReset ? [] : user.games,
           });
 
           // Resetting necessary state variables and executing res()
@@ -266,7 +422,6 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                   <div className='number-arrows'>
                     <button
                       className='number-arrow'
-                      // style={{ transform: 'translate(-1px, 15px) rotate(-90deg)' }}
                       // Decrement shrinkTime
                       onClick={() => handleChange('shrinkTime', localSettings.shrinkTime - 0.5)}
                       disabled={localSettings.shrinkTime === 0.5}
@@ -275,7 +430,6 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                     </button>
                     <button
                       className='number-arrow'
-                      // style={{ transform: 'translate(-1px, -15px) rotate(90deg)' }}
                       // Increment shrinkTime
                       onClick={() => handleChange('shrinkTime', localSettings.shrinkTime + 0.5)}
                       disabled={localSettings.shrinkTime === 3}
