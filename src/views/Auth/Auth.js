@@ -3,6 +3,8 @@ import './Auth.css';
 import { UserContext } from '../../hooks/UserContext';
 import { Button } from '../../components/Button/Button';
 import Navbar from '../../components/Navbar/Navbar';
+import { LogoSvg } from '../../svgs/LogoSvg';
+import { CautionSvg } from '../../svgs/CautionSvg';
 
 function Auth() {
   const { user, setUser, userRef } = useContext(UserContext);
@@ -47,7 +49,7 @@ function Auth() {
           userId: data.id,
           settingsId: data.settingsId,
           statsId: data.statsId,
-          username: 'username',
+          username: username,
           isLoggedIn: true,
         });
         window.localStorage.setItem('USER', JSON.stringify(userRef.current));
@@ -84,7 +86,7 @@ function Auth() {
           userId: data.id,
           settingsId: data.settingsId,
           statsId: data.statsId,
-          username: 'username',
+          username: username,
           isLoggedIn: true,
         });
         window.localStorage.setItem('USER', JSON.stringify(userRef.current));
@@ -99,10 +101,17 @@ function Auth() {
       <Navbar />
       <div className='auth-cont'>
         <header className='auth-header'>
+          <LogoSvg className='header-logo-svg' />
           <h3 className='header-text'>{isLoggingIn ? 'Login' : 'Sign Up'}</h3>
         </header>
-        <span className='auth-warning'>{warning}</span>
-        <form onSubmit={isLoggingIn ? (e) => handleLogin(e) : (e) => handleCreateUser(e)}>
+        <hr className='auth-break' />
+        {warning && (
+          <div className='warning-cont'>
+            <CautionSvg className='caution-svg' />
+            <span className='auth-warning'>{warning}</span>
+          </div>
+        )}
+        <form className='auth-form' onSubmit={isLoggingIn ? (e) => handleLogin(e) : (e) => handleCreateUser(e)}>
           <div className='input-cont'>
             <label className='input-label' htmlFor='username'>
               Username
@@ -150,11 +159,17 @@ function Auth() {
               ></input>
             </div>
           )}
-          <Button type='submit' text={isLoggingIn ? 'Login' : 'Sign Up'} />
+          <Button className='submit-button' type='submit' text={isLoggingIn ? 'Login' : 'Sign Up'} />
         </form>
         <footer className='auth-footer'>
-          <span className='footer-text'>{isLoggingIn ? "Don't have an account yet?" : 'Already have an account?'}</span>
-          <Button onClick={() => setIsLoggingIn(!isLoggingIn)} text={isLoggingIn ? 'Sign up.' : 'Login.'} />
+          <span className='footer-text'>
+            {isLoggingIn ? "Don't have an account yet?  " : 'Already have an account?  '}
+          </span>
+          <Button
+            className='footer-button'
+            onClick={() => setIsLoggingIn(!isLoggingIn)}
+            text={isLoggingIn ? 'Sign up' : 'Login'}
+          />
         </footer>
       </div>
     </div>
