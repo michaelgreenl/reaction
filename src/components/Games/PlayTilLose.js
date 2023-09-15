@@ -68,7 +68,7 @@ export const PlayTilLose = (props) => {
     setGameEnded(true);
     setUser({
       ...user,
-      scores: [...user.scores, { score: currScore, time: stopwatchTime }],
+      games: [...user.games, { score: currScore, time: stopwatchTime }],
     });
     setCurrScore(0);
     setCircleCount(0);

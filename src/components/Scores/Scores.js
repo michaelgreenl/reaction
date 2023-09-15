@@ -70,10 +70,10 @@ export const Scores = (props) => {
       <hr className='scores-break' />
       {/* Making the scroll bar thumb transparent during the dropdown closing */}
       <ul className={`score-list ${scoresDiv === 'closed' ? 'transparent-scroll' : undefined}`}>
-        {user.scores.toReversed().map((score, i) => (
+        {user.games.toReversed().map((game, i) => (
           <li key={i} className='score' style={{ background: i === 0 && props.showEndScreen ? '#f5f5f5' : undefined }}>
-            <span>{score.score}</span>
-            <span className='time'>{score.time}</span>
+            <span>{game.score}</span>
+            <span className='time'>{game.time}</span>
           </li>
         ))}
       </ul>
