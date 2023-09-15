@@ -8,7 +8,8 @@ export const Button = (props) => {
     <motion.button
       className={`button ${props.className}`}
       style={{ ...props.styling }}
-      onClick={() => props.onClick()}
+      onClick={props.onClick ? () => props.onClick() : undefined}
+      type={props.type}
       disabled={props.disabled}
       initial={props.btnInitial}
       animate={props.btnAnimate}
@@ -40,6 +41,7 @@ export const Button = (props) => {
 Button.propTypes = {
   onClick: PropTypes.func,
   className: PropTypes.string,
+  type: PropTypes.string,
   styling: PropTypes.object,
   disabled: PropTypes.bool,
   btnInitial: PropTypes.any,
