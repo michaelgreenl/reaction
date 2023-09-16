@@ -9,7 +9,7 @@ import { CautionSvg } from '../../svgs/CautionSvg';
 function Auth() {
   const { user, setUser, userRef } = useContext(UserContext);
   const [isLoggingIn, setIsLoggingIn] = useState(true);
-  const [warning, setWarning] = useState(null);
+  const [warning, setWarning] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -19,21 +19,20 @@ function Auth() {
   useEffect(() => {
     if (password !== confirmPassword) {
       setWarning('Passwords do not match');
+    } else {
+      setWarning('');
     }
   }, [confirmPassword]);
 
-  function handleCreateUser(e) {
-    e.preventDefault();
-    fetch(`${REACT_APP_API_URL}/users/auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username,
-        password,
-      }),
-    })
+  useEffect(() => {
+    setWarning('');
+    setUsername('');
+    setPassword('');
+    setConfirmPassword('');
+  }, [isLoggingIn]);
+
+  function makeApiRequest(url, options) {
+    return fetch(url, options)
       .then(async (res) => {
         if (!res.ok) {
           const err = await res.json();
@@ -41,27 +40,16 @@ function Auth() {
           throw new Error('ERROR');
         }
         return res.json();
-      })
-      .then((data) => {
-        setUser({
-          ...user,
-          token: data.token,
-          userId: data.id,
-          settingsId: data.settingsId,
-          statsId: data.statsId,
-          username: username,
-          isLoggedIn: true,
-        });
-        window.localStorage.setItem('USER', JSON.stringify(userRef.current));
       })
       .catch((error) => {
         console.error(error);
       });
   }
 
-  function handleLogin(e) {
+  function handleAuth(e) {
     e.preventDefault();
-    fetch('http://localhost:3001/users/login', {
+    const url = isLoggingIn ? `${REACT_APP_API_URL}/users/login` : `${REACT_APP_API_URL}/users/auth`;
+    makeApiRequest(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -70,30 +58,18 @@ function Auth() {
         username,
         password,
       }),
-    })
-      .then(async (res) => {
-        if (!res.ok) {
-          const err = await res.json();
-          setWarning(err.message);
-          throw new Error('ERROR');
-        }
-        return res.json();
-      })
-      .then((data) => {
-        setUser({
-          ...user,
-          token: data.token,
-          userId: data.id,
-          settingsId: data.settingsId,
-          statsId: data.statsId,
-          username: username,
-          isLoggedIn: true,
-        });
-        window.localStorage.setItem('USER', JSON.stringify(userRef.current));
-      })
-      .catch((error) => {
-        console.error(error);
+    }).then((data) => {
+      setUser({
+        ...user,
+        token: data.token,
+        userId: data.id,
+        settingsId: data.settingsId,
+        statsId: data.statsId,
+        username: username,
+        isLoggedIn: true,
       });
+      window.localStorage.setItem('USER', JSON.stringify(userRef.current));
+    });
   }
 
   return (
@@ -111,7 +87,7 @@ function Auth() {
             <span className='auth-warning'>{warning}</span>
           </div>
         )}
-        <form className='auth-form' onSubmit={isLoggingIn ? (e) => handleLogin(e) : (e) => handleCreateUser(e)}>
+        <form className='auth-form' onSubmit={(e) => handleAuth(e)}>
           <div className='input-cont'>
             <label className='input-label' htmlFor='username'>
               Username
