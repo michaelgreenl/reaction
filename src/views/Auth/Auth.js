@@ -13,14 +13,17 @@ function Auth() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [fieldWarning, setFieldWarning] = useState({ username: false, password: false, confirmPassword: false });
 
   const { REACT_APP_API_URL } = process.env;
 
   useEffect(() => {
     if (password !== confirmPassword) {
       setWarning('Passwords do not match');
+      setFieldWarning({ ...fieldWarning, password: true, confirmPassword: true });
     } else {
       setWarning('');
+      setFieldWarning({ ...fieldWarning, password: false, confirmPassword: false });
     }
   }, [confirmPassword]);
 
@@ -29,6 +32,7 @@ function Auth() {
     setUsername('');
     setPassword('');
     setConfirmPassword('');
+    setFieldWarning({ username: false, password: false, confirmPassword: false });
   }, [isLoggingIn]);
 
   function makeApiRequest(url, options) {
@@ -37,6 +41,15 @@ function Auth() {
         if (!res.ok) {
           const err = await res.json();
           setWarning(err.message);
+          switch (res.status) {
+            case 404:
+            case 422:
+              setFieldWarning({ ...fieldWarning, username: true });
+              break;
+            case 401:
+              setFieldWarning({ ...fieldWarning, password: true });
+              break;
+          }
           throw new Error('ERROR');
         }
         return res.json();
@@ -93,7 +106,7 @@ function Auth() {
               Username
             </label>
             <input
-              className='auth-input'
+              className={`input-field ${fieldWarning.username ? 'auth-input-warning' : undefined}`}
               name='username'
               type='text'
               value={username}
@@ -108,7 +121,7 @@ function Auth() {
               Password
             </label>
             <input
-              className='auth-input'
+              className={`input-field ${fieldWarning.password ? 'auth-input-warning' : undefined}`}
               name='password'
               type='password'
               value={password}
@@ -124,7 +137,7 @@ function Auth() {
                 Confirm Password
               </label>
               <input
-                className='auth-input'
+                className={`input-field ${fieldWarning.confirmPassword ? 'auth-input-warning' : undefined}`}
                 name='confirmPassword'
                 type='password'
                 value={confirmPassword}
@@ -135,7 +148,11 @@ function Auth() {
               ></input>
             </div>
           )}
-          <Button className='submit-button' type='submit' text={isLoggingIn ? 'Login' : 'Sign Up'} />
+          <Button
+            className='submit-button'
+            type={password === confirmPassword || isLoggingIn ? 'submit' : 'button'}
+            text={isLoggingIn ? 'Login' : 'Sign Up'}
+          />
         </form>
         <footer className='auth-footer'>
           <span className='footer-text'>
