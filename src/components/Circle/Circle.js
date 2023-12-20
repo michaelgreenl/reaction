@@ -23,6 +23,10 @@ export const Circle = (props) => {
   const controls = useAnimation();
 
   useEffect(() => {
+    /*
+      If the animations are going to be used and showCircle is false (the circle has been clicked), or the game has ended,
+      trigger the fade out animation.
+    */
     if ((props.useTransition && !showCircle) || props.gameEnded) {
       controls.stop();
       controls
@@ -40,7 +44,7 @@ export const Circle = (props) => {
           width: 12,
           transition: { duration: gameSettings.shrinkTime, ease: 'easeOut' },
         })
-        .then(() => (showCircleRef.current ? props.animationEnd() : undefined));
+        .then(() => (showCircleRef.current ? props.animationEnd(true) : undefined));
     }
   }, [showCircle, props.gameEnded]);
 

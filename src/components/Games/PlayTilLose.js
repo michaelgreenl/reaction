@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext, useEffect, useState } from 'react';
 import './Games.css';
 import PropTypes from 'prop-types';
@@ -8,7 +9,8 @@ import { Circle } from '../Circle/Circle';
 import { AnimatePresence, motion } from 'framer-motion';
 
 export const PlayTilLose = (props) => {
-  const { user, setUser } = useContext(UserContext);
+  const { REACT_APP_API_URL } = process.env;
+  const { user, setUser, userRef } = useContext(UserContext);
   const { gameSettings } = user;
   const [circles, setCircles] = useState([]);
   const [currScore, setCurrScore] = useState(0);
@@ -64,14 +66,86 @@ export const PlayTilLose = (props) => {
     setCircles(circles.filter((circle) => circle.key !== key));
   }
 
-  function gameLostListener() {
-    setGameEnded(true);
-    setUser({
-      ...user,
-      games: [...user.games, { score: currScore, time: stopwatchTime }],
-    });
-    setCurrScore(0);
-    setCircleCount(0);
+  useEffect(() => {
+    if (gameEnded) {
+      // Setting the user's games before posting the games since the updated state is needed immediately
+      setUser({
+        ...user,
+        games: [...user.games, { score: currScore, time: stopwatchTime }],
+      });
+      postGame();
+    }
+  }, [gameEnded]);
+
+  function postGame() {
+    if (user.isLoggedIn) {
+      fetch(`${REACT_APP_API_URL}/game`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          statsId: user.statsId,
+          userId: user.userId,
+          score: currScore,
+          time: stopwatchTime,
+          stats: user.stats,
+        }),
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const err = await res.json();
+            if (err.message) {
+              throw new Error(err.message);
+            }
+            throw new Error('ERROR');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setUser({
+            ...userRef.current,
+            stats: {
+              totalGames: data.totalGames,
+              highScore: data.highScore,
+              highTime: data.highTime,
+            },
+          });
+          window.localStorage.setItem(
+            'USER',
+            JSON.stringify({
+              ...userRef.current,
+            }),
+          );
+          setCurrScore(0);
+          setCircleCount(0);
+        });
+    } else {
+      let { highScore, totalGames, highTime } = user.stats;
+
+      const updatedStats = {
+        totalGames: totalGames + 1,
+        highScore: currScore > highScore ? currScore : highScore,
+        highTime: parseFloat(stopwatchTime, 10) > highTime ? parseFloat(stopwatchTime, 10) : highTime,
+      };
+
+      setUser({
+        ...userRef.current,
+        stats: { ...updatedStats },
+      });
+
+      window.localStorage.setItem(
+        'USER',
+        JSON.stringify({
+          ...user,
+          games: [...user.games, { score: currScore, time: stopwatchTime }],
+          stats: { ...updatedStats },
+        }),
+      );
+      setCurrScore(0);
+      setCircleCount(0);
+    }
   }
 
   return (
@@ -105,7 +179,7 @@ export const PlayTilLose = (props) => {
           onClick={() => circleClick(circle.key)}
           styles={circle.styles}
           useTransition={true}
-          animationEnd={gameLostListener}
+          animationEnd={setGameEnded}
           gameEnded={gameEnded}
         />
       ))}
