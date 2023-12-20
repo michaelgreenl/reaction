@@ -272,7 +272,20 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
             },
             // FIXME: This can be changed in the future
             games: enableScoreReset ? [] : user.games,
+            stats: enableScoreReset
+              ? {
+                  totalGames: 0,
+                  highScore: 0,
+                  highTime: 0,
+                }
+              : user.stats,
           });
+          window.localStorage.setItem(
+            'USER',
+            JSON.stringify({
+              ...userRef.current,
+            }),
+          );
 
           // Resetting necessary state variables and executing res()
           props.setResetBtnDisabled(true);
