@@ -10,7 +10,8 @@ import { Scores } from '../../components/Scores/Scores';
 import { AnimatePresence, motion, LayoutGroup } from 'framer-motion';
 
 function Play() {
-  const { user } = useContext(UserContext);
+  const { REACT_APP_API_URL } = process.env;
+  const { user, setUser, userRef } = useContext(UserContext);
   const [gameActive, setGameActive] = useState(false);
   const [showEndScreen, setShowEndScreen] = useState(false);
   const [warning, dispatchWarning] = useReducer(warningReducer, {});
@@ -21,6 +22,80 @@ function Play() {
   const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
   const [mainAnims, setMainAnims] = useState(true);
+
+  useEffect(() => {
+    if (user.isLoggedIn && typeof user.stats.highScore === 'undefined') {
+      fetch(`${REACT_APP_API_URL}/stats?statsId=${user.statsId}&userId=${user.userId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const err = await res.json();
+            if (err.message) {
+              throw new Error(err.message);
+            }
+            throw new Error('ERROR');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          const stats = { ...data.stats };
+          setUser({
+            ...user,
+            stats: {
+              totalGames: stats.totalGames,
+              highScore: stats.highScore,
+              highTime: stats.highTime,
+            },
+          });
+        });
+      fetch(`${REACT_APP_API_URL}/game?userId=${user.userId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+        .then(async (res) => {
+          if (!res.ok) {
+            const err = await res.json();
+            if (err.message) {
+              throw new Error(err.message);
+            }
+            throw new Error('ERROR');
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setUser({
+            ...user,
+            games: [...data.games],
+          });
+        });
+      window.localStorage.setItem(
+        'USER',
+        JSON.stringify({
+          ...userRef.current,
+        }),
+      );
+    } else {
+      if (typeof user.stats.highScore === 'undefined') {
+        window.localStorage.setItem(
+          'USER',
+          JSON.stringify({
+            ...user,
+            stats: {
+              totalGames: 0,
+              highScore: 0,
+              highTime: 0,
+            },
+          }),
+        );
+      }
+    }
+  }, []);
 
   useEffect(() => {
     // Waits for the longest animation to finish before starting the game, this could be different depending on what is showing in the dom
@@ -243,7 +318,7 @@ const warningReducer = (state, action) => {
         ...state,
         saveGameSettingsWarning: {
           header: 'Warning',
-          message: 'Saving these settings will reset your previous scores, since the difficulty will change.',
+          message: 'Saving these settings will reset your previous scores and stats, since the difficulty will change.',
           optOutOption: 'saveGameSettingsWarning',
           buttons: [
             {
