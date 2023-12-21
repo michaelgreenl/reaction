@@ -71,7 +71,7 @@ export const PlayTilLose = (props) => {
       // Setting the user's games before posting the games since the updated state is needed immediately
       setUser({
         ...user,
-        games: [...user.games, { score: currScore, time: stopwatchTime }],
+        games: [{ score: currScore, time: stopwatchTime }, ...user.games],
       });
       postGame();
     }
@@ -138,9 +138,7 @@ export const PlayTilLose = (props) => {
       window.localStorage.setItem(
         'USER',
         JSON.stringify({
-          ...user,
-          games: [...user.games, { score: currScore, time: stopwatchTime }],
-          stats: { ...updatedStats },
+          ...userRef.current,
         }),
       );
       setCurrScore(0);
