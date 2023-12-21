@@ -122,6 +122,7 @@
   --secondary-white: #f2eef2;
   --primary-black: black;
   --secondary-black: #473f48;
+  --dark-grey: #79757a;
   --grey: #a7a7a7;
   --light-grey: #c6c6c6;
   --lighter-grey: #f3f3f3;
@@ -178,4 +179,8 @@ button {
 
 button:focus-visible {
   outline: none;
+}
+
+a:visited {
+  color: inherit;
 }
