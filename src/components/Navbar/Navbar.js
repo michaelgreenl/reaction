@@ -9,6 +9,7 @@ import { PolygonSvg } from '../../svgs/PolygonSvg';
 import { ProfileSvg } from '../../svgs/ProfileSvg';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const Navbar = () => {
   const url = useRef(window.location.href);
@@ -39,7 +40,7 @@ const Navbar = () => {
         shrinkTime: 2.0,
         difficulty: { easy: false, medium: true, hard: false }, // FIXME: This can be made a string
         circleColor: '#FFFFFF',
-        circleSize: { range: 'md', px: 100 }, // THOUGHT: Just the px value can be sent to the backend
+        circleSize: { range: 'md', px: 100 },
       },
       games: [],
       stats: {},
@@ -77,14 +78,23 @@ const Navbar = () => {
                 <PolygonSvg className='dropdown-arrow' />
                 <ProfileSvg className='nav-profile' />
               </button>
-              {showProfileMenu && (
-                <div className='nav-dropdown'>
-                  <NavLink className='dropdown-nav-item' to='/Profile'>
-                    Profile
-                  </NavLink>
-                  <Button className='dropdown-nav-item' onClick={() => handleLogout()} text='Logout' />
-                </div>
-              )}
+              <AnimatePresence>
+                {showProfileMenu && (
+                  <motion.div
+                    className='nav-dropdown'
+                    key='profile-dropdown'
+                    initial={{ height: 0, padding: 0 }}
+                    animate={{ height: 'auto', padding: '0.4em 0' }}
+                    exit={{ height: 0, padding: '0' }}
+                    transition={{ duration: 0.1, ease: 'easeInOut' }}
+                  >
+                    <NavLink className='dropdown-nav-link' to='/Profile'>
+                      <Button className='dropdown-nav-item' text='Profile'></Button>
+                    </NavLink>
+                    <Button className='dropdown-nav-item' onClick={() => handleLogout()} text='Logout' />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </>
           )}
         </ul>

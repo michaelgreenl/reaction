@@ -2,8 +2,14 @@
   font-size: 16px;
   display: flex;
   align-items: center;
-  height: 7rem;
-  padding: 0px 3rem;
+  gap: 4em;
+  height: 7.5rem;
+  padding: 0px 2.5rem;
+  width: 100%;
+}
+
+.navbar-home {
+  gap: 0;
 }
 
 .navbar .logo-cont {
@@ -26,17 +32,24 @@
 .navbar .nav-list {
   display: flex;
   justify-content: space-evenly;
-  width: 50%;
+  height: 100%;
+  align-items: center;
+  flex: 1;
   min-width: 46rem;
-  padding: 0px 10% 0px 0px;
   margin: 0;
   margin-right: auto;
   list-style: none;
+  gap: 8rem;
 }
 
 .navbar .nav-list-home {
-  margin: 0 auto;
-  padding: 0;
+  flex: 0.6;
+  margin: 0 0 0 auto;
+}
+
+.navbar .nav-item:last-child,
+.navbar .dropdown-button {
+  margin-left: auto;
 }
 
 .navbar .nav-link,
@@ -71,12 +84,65 @@
   right: -4px;
 }
 
-.not-active-hovered .nav-link-active::after {
+.navbar .not-active-hovered .nav-link-active::after {
   right: 150%;
 }
 
-@media screen and (max-width: 1024px) {
-  .navbar .logo-cont {
-    margin-right: 12.5%;
-  }
+.navbar .dropdown-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: transparent;
+  border: 0;
+  height: 4em;
+  width: 4.5em;
+}
+
+.navbar .dropdown-arrow {
+  fill: var(--primary-white);
+  width: 0.45em;
+  transform: rotate(-90deg);
+}
+
+.navbar .nav-profile {
+  fill: var(--primary-white);
+  width: 2.5em;
+}
+
+.navbar .nav-dropdown {
+  font-size: 1.1em;
+  z-index: 1000;
+  overflow: hidden;
+  position: absolute;
+  top: 6.3rem;
+  right: 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.2em;
+  background: var(--primary-white);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.navbar .dropdown-nav-link {
+  text-decoration: none;
+}
+
+.navbar .dropdown-nav-item {
+  font-size: 1em;
+  font-weight: 400;
+  display: flex;
+  cursor: pointer;
+  color: var(--secondary-black);
+  margin: 0.2em 0.6em;
+  padding: 0.2em 2.5em 0.2em 0.4em;
+  background-color: transparent;
+  border-left: 4px var(--bright-pink) solid;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.navbar .dropdown-nav-item:hover {
+  background-color: var(--lighter-grey);
 }
