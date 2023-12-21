@@ -101,7 +101,7 @@
 .game-settings .caution-svg {
   width: 1em;
   height: 1em;
-  fill: rgb(241, 183, 75);
+  fill: #f1b74b;
 }
 
 .game-settings .number {
@@ -214,6 +214,8 @@
 
 .game-settings .range-input::-webkit-slider-thumb:active {
   cursor: grabbing;
+  height: 1.5em;
+  width: 1.5em;
 }
 
 .game-settings .checkbox-input {
