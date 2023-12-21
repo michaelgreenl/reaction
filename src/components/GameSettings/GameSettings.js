@@ -252,25 +252,36 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
               .catch((error) => {
                 console.error(error);
               });
+            // TODO: This can be changed in the future
+
+            if (enableScoreReset) {
+              fetch(`${REACT_APP_API_URL}/game/${user.userId}/${user.statsId}`, {
+                method: 'DELETE',
+              })
+                .then(async (res) => {
+                  if (!res.ok) {
+                    const err = await res.json();
+                    if (err.message) {
+                      throw new Error(err.message);
+                    }
+                    throw new Error('ERROR');
+                  }
+                })
+                .catch((err) => {
+                  console.error(err);
+                });
+            }
           }
-          window.localStorage.setItem(
-            'USER',
-            JSON.stringify({
-              ...user,
-              gameSettings: {
-                shrinkTime: localSettings.shrinkTime,
-                difficulty: localSettings.difficulty,
-                circleColor: localSettings.circleColor,
-                circleSize: localSettings.circleSize,
-              },
-            }),
-          );
+
+          // TODO: This can be changed in the future
           setUser({
             ...user,
             gameSettings: {
-              ...localSettings,
+              shrinkTime: localSettings.shrinkTime,
+              difficulty: localSettings.difficulty,
+              circleColor: localSettings.circleColor,
+              circleSize: localSettings.circleSize,
             },
-            // FIXME: This can be changed in the future
             games: enableScoreReset ? [] : user.games,
             stats: enableScoreReset
               ? {
