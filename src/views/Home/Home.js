@@ -1,10 +1,10 @@
 import React from 'react';
 import './Home.css';
-import { Navbar } from '../../components/Navbar/Navbar';
+import Navbar from '../../components/Navbar/Navbar';
 import { Button } from '../../components/Button/Button';
 import { LogoText } from '../../components/Logo/LogoText';
 import { NavLink } from 'react-router-dom';
-import { Footer } from '../../components/Footer/Footer';
+import Footer from '../../components/Footer/Footer';
 import { useMediaQuery } from 'react-responsive';
 
 function Home() {
