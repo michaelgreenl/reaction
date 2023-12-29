@@ -71,7 +71,11 @@ export const PlayTilLose = (props) => {
       // Setting the user's games before posting the games since the updated state is needed immediately
       setUser({
         ...user,
-        games: [{ score: currScore, time: stopwatchTime }, ...user.games],
+        games: [
+          // Added createdAt property so if user goes to profile without refreshing, the date and time will be there.
+          { score: currScore, time: stopwatchTime, createdAt: new Date(Date.now()).toISOString() },
+          ...user.games,
+        ],
       });
       postGame();
     }
