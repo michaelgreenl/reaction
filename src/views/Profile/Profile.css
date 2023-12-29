@@ -10,3 +10,25 @@
   animation: gradientBackground 20s ease infinite;
   letter-spacing: 0.03ch;
 }
+
+.profile .main {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.profile .header {
+  display: flex;
+}
+
+.profile .stats-list {
+  display: flex;
+  list-style: none;
+}
+
+.profile .games {
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 90%;
+}

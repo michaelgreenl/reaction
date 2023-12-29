@@ -1,0 +1,32 @@
+.game-slider {
+  /* display: flex; */
+  /* width: 80% !important; */
+}
+
+.slick-track {
+  /* width: 80% !important; */
+}
+
+.profile .slick-dots li button::before {
+  color: var(--primary-white) !important;
+}
+
+/* making the dots not clickable */
+.profile .slick-dots::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.profile .prev-button,
+.profile .next-button {
+  border: 0;
+  background-color: var(--primary-white);
+}
+
+.profile .next-button-svg {
+}
