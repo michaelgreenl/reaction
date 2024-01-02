@@ -1,5 +1,6 @@
 import React, { useState, useRef, useCallback, memo, useContext } from 'react';
 import './Navbar.css';
+import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
 import { LogoText } from '../Logo/LogoText';
 import { useMediaQuery } from 'react-responsive';
@@ -11,7 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Button } from '../Button/Button';
 import { AnimatePresence, motion } from 'framer-motion';
 
-const Navbar = () => {
+const Navbar = (props) => {
   const url = useRef(window.location.href);
   const { user, setUser } = useContext(UserContext);
   const isSmLaptop = useMediaQuery({ query: '(min-width: 1024px)' });
@@ -89,9 +90,19 @@ const Navbar = () => {
                     transition={{ duration: 0.1, ease: 'easeInOut' }}
                   >
                     <NavLink className='dropdown-nav-link' to='/Profile'>
-                      <Button className='dropdown-nav-item' text='Profile'></Button>
+                      <Button className='dropdown-nav-item' text='Profile' />
                     </NavLink>
                     <Button className='dropdown-nav-item' onClick={() => handleLogout()} text='Logout' />
+                    {user.isLoggedIn && url.current.endsWith('/Profile') && (
+                      <Button
+                        className='dropdown-nav-item'
+                        onClick={() => {
+                          setShowProfileMenu(false);
+                          props.deleteUser(true);
+                        }}
+                        text='Delete Account'
+                      />
+                    )}
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -101,6 +112,10 @@ const Navbar = () => {
       )}
     </nav>
   );
+};
+
+Navbar.propTypes = {
+  deleteUser: PropTypes.func,
 };
 
 export default memo(Navbar);
