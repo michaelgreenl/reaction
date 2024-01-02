@@ -8,6 +8,8 @@ import { PlayTilLose } from '../../components/Games/PlayTilLose';
 import Modal from '../../components/Modal/Modal';
 import { Scores } from '../../components/Scores/Scores';
 import { AnimatePresence, motion, LayoutGroup } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
+import Footer from '../../components/Footer/Footer';
 
 function Play() {
   const { REACT_APP_API_URL } = process.env;
@@ -22,6 +24,7 @@ function Play() {
   const [resetBtnDisabled, setResetBtnDisabled] = useState(true);
   const [saveBtnDisabled, setSaveBtnDisabled] = useState(true);
   const [mainAnims, setMainAnims] = useState(true);
+  const isInvalidDevice = useMediaQuery({ query: '(max-width: 675px)' });
 
   useEffect(() => {
     if (user.isLoggedIn) {
@@ -198,86 +201,101 @@ function Play() {
           buttons={warning[`${currWarning}`].buttons}
         />
       )}
-      {!gameActive ? (
-        <main className='main'>
-          <AnimatePresence>
-            {mainAnims && user.games.length > 0 && !showSettings && <Scores showEndScreen={showEndScreen} />}
-          </AnimatePresence>
-          <AnimatePresence mode='wait'>
-            {!showEndScreen ? (
-              <GameSettings {...GameSettingsProps} />
-            ) : (
-              <motion.div
-                key='endScreen'
-                className='end-screen'
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-              >
-                <div className='end-stats-cont'>
-                  <div className='end-stat-cont'>
-                    <h2 className='end-stat-head'>Score:</h2>
-                    <span className='end-stat'>{user.games[0].score}</span>
-                  </div>
-                  <div className='end-stat-cont'>
-                    <h2 className='end-stat-head'>Time:</h2>
-                    <span className='end-stat'>{user.games[0].time}</span>
-                  </div>
-                </div>
-                <hr className='end-screen-break' />
-              </motion.div>
-            )}
-          </AnimatePresence>
-          <div className='play-buttons'>
-            <LayoutGroup>
-              <AnimatePresence mode='wait'>
-                {mainAnims && !showEndScreen && showSettings && (
-                  <motion.div key='reset' {...buttonVariants}>
-                    <Button
-                      className='play-button'
-                      text='Reset'
-                      onClick={() => gameSettingsRef.current.resetSettings()}
-                      disabled={resetBtnDisabled}
-                    />
-                  </motion.div>
-                )}
-                {mainAnims && !showEndScreen && showSettings && (
-                  <motion.div key='save' {...buttonVariants}>
-                    <Button
-                      className='play-button'
-                      text='Save'
-                      onClick={() => gameSettingsRef.current.saveSettings()}
-                      disabled={saveBtnDisabled}
-                    />
-                  </motion.div>
-                )}
-                {mainAnims && !showEndScreen && !showSettings && (
-                  <motion.div key='settings' {...buttonVariants}>
-                    <Button className='play-button' text='Settings' onClick={() => setShowSettings(!showSettings)} />
-                  </motion.div>
-                )}
-                {mainAnims && showEndScreen && (
-                  <motion.div key='endSettings' {...buttonVariants}>
-                    <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+      {!isInvalidDevice ? (
+        <>
+          {!gameActive ? (
+            <main className='main'>
               <AnimatePresence>
-                {mainAnims && (
-                  <motion.div key='start' {...buttonVariants}>
-                    <Button
-                      className='play-button'
-                      text={!showEndScreen ? 'Start' : 'Play Again'}
-                      onClick={!showEndScreen ? () => checkStartSettings() : () => setMainAnims(false)}
-                    />
+                {mainAnims && user.games.length > 0 && !showSettings && <Scores showEndScreen={showEndScreen} />}
+              </AnimatePresence>
+              <AnimatePresence mode='wait'>
+                {!showEndScreen ? (
+                  <GameSettings {...GameSettingsProps} />
+                ) : (
+                  <motion.div
+                    key='endScreen'
+                    className='end-screen'
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <div className='end-stats-cont'>
+                      <div className='end-stat-cont'>
+                        <h2 className='end-stat-head'>Score:</h2>
+                        <span className='end-stat'>{user.games[0].score}</span>
+                      </div>
+                      <div className='end-stat-cont'>
+                        <h2 className='end-stat-head'>Time:</h2>
+                        <span className='end-stat'>{user.games[0].time}</span>
+                      </div>
+                    </div>
+                    <hr className='end-screen-break' />
                   </motion.div>
                 )}
               </AnimatePresence>
-            </LayoutGroup>
-          </div>
-        </main>
+              <div className='play-buttons'>
+                <LayoutGroup>
+                  <AnimatePresence mode='wait'>
+                    {mainAnims && !showEndScreen && showSettings && (
+                      <motion.div key='reset' {...buttonVariants}>
+                        <Button
+                          className='play-button'
+                          text='Reset'
+                          onClick={() => gameSettingsRef.current.resetSettings()}
+                          disabled={resetBtnDisabled}
+                        />
+                      </motion.div>
+                    )}
+                    {mainAnims && !showEndScreen && showSettings && (
+                      <motion.div key='save' {...buttonVariants}>
+                        <Button
+                          className='play-button'
+                          text='Save'
+                          onClick={() => gameSettingsRef.current.saveSettings()}
+                          disabled={saveBtnDisabled}
+                        />
+                      </motion.div>
+                    )}
+                    {mainAnims && !showEndScreen && !showSettings && (
+                      <motion.div key='settings' {...buttonVariants}>
+                        <Button
+                          className='play-button'
+                          text='Settings'
+                          onClick={() => setShowSettings(!showSettings)}
+                        />
+                      </motion.div>
+                    )}
+                    {mainAnims && showEndScreen && (
+                      <motion.div key='endSettings' {...buttonVariants}>
+                        <Button className='play-button' text='Settings' onClick={() => endSetActiveSettings()} />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  <AnimatePresence>
+                    {mainAnims && (
+                      <motion.div key='start' {...buttonVariants}>
+                        <Button
+                          className='play-button'
+                          text={!showEndScreen ? 'Start' : 'Play Again'}
+                          onClick={!showEndScreen ? () => checkStartSettings() : () => setMainAnims(false)}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </LayoutGroup>
+              </div>
+            </main>
+          ) : (
+            <PlayTilLose endGame={endGame} />
+          )}
+        </>
       ) : (
-        <PlayTilLose endGame={endGame} />
+        <>
+          <div className='invalid-container'>
+            <h1 className='invalid-warning'>This game is intended for larger screens.</h1>
+          </div>
+          <Footer />
+        </>
       )}
     </div>
   );

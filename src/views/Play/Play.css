@@ -83,3 +83,11 @@
   width: 100%;
   border: var(--light-blue) solid 2px;
 }
+
+.play .invalid-container {
+  margin: 30% 3em;
+}
+
+.play .invalid-warning {
+  font-weight: 400;
+}
