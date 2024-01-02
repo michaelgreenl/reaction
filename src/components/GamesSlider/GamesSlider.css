@@ -1,10 +1,71 @@
-.game-slider {
-  /* display: flex; */
-  /* width: 80% !important; */
+.profile .slider-wrapper {
+  margin-bottom: 5vh;
+  width: 40%;
+  min-width: 48rem;
+  max-width: 60rem;
 }
 
-.slick-track {
-  /* width: 80% !important; */
+.profile .game-slider {
+  width: 100% !important;
+}
+
+.profile .table-wrapper {
+  display: flex !important;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 54rem;
+  background-color: var(--secondary-white);
+  color: var(--secondary-black);
+  border-radius: 10px;
+  padding: 1em 0.75em;
+}
+
+.profile .game-table {
+  width: 100%;
+  color: var(--secondary-black);
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+.profile .game-table-header-row {
+  color: var(--light-pink);
+  font-style: oblique;
+  font-size: 1.3em;
+}
+
+.profile .game-table-header-row::after {
+  border: 0 !important;
+  border-bottom: solid var(--light-blue) 3px !important;
+  box-shadow: none !important;
+}
+
+.profile .game-table-header {
+  background-clip: padding-box;
+  padding: 0 0 0.4em;
+}
+
+.profile .game-table-row {
+  position: relative;
+}
+
+.profile .game-table-row::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  border: solid #dadada 1px;
+  box-shadow: 0 0 5px 1px #dadada;
+}
+
+.profile .game-table-data {
+  background-clip: padding-box;
+  padding: 0.3em 0;
+  color: var(--secondary-black);
+  font-size: 1.1em;
 }
 
 .profile .slick-dots li button::before {
@@ -22,11 +83,46 @@
   left: 0;
 }
 
+.profile .slider-buttons {
+  align-self: flex-end;
+  display: flex;
+  gap: 1em;
+}
+
 .profile .prev-button,
 .profile .next-button {
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
   border: 0;
-  background-color: var(--primary-white);
+  border-radius: 12px;
+  padding: 0.25em 1em;
+  font-weight: 400;
+  color: var(--secondary-white);
+  background-color: var(--light-pink);
+}
+
+.profile .prev-button {
+  padding-left: 0.8em;
+}
+
+.profile .next-button {
+  padding-right: 0.8em;
+}
+
+.profile .next-button-svg,
+.profile .prev-button-svg {
+  height: 0.8em;
+  width: 1em;
+  stroke-width: 12px;
+  stroke: var(--secondary-white);
+}
+
+.profile .prev-button-svg {
+  transform: rotate(90deg);
 }
 
 .profile .next-button-svg {
+  transform: rotate(-90deg);
 }

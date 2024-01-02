@@ -27,22 +27,21 @@ export const GameSlider = (props) => {
     slidesToScroll: 1,
     draggable: false,
   };
+  // ${new Date(time)
+  //   .toLocaleTimeString('en-US', {
+  //     hour: 'numeric',
+  //     minute: 'numeric',
+  //     hour12: true,
+  //   })
+  //   .replace(/\s?[APM]{2}\s?/gi, (match) => match.trim().toLowerCase())}
 
   const reformatTime = (time) => {
-    return `${new Date(time)
-      .toLocaleTimeString('en-US', {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-      })
-      .replace(/\s?[APM]{2}\s?/gi, (match) => match.trim().toLowerCase())} ${new Date(time).toLocaleDateString(
-      'en-US',
-      {
+    return `
+      ${new Date(time).toLocaleDateString('en-US', {
         weekday: 'short',
         month: 'short',
         day: 'numeric',
-      },
-    )}`;
+      })}`;
   };
 
   async function getGames(offset) {
@@ -99,30 +98,37 @@ export const GameSlider = (props) => {
     <div className='slider-wrapper'>
       <Slider ref={sliderRef} {...settings}>
         {_.range(0, props.totalGames / 10).map((index) => (
-          <div key={index}>
+          <div className='table-wrapper' key={index}>
             <table className='game-table'>
               <tbody>
+                <tr className='game-table-row game-table-header-row'>
+                  <th className='game-table-header'>Date</th>
+                  <th className='game-table-header'>Score</th>
+                  <th className='game-table-header'>Time</th>
+                </tr>
                 {activeGames.map((game, index) => (
                   <tr key={index} className='game-table-row'>
-                    <td className='game-table-data'>{game.score}</td>
-                    <td className='game-table-data'>{game.time}</td>
                     <td className='game-table-data'>{game.createdAt}</td>
+                    <td className='game-table-data'>{game.score}</td>
+                    <td className='game-table-data'>{game.time.toFixed(2)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <button className='previous-button' onClick={() => handlePrevClick()} disabled={activeSlide === 0}>
-              prev
-              <DownChevronSvg className='prev-button-svg' />
-            </button>
-            <button
-              className='next-button'
-              onClick={() => handleNextClick()}
-              disabled={activeSlide === Math.ceil(props.totalGames / 10) - 1}
-            >
-              next
-              <DownChevronSvg className='next-button-svg' />
-            </button>
+            <div className='slider-buttons'>
+              <button className='prev-button' onClick={() => handlePrevClick()} disabled={activeSlide === 0}>
+                <DownChevronSvg className='prev-button-svg' />
+                Prev
+              </button>
+              <button
+                className='next-button'
+                onClick={() => handleNextClick()}
+                disabled={activeSlide === Math.ceil(props.totalGames / 10) - 1}
+              >
+                Next
+                <DownChevronSvg className='next-button-svg' />
+              </button>
+            </div>
           </div>
         ))}
       </Slider>
