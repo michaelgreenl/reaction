@@ -24,7 +24,7 @@ function Play() {
   const [mainAnims, setMainAnims] = useState(true);
 
   useEffect(() => {
-    if (user.isLoggedIn && typeof user.stats.highScore === 'undefined') {
+    if (user.isLoggedIn) {
       fetch(`${REACT_APP_API_URL}/stats?statsId=${user.statsId}&userId=${user.userId}`, {
         method: 'GET',
         headers: {
@@ -217,11 +217,11 @@ function Play() {
                 <div className='end-stats-cont'>
                   <div className='end-stat-cont'>
                     <h2 className='end-stat-head'>Score:</h2>
-                    <span className='end-stat'>{user.games[user.games.length - 1].score}</span>
+                    <span className='end-stat'>{user.games[0].score}</span>
                   </div>
                   <div className='end-stat-cont'>
                     <h2 className='end-stat-head'>Time:</h2>
-                    <span className='end-stat'>{user.games[user.games.length - 1].time}</span>
+                    <span className='end-stat'>{user.games[0].time}</span>
                   </div>
                 </div>
                 <hr className='end-screen-break' />
