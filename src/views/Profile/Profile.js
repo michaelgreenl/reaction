@@ -111,7 +111,7 @@ function Profile() {
 
   return (
     <div className='profile'>
-      <Navbar />
+      <Navbar deleteUser={deleteUser} />
       {currWarning && (
         <Modal
           header={warning[`${currWarning}`].header}
@@ -122,27 +122,29 @@ function Profile() {
       )}
       <main className='main'>
         <header className='header'>
-          <h1>{user.username}</h1>
+          <h1 className='username'>{user.username}</h1>
           <ul className='stats-list'>
             <li className='stat-container'>
-              <span className='stat'>{user.stats.totalGames}</span>
+              <span className='stat-label'>Total Games:</span>
+              <span className='stat-data'>{user.stats.totalGames}</span>
             </li>
             <li className='stat-container'>
-              <span className='stat'>{user.stats.highScore}</span>
+              <span className='stat-label'>High Score:</span>
+              <span className='stat-data'>{user.stats.highScore}</span>
             </li>
             <li className='stat-container'>
-              <span className='stat'>{user.stats.highTime}</span>
+              <span className='stat-label'>Highest Time:</span>
+              <span className='stat-data'>{user.stats.highTime}</span>
             </li>
           </ul>
-          <Button onClick={() => deleteUser(true)} text='delete' />
         </header>
         <section className='games'>
           {user.stats.totalGames !== 0 ? (
             <GameSlider totalGames={user.stats.totalGames} />
           ) : (
             <div className='play-now-wrapper'>
-              <h2 className='play-now-header'>No games have been played</h2>
-              <Button text='Play Now'></Button>
+              <h2 className='play-now-header'>No games have been played yet.</h2>
+              <Button className='play-now-button' text='Play Now'></Button>
             </div>
           )}
         </section>
