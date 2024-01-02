@@ -1,6 +1,8 @@
 .game-settings {
   height: 15rem;
-  width: 80rem;
+  width: 80%;
+  max-width: 80rem;
+  min-width: 69rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,7 +98,7 @@
 
 .game-settings .input-label {
   white-space: nowrap;
-} 
+}
 
 .game-settings .caution-svg {
   width: 1em;
@@ -246,4 +248,19 @@
 
 .game-settings .settings-circle {
   position: relative;
+}
+
+@media screen and (max-width: 768px) {
+  .game-settings {
+    font-size: 14px;
+    height: 12rem;
+  }
+
+  .game-settings .settings {
+    min-width: 45rem;
+  }
+
+  .game-settings-open .settings-item:last-child {
+    padding-left: 0%;
+  }
 }
