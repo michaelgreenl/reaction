@@ -38,14 +38,9 @@ export const PlayTilLose = (props) => {
   function generateCircle() {
     // Creating a random position for the circle
     const position = {
-      top: random(2, 85),
-      right: random(2, 85),
+      top: random(7, 85),
+      right: random(2, 83),
     };
-
-    // Making sure the circle never touches the score
-    if (position.top <= 6 && position.right <= 6) {
-      position.right = 8;
-    }
 
     // Adding circle to 'circles' and incrementing circle count for the key
     setCircles(
