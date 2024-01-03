@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback, memo, useContext } from 'react';
+import React, { useState, useRef, useCallback, memo, useContext, useEffect } from 'react';
 import './Navbar.css';
 import PropTypes from 'prop-types';
 import { UserContext } from '../../hooks/UserContext';
@@ -13,6 +13,7 @@ import { Button } from '../Button/Button';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const Navbar = (props) => {
+  const navbarRef = useRef();
   const url = useRef(window.location.href);
   const { user, setUser } = useContext(UserContext);
   const isSmLaptop = useMediaQuery({ query: '(min-width: 1024px)' });
@@ -20,6 +21,20 @@ const Navbar = (props) => {
   const [notActiveHovered, setNotActiveHovered] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (navbarRef.current && !navbarRef.current.contains(event.target)) {
+        setShowProfileMenu(false);
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   /*
     When a NavItem other than the active one gets MouseOver/MouseOut this gets triggered. Making the animation for the
@@ -55,7 +70,7 @@ const Navbar = (props) => {
   }
 
   return (
-    <nav className={`navbar ${url.current.endsWith('/') ? 'navbar-home' : undefined}`}>
+    <nav ref={navbarRef} className={`navbar ${url.current.endsWith('/') ? 'navbar-home' : undefined}`}>
       <div className='logo-cont' style={url.current.endsWith('/') && isSmLaptop ? { display: 'none' } : undefined}>
         <LogoText svgClassName='navbar-logo-svg' textClassName='navbar-logo-text' />
       </div>
