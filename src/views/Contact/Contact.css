@@ -17,29 +17,18 @@
   flex-direction: column;
   margin: 0 auto;
   width: 100%;
-}
-
-.contact .header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex: 2;
-  width: 70%;
-  margin: 0 auto;
-}
-
-.contact .header-text {
-  font-size: 4.5em;
-  font-weight: 400;
-  margin: 0;
+  padding-bottom: 10vh;
 }
 
 .contact .other-links {
   display: flex;
   align-items: center;
+  list-style: none;
+  margin-left: auto;
+  margin-right: 7em;
 }
 
-.contact .other-link {
+.contact .other-link-button {
   background: transparent;
   border-radius: 100px;
   padding: 0;
@@ -52,23 +41,40 @@
 }
 
 .contact .form-cont {
-  flex: 3;
   display: flex;
   flex-direction: column;
-  margin: 0 auto;
-  min-width: 50rem;
+  margin: 3em auto;
+  min-width: 40rem;
+  max-width: 70rem;
   width: 70%;
+  background-color: var(--primary-white);
+  color: var(--secondary-black);
+  border-radius: 10px;
+  padding: 1.2em 2em;
+  box-sizing: border-box;
+}
+
+.contact .form-header {
+  display: flex;
+  border-bottom: solid 3px var(--light-blue);
+  margin-bottom: 0.8em;
+}
+
+.contact .header-logo {
+  width: 2.5em;
+}
+
+.contact .header-text {
+  color: var(--light-pink);
+  font-size: 1.8em;
+  font-weight: 600;
+  margin: 0.4em 0;
 }
 
 .contact .contact-form {
   display: flex;
   flex-direction: column;
   gap: 1em;
-  background-color: var(--primary-white);
-  color: var(--secondary-black);
-  border-radius: 10px;
-  padding: 2.5em 3em;
-  box-sizing: border-box;
 }
 
 .contact .form-inputs {
@@ -82,7 +88,8 @@
 
 .small-input-cont {
   display: flex;
-  gap: 2em;
+  flex-wrap: wrap;
+  gap: 1.5em;
 }
 
 .contact .input-cont {
@@ -91,6 +98,7 @@
   flex-direction: column;
   gap: 0.15em;
   width: 100%;
+  flex: 1;
 }
 
 .contact .input-label {
@@ -113,11 +121,66 @@
   height: 7em;
 }
 
+.contact .form-footer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.contact .success-message {
+  font-size: 1.1em;
+  color: var(--primary-white);
+  margin: 0 auto;
+}
+
+.contact .form-footer .success-message {
+  color: var(--secondary-black);
+  margin: 0;
+}
+
 .contact .submit-button {
   font-size: 1.15em;
-  margin-top: 0.55em;
+  margin-left: auto;
   padding: 0.25em 1.5em;
   background-color: var(--bright-pink);
   color: var(--primary-white);
   align-self: flex-end;
+}
+
+@media screen and (max-width: 768px) {
+  .contact .main {
+    padding-bottom: 0;
+  }
+
+  .contact .form-cont {
+    min-width: 30rem;
+  }
+
+  .contact .other-links {
+    padding: 0;
+    margin: 1em 4em 0;
+  }
+
+  .contact .small-input-cont {
+    gap: 1em;
+  }
+
+  .contact .input-cont {
+    min-width: 22rem;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .contact .other-links {
+    margin: 0 2em 2em;
+  }
+
+  .contact .form-cont {
+    min-width: 27.5rem;
+    margin: 0 auto;
+  }
+
+  .contact .input-cont {
+    min-width: 21rem;
+  }
 }
