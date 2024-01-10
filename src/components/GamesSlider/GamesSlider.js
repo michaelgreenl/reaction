@@ -27,13 +27,6 @@ export const GameSlider = (props) => {
     slidesToScroll: 1,
     draggable: false,
   };
-  // ${new Date(time)
-  //   .toLocaleTimeString('en-US', {
-  //     hour: 'numeric',
-  //     minute: 'numeric',
-  //     hour12: true,
-  //   })
-  //   .replace(/\s?[APM]{2}\s?/gi, (match) => match.trim().toLowerCase())}
 
   const reformatTime = (time) => {
     return `
@@ -45,7 +38,7 @@ export const GameSlider = (props) => {
   };
 
   async function getGames(offset) {
-    if (allGames.length <= offset && allGames.length < props.totalGames) {
+    if ((allGames.length <= offset && allGames.length < props.totalGames) || typeof props.totalGames === 'undefined') {
       await fetch(`${REACT_APP_API_URL}/game?userId=${user.userId}&limit=10&offset=${offset}`, {
         method: 'GET',
         headers: {
