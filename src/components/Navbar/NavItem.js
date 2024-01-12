@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-const NavItem = ({ link, text, setNotActiveHovered }) => {
+const NavItem = ({ link, text, setNotActiveHovered, style }) => {
   return (
-    <li className='nav-item'>
+    <li className='nav-item' style={{ ...style }}>
       <NavLink className='nav-link' to={link}>
         {({ isActive }) => (
           <span
@@ -28,6 +28,7 @@ NavItem.propTypes = {
   link: PropTypes.string,
   text: PropTypes.string,
   setNotActiveHovered: PropTypes.func,
+  style: PropTypes.object,
 };
 
 export default memo(NavItem);
