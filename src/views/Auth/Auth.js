@@ -25,7 +25,7 @@ function Auth() {
       setWarning('');
       setFieldWarning({ ...fieldWarning, password: false, confirmPassword: false });
     }
-  }, [confirmPassword]);
+  }, [password, confirmPassword]);
 
   useEffect(() => {
     setWarning('');
@@ -35,28 +35,27 @@ function Auth() {
     setFieldWarning({ username: false, password: false, confirmPassword: false });
   }, [isLoggingIn]);
 
-  function makeApiRequest(url, options) {
-    return fetch(url, options)
-      .then(async (res) => {
-        if (!res.ok) {
-          const err = await res.json();
-          setWarning(err.message);
-          switch (res.status) {
-            case 404:
-            case 422:
-              setFieldWarning({ ...fieldWarning, username: true });
-              break;
-            case 401:
-              setFieldWarning({ ...fieldWarning, password: true });
-              break;
-          }
-          throw new Error('ERROR');
+  async function makeApiRequest(url, options) {
+    try {
+      const res = await fetch(url, options);
+      if (!res.ok) {
+        const err = await res.json();
+        setWarning(err.message);
+        switch (res.status) {
+          case 404:
+          case 422:
+            setFieldWarning({ ...fieldWarning, username: true });
+            break;
+          case 401:
+            setFieldWarning({ ...fieldWarning, password: true });
+            break;
         }
-        return res.json();
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        throw new Error('ERROR');
+      }
+      return await res.json();
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   function handleAuth(e) {
