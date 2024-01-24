@@ -247,7 +247,6 @@ const GameSettings = forwardRef(function GameSettings(props, ref) {
                   }
                   throw new Error('ERROR');
                 }
-                return res.json();
               })
               .catch((error) => {
                 console.error(error);
