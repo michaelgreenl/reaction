@@ -18,7 +18,7 @@ function Auth() {
   const { REACT_APP_API_URL } = process.env;
 
   useEffect(() => {
-    if (password !== confirmPassword) {
+    if (!isLoggingIn && password !== confirmPassword) {
       setWarning('Passwords do not match');
       setFieldWarning({ ...fieldWarning, password: true, confirmPassword: true });
     } else {
