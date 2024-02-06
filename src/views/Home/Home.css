@@ -45,13 +45,6 @@
   margin: 0;
 }
 
-.home .intro-quote {
-  white-space: nowrap;
-  font-style: italic;
-  align-self: flex-end;
-  margin: 0;
-}
-
 .home .play-now-btn {
   align-self: flex-end;
   margin-top: 0.75em;

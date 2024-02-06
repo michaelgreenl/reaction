@@ -9,7 +9,6 @@ import { useMediaQuery } from 'react-responsive';
 
 function Home() {
   const isSmLaptop = useMediaQuery({ query: '(min-width: 1024px)' });
-  const isSmPhone = useMediaQuery({ query: '(max-width: 450px)' });
 
   return (
     <div className='home'>
@@ -23,20 +22,10 @@ function Home() {
         <section className='intro'>
           <h2 className='intro-header'>Why Reaction?</h2>
           <p className='intro-content'>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam semper pharetra porta. Proin sed velit auctor
-            massa egestas faucibus vel consequat lacus. Consectetur adipiscing elit. Etiam semper pharetra porta. Proin
-            sed velit auctor massa egestas faucib
+            Reaction is an aim trainer to help sharpen your skills and master the art of precision. Sign up and track
+            your progression as you improve your reaction time. Change the difficulty as your reflexes sharpen so you
+            can take your ability to the highest level.
           </p>
-          <blockquote className='intro-quote'>
-            &quot;If you ain&apos;t first, you&apos;re last&quot;&nbsp;
-            {isSmPhone && (
-              <>
-                <br />
-                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-              </>
-            )}
-            - Ricky Bobby
-          </blockquote>
           <NavLink className='play-now-btn' to='/play'>
             <Button className='home-button' text='Play Now' />
           </NavLink>
