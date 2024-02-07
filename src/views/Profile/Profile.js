@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import { GameSlider } from '../../components/GamesSlider/GamesSlider';
 import Modal from '../../components/Modal/Modal';
+import { Link } from 'react-router-dom';
 
 function Profile() {
   const { REACT_APP_API_URL } = process.env;
@@ -144,7 +145,9 @@ function Profile() {
           ) : (
             <div className='play-now-wrapper'>
               <h2 className='play-now-header'>No games have been played yet.</h2>
-              <Button className='play-now-button' text='Play Now'></Button>
+              <Link to='/Play' className='play-now-link'>
+                <Button className='play-now-button' text='Play Now'></Button>
+              </Link>
             </div>
           )}
         </section>

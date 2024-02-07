@@ -88,10 +88,13 @@
   font-weight: 400;
 }
 
+.profile .play-now-link {
+  align-self: flex-end;
+}
+
 .profile .play-now-button {
   font-size: 1.25em;
   padding: 0.2em 1em;
-  align-self: flex-end;
   margin-right: 1em;
   color: var(--secondary-black);
   background-color: var(--secondary-white);
