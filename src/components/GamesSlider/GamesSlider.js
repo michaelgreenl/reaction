@@ -109,12 +109,16 @@ export const GameSlider = (props) => {
               </tbody>
             </table>
             <div className='slider-buttons'>
-              <button className='prev-button' onClick={() => handlePrevClick()} disabled={activeSlide === 0}>
+              <button
+                className='slider-button prev-button'
+                onClick={() => handlePrevClick()}
+                disabled={activeSlide === 0}
+              >
                 <DownChevronSvg className='prev-button-svg' />
                 Prev
               </button>
               <button
-                className='next-button'
+                className='slider-button next-button'
                 onClick={() => handleNextClick()}
                 disabled={activeSlide === Math.ceil(props.totalGames / 10) - 1}
               >
