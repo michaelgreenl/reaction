@@ -53,6 +53,6 @@
         "stylelint-config-standard-scss": "^5.0.0",
         "vite": "^7.0.6",
         "vite-plugin-vue-devtools": "^8.0.0",
-        "vitest": "^3.2.4"
+        "vitest": "^5.0.0"
     }
 }
