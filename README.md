@@ -1,76 +1,59 @@
-# Reaction Client
+# Reaction
 
-> A Vue 3/Pinia reaction-time game with configurable target behavior, saved scores, profile history, GSAP transitions, and an Express/PostgreSQL API.
+Reaction is a reaction-time game with saved settings, scores, statistics, and game history.
 
-[![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D)](https://vuejs.org/) [![Pinia](https://img.shields.io/badge/Pinia-F1C40F?style=for-the-badge&logo=pinia&logoColor=black)](https://pinia.vuejs.org/) [![GSAP](https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white)](https://greensock.com/) [![Sass](https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white)](https://sass-lang.com/)
+[Live site](https://trainreaction.gg) · [API health](https://api.trainreaction.gg/health) · [Demo](https://michaelgreenl.net/#projects?slug=reaction&autoplay=true)
 
-## Quick Links
+## Workspaces
 
-- 🌐 **[Live Site](https://trainreaction.gg)**
-- 🎥 **[Demo Video](https://michaelgreenl.net/#projects?slug=reaction&autoplay=true)**
-- **⚙ [Backend Repository](https://github.com/michaelgreenl/reaction-api)**
-- **💼 [Portfolio Link](https://michaelgreenl.net/#projects?slug=reaction&autoplay=false)**
+| Workspace    | Purpose      | Stack                          |
+| ------------ | ------------ | ------------------------------ |
+| `app/client` | Browser game | Vue 3, Pinia, Vite, GSAP, Sass |
+| `app/server` | HTTP API     | Express, Sequelize, PostgreSQL |
 
-## Overview
+The root owns shared formatting, Node, Docker Compose, CI, and npm scripts.
 
-Reaction is an interactive game where players register or log in, tune circle size, spawn interval, and shrink time, then click randomly placed shrinking targets before one expires.
+## Local development
 
-The client stores session state, recent games, aggregate stats, and saved settings in Pinia. The API uses Express, Sequelize, PostgreSQL, bcrypt, and JWT cookies to create users, persist settings, save game results, and update profile stats.
-
-## Features
-
-- Configurable game settings for circle size, spawn interval, and shrink time, saved through `/settings` for logged-in users.
-- A timed game loop that starts after a three-second countdown, updates elapsed time every 10ms, and ends when an active target finishes shrinking.
-- Recent scores on the game screen for authenticated users, limited to the five latest saved games.
-- Profile history with paginated game results, sortable score/time/date columns, optional settings columns, and filters for saved circle size, spawn interval, and shrink time.
-- Registration hashes passwords with bcrypt and creates stats/settings records; login sets an HTTP-only JWT cookie from the Express API.
-- Game persistence that stores score, elapsed time, and per-game settings, then updates total games, high score, and longest time.
-- GSAP and Flip animations extracted into `useGameAnimations`, `useProfileAnimations`, `useUtilAnimations`, and `useGsap` composables.
-
-## Technical Details
-
-- Vue Router exposes `/game`, `/login`, `/register`, and authenticated `/profile` routes.
-- `api.js` wraps `fetch` with `credentials: 'include'`, JSON headers, and API error parsing.
-- `authStore` manages session checks, login/logout, stats, recent games, game creation, and filtered game history.
-- `settingsStore` manages circle size, spawn interval, shrink time, and `/settings` reads/writes.
-- `useBreakpoints` drives viewport-specific UI behavior, including recent-score/settings panel collisions on mobile.
-- The backend exposes `/users`, `/game`, `/stats`, and `/settings` routes with Sequelize models for users, games, stats, and settings.
-- Static client deployment is handled by `gh-pages -d dist` through `npm run deploy`.
-
-## Run Locally
+Install Node.js 24.20.0 and Docker. Then run:
 
 ```sh
 npm install
+cp app/client/.env.example app/client/.env.development
+cp app/server/.env.example app/server/.env.development
 npm run dev
 ```
 
-The client reads the API origin from `VITE_API_URL`.
+The client runs on `http://localhost:5173`. The API runs on `http://localhost:3000`.
 
-The API runs from the sibling backend project:
+`npm run dev` starts PostgreSQL, applies pending migrations, and starts both workspaces.
 
-```sh
-cd ../reaction-api
-npm install
-npm run dev
-```
+## Root scripts
 
-## Project Scripts
+- `npm run dev` starts both workspaces.
+- `npm run dev:client` starts only the client.
+- `npm run dev:server` starts PostgreSQL and the API.
+- `npm start` starts the API and applies pending migrations.
+- `npm run build` builds the client.
+- `npm test` runs the API contract and schema tests.
+- `npm run test:db` runs the API PostgreSQL integration tests.
+- `npm run lint` checks both workspaces.
+- `npm run lint:style` checks client styles.
+- `npm run format` checks repository formatting.
+- `npm run deploy:client` publishes the client build to `gh-pages`.
 
-- `npm run build` builds the Vite client.
-- `npm run preview` serves the production build.
-- `npm run lint` runs ESLint.
-- `npm run lint:style` runs Stylelint on Vue, CSS, and SCSS files.
-- `npm run format` runs the Prettier check.
-- `npm run test:unit` runs Vitest.
-- `npm run test:e2e` runs Playwright.
+The client includes Vitest and Playwright configuration. It does not yet include committed client tests.
 
-## Tech Stack
+## Environment
 
-- **Framework:** Vue 3, Vite, Vue Router
-- **State:** Pinia
-- **Styling:** Sass (SCSS)
-- **Animation:** GSAP, Flip
-- **API:** Express, Sequelize, PostgreSQL
-- **Auth:** bcrypt, JWT cookies
-- **Quality:** ESLint, Stylelint, Prettier, Vitest, Playwright
-- **Deploy:** GitHub Pages
+The client reads `VITE_API_URL` from `app/client/.env.*`.
+
+The API reads server, database, JWT, and client-origin values from `app/server/.env.*`. Render supplies these values in production.
+
+## Deployment
+
+GitHub Pages serves the `gh-pages` branch from its root. `app/client/public/CNAME` preserves `trainreaction.gg` during each deployment.
+
+Render uses this repository with no root-directory override. Its build command is `npm ci`, start command is `npm start`, and health path is `/health`.
+
+The start script selects `app/server` through npm workspaces. The API applies migrations before it starts.

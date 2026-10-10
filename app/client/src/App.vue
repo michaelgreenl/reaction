@@ -125,7 +125,7 @@ a {
     text-decoration: none;
 }
 
-a:visted {
+a:visited {
     color: inherit;
 }
 </style>

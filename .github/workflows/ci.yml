@@ -1,0 +1,48 @@
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches: [main]
+
+permissions:
+    contents: read
+
+jobs:
+    verify:
+        runs-on: ubuntu-latest
+        services:
+            postgres:
+                image: postgres:16
+                env:
+                    POSTGRES_DB: reaction_test
+                    POSTGRES_USER: reaction_user
+                    POSTGRES_PASSWORD: reaction_pass
+                ports:
+                    - 5432:5432
+                options: >-
+                    --health-cmd "pg_isready -U reaction_user -d reaction_test" --health-interval 10s --health-timeout 5s --health-retries 5
+        env:
+            NODE_ENV: test
+            FRONTEND_URL: http://localhost:5173
+            JWT_SECRET: test-only-secret
+            POSTGRES_DATABASE: reaction_test
+            POSTGRES_HOST: 127.0.0.1
+            POSTGRES_PASSWORD: reaction_pass
+            POSTGRES_PORT: 5432
+            POSTGRES_USER: reaction_user
+        steps:
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v7
+              with:
+                  node-version-file: .node-version
+                  cache: npm
+                  cache-dependency-path: package-lock.json
+            - run: npm ci
+            - run: npm run format
+            - run: npm run lint
+            - run: npm run lint:style
+            - run: npm run build
+            - run: npm test
+            - run: npm run migrate --workspace=reaction-api
+            - run: npm run test:db

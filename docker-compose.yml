@@ -1,0 +1,23 @@
+name: reaction-api
+
+services:
+    postgres:
+        image: postgres:16
+        container_name: reaction-postgres
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB: reaction_db
+            POSTGRES_USER: reaction_user
+            POSTGRES_PASSWORD: reaction_pass
+        ports:
+            - '${POSTGRES_HOST_PORT:-5432}:5432'
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+            test: ['CMD-SHELL', 'pg_isready -U reaction_user -d reaction_db']
+            interval: 10s
+            timeout: 5s
+            retries: 5
+
+volumes:
+    postgres_data:
