@@ -114,13 +114,13 @@ function exitHudAnim({ tl = gsap.timeline() } = {}) {
 
 <template>
     <div ref="canvasRef" class="game-container">
-        <div class="hud">
+        <div data-testid="hud" class="hud">
             <GameStats :adjust-time-size="true" :score="score" :time="time" />
         </div>
         <div v-if="showCount" class="countdown">
             <span>{{ count }}</span>
         </div>
-        <div v-else class="canvas">
+        <div v-else data-testid="canvas" class="canvas">
             <div v-for="c in circles" :key="c.id" class="circle-wrapper" :style="{ left: c.x + 'px', top: c.y + 'px' }">
                 <Circle :game-active="localGameActive" @click="handleCircleClick(c.id)" @end-game="handleGameEnd()" />
             </div>

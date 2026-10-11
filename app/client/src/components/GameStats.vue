@@ -24,7 +24,7 @@ function timeValueSize(timeMs) {
 <template>
     <div class="stat-wrapper">
         <span class="label">Score:</span>
-        <span class="stat">{{ score }}</span>
+        <span data-testid="score" class="stat">{{ score }}</span>
     </div>
     <span> | </span>
     <div class="stat-wrapper">

@@ -43,6 +43,8 @@ jobs:
             - run: npm run lint
             - run: npm run lint:style
             - run: npm run build
+            - run: npx playwright install --with-deps chromium
+            - run: npm run test:e2e
             - run: npm test
             - run: npm run migrate --workspace=reaction-api
             - run: npm run test:db
