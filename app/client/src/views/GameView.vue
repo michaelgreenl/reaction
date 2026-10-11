@@ -277,7 +277,7 @@ async function toggleRecentGames() {
                     </li>
                 </ul>
             </div>
-            <div v-if="gamePlayed && !showSettings" class="end-screen psuedo-border">
+            <div v-if="gamePlayed && !showSettings" data-testid="end-screen" class="end-screen psuedo-border">
                 <h1 class="end-screen-child">Game Over</h1>
                 <hr class="end-screen-child" />
                 <div class="stats end-screen-child">
@@ -304,7 +304,13 @@ async function toggleRecentGames() {
                     :disabled="button.disabled && button.disabled()"
                     @click="button.click"
                 />
-                <Button class="start-button" preset="primary animated" text="Start" @click="startGame" />
+                <Button
+                    data-testid="start-button"
+                    class="start-button"
+                    preset="primary animated"
+                    text="Start"
+                    @click="startGame"
+                />
             </div>
         </div>
         <Canvas
