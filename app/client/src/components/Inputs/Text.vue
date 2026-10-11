@@ -14,6 +14,7 @@ defineEmits(['toggleHideButton', 'update:modelValue', 'focus', 'blur']);
 <template>
     <input
         :id="id"
+        :data-testid="`${id}-input`"
         :value="modelValue"
         :type="showPassword ? 'text' : 'password'"
         :required="required"
