@@ -30,7 +30,7 @@
         "db:down": "docker compose down"
     },
     "devDependencies": {
-        "concurrently": "^10.0.5",
+        "concurrently": "^10.0.6",
         "postcss-html": "1.8.0",
         "prettier": "^3.9.4"
     },
