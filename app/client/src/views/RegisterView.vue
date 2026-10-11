@@ -120,9 +120,16 @@ const handleRegister = async () => {
                     Contains a number
                 </li>
             </ul>
-            <Button type="submit" text="Register" preset="secondary" :is-loading="isLoading" :disabled="isLoading" />
+            <Button
+                data-testid="register-submit"
+                type="submit"
+                text="Register"
+                preset="secondary"
+                :is-loading="isLoading"
+                :disabled="isLoading"
+            />
             <hr class="bottom-border" />
-            <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
+            <p v-if="errorMessage" data-testid="auth-error" class="error-message">{{ errorMessage }}</p>
             <p class="form-link">Already have an account? <router-link to="/login">Login</router-link></p>
         </form>
     </div>
