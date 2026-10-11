@@ -61,6 +61,7 @@ defineExpose({ openCircle, closeCircle });
         }"
     >
         <button
+            data-testid="circle"
             :class="{ animate: animating, 'fade-out': paused || !gameActive }"
             :style="{
                 animationDuration: `${settingsStore.shrinkTime}s`,

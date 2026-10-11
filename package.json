@@ -20,6 +20,7 @@
         "preview": "npm run preview --workspace=reaction-client",
         "test": "npm test --workspace=reaction-api",
         "test:db": "npm run test:db --workspace=reaction-api",
+        "test:e2e": "npm run test:e2e --workspace=reaction-client -- --project=chromium",
         "lint": "npm run lint --workspaces --if-present",
         "lint:style": "npm run lint:style --workspace=reaction-client",
         "format": "prettier --check .",
