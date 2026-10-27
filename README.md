@@ -2,7 +2,7 @@
 
 Reaction is a reaction-time game with saved settings, scores, statistics, and game history.
 
-[Live site](https://trainreaction.gg) · [API health](https://api.trainreaction.gg/health) · [Demo](https://michaelgreenl.net/#projects?slug=reaction&autoplay=true)
+[Live site](https://trainreaction.gg) · [API health](https://api.trainreaction.gg/health) · [Demo](https://michaelgreenl.net/projects/reaction/)
 
 ## Workspaces
 
